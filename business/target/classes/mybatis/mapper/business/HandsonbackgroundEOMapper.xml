@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.HandsonbackgroundEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.HandsonbackgroundEO" >
+    <id column="handsonbackgroundkey" property="handsonbackgroundkey" />
+    <result column="leavingreason" property="leavingreason" />
+    <result column="enterprisescale" property="enterprisescale" />
+    <result column="reportingobject" property="reportingobject" />
+    <result column="subordinates" property="subordinates" />
+    <result column="updatetime" property="updatetime" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="unitname" property="unitname" />
+    <result column="positionname" property="positionname" />
+    <result column="workinghours" property="workinghours" />
+    <result column="operatinduty" property="operatinduty" />
+    <result column="department" property="department" />
+    <result column="positionlevel" property="positionlevel" />
+    <result column="workingplace" property="workingplace" />
+    <result column="monthlysalary" property="monthlysalary" />
+  </resultMap>
+
+  <!-- HANDSONBACKGROUND table all fields -->
+  <sql id="Base_Column_List" >
+     leavingreason, enterprisescale, reportingobject, subordinates, updatetime, handsonbackgroundkey, applymemberkey, unitname, positionname, workinghours, operatinduty, department, positionlevel, workingplace, monthlysalary
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="leavingreason != null" >
+        and leavingreason ${leavingreasonOperator} #{leavingreason}
+      </if>
+      <if test="enterprisescale != null" >
+        and enterprisescale ${enterprisescaleOperator} #{enterprisescale}
+      </if>
+      <if test="reportingobject != null" >
+        and reportingobject ${reportingobjectOperator} #{reportingobject}
+      </if>
+      <if test="subordinates != null" >
+        and subordinates ${subordinatesOperator} #{subordinates}
+      </if>
+      <if test="updatetime != null" >
+        and updatetime ${updatetimeOperator} #{updatetime}
+      </if>
+      <if test="updatetime1 != null" >
+        and updatetime &gt;= #{updatetime1}
+      </if>
+      <if test="updatetime2 != null" >
+        and updatetime &lt;= #{updatetime2}
+      </if>
+      <if test="handsonbackgroundkey != null" >
+        and handsonbackgroundkey ${handsonbackgroundkeyOperator} #{handsonbackgroundkey}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="unitname != null" >
+        and unitname ${unitnameOperator} #{unitname}
+      </if>
+      <if test="positionname != null" >
+        and positionname ${positionnameOperator} #{positionname}
+      </if>
+      <if test="workinghours != null" >
+        and workinghours ${workinghoursOperator} #{workinghours}
+      </if>
+      <if test="workinghours1 != null" >
+        and workinghours &gt;= #{workinghours1}
+      </if>
+      <if test="workinghours2 != null" >
+        and workinghours &lt;= #{workinghours2}
+      </if>
+      <if test="operatinduty != null" >
+        and operatinduty ${operatindutyOperator} #{operatinduty}
+      </if>
+      <if test="department != null" >
+        and department ${departmentOperator} #{department}
+      </if>
+      <if test="positionlevel != null" >
+        and positionlevel ${positionlevelOperator} #{positionlevel}
+      </if>
+      <if test="workingplace != null" >
+        and workingplace ${workingplaceOperator} #{workingplace}
+      </if>
+      <if test="monthlysalary != null" >
+        and monthlysalary ${monthlysalaryOperator} #{monthlysalary}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.HandsonbackgroundEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="handsonbackgroundkey">
+        SELECT SEQ_HANDSONBACKGROUND.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into HANDSONBACKGROUND(<include refid="Base_Column_List" />)
+    values (#{leavingreason, jdbcType=VARCHAR}, #{enterprisescale, jdbcType=VARCHAR}, #{reportingobject, jdbcType=VARCHAR}, #{subordinates, jdbcType=VARCHAR}, #{updatetime, jdbcType=TIMESTAMP}, #{handsonbackgroundkey, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{unitname, jdbcType=VARCHAR}, #{positionname, jdbcType=VARCHAR}, #{workinghours, jdbcType=TIMESTAMP}, #{operatinduty, jdbcType=VARCHAR}, #{department, jdbcType=VARCHAR}, #{positionlevel, jdbcType=VARCHAR}, #{workingplace, jdbcType=VARCHAR}, #{monthlysalary, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.HandsonbackgroundEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="handsonbackgroundkey">
+        SELECT SEQ_HANDSONBACKGROUND.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into HANDSONBACKGROUND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="leavingreason != null" >leavingreason,</if>
+                <if test="enterprisescale != null" >enterprisescale,</if>
+                <if test="reportingobject != null" >reportingobject,</if>
+                <if test="subordinates != null" >subordinates,</if>
+                <if test="updatetime != null" >updatetime,</if>
+                <if test="handsonbackgroundkey != null" >handsonbackgroundkey,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="unitname != null" >unitname,</if>
+                <if test="positionname != null" >positionname,</if>
+                <if test="workinghours != null" >workinghours,</if>
+                <if test="operatinduty != null" >operatinduty,</if>
+                <if test="department != null" >department,</if>
+                <if test="positionlevel != null" >positionlevel,</if>
+                <if test="workingplace != null" >workingplace,</if>
+                <if test="monthlysalary != null" >monthlysalary,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="leavingreason != null" >#{leavingreason, jdbcType=VARCHAR},</if>
+                <if test="enterprisescale != null" >#{enterprisescale, jdbcType=VARCHAR},</if>
+                <if test="reportingobject != null" >#{reportingobject, jdbcType=VARCHAR},</if>
+                <if test="subordinates != null" >#{subordinates, jdbcType=VARCHAR},</if>
+                <if test="updatetime != null" >#{updatetime, jdbcType=TIMESTAMP},</if>
+                <if test="handsonbackgroundkey != null" >#{handsonbackgroundkey, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="unitname != null" >#{unitname, jdbcType=VARCHAR},</if>
+                <if test="positionname != null" >#{positionname, jdbcType=VARCHAR},</if>
+                <if test="workinghours != null" >#{workinghours, jdbcType=TIMESTAMP},</if>
+                <if test="operatinduty != null" >#{operatinduty, jdbcType=VARCHAR},</if>
+                <if test="department != null" >#{department, jdbcType=VARCHAR},</if>
+                <if test="positionlevel != null" >#{positionlevel, jdbcType=VARCHAR},</if>
+                <if test="workingplace != null" >#{workingplace, jdbcType=VARCHAR},</if>
+                <if test="monthlysalary != null" >#{monthlysalary, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.HandsonbackgroundEO" >
+    update HANDSONBACKGROUND
+       set  leavingreason = #{leavingreason},
+            enterprisescale = #{enterprisescale},
+            reportingobject = #{reportingobject},
+            subordinates = #{subordinates},
+            updatetime = #{updatetime},
+            applymemberkey = #{applymemberkey},
+            unitname = #{unitname},
+            positionname = #{positionname},
+            workinghours = #{workinghours},
+            operatinduty = #{operatinduty},
+            department = #{department},
+            positionlevel = #{positionlevel},
+            workingplace = #{workingplace},
+            monthlysalary = #{monthlysalary}
+     where  handsonbackgroundkey = #{handsonbackgroundkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.HandsonbackgroundEO" >
+    update HANDSONBACKGROUND
+    <set >
+      <if test="leavingreason != null" >
+        leavingreason = #{leavingreason},
+      </if>
+      <if test="enterprisescale != null" >
+        enterprisescale = #{enterprisescale},
+      </if>
+      <if test="reportingobject != null" >
+        reportingobject = #{reportingobject},
+      </if>
+      <if test="subordinates != null" >
+        subordinates = #{subordinates},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime},
+      </if>
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="unitname != null" >
+        unitname = #{unitname},
+      </if>
+      <if test="positionname != null" >
+        positionname = #{positionname},
+      </if>
+      <if test="workinghours != null" >
+        workinghours = #{workinghours},
+      </if>
+      <if test="operatinduty != null" >
+        operatinduty = #{operatinduty},
+      </if>
+      <if test="department != null" >
+        department = #{department},
+      </if>
+      <if test="positionlevel != null" >
+        positionlevel = #{positionlevel},
+      </if>
+      <if test="workingplace != null" >
+        workingplace = #{workingplace},
+      </if>
+      <if test="monthlysalary != null" >
+        monthlysalary = #{monthlysalary},
+      </if>
+    </set>
+     where handsonbackgroundkey = #{handsonbackgroundkey}
+  </update>
+
+  <!-- 根据id查询 HANDSONBACKGROUND -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from HANDSONBACKGROUND
+     where handsonbackgroundkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from HANDSONBACKGROUND
+     where handsonbackgroundkey = #{value}
+
+  </delete>
+
+  <!-- HANDSONBACKGROUND 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from HANDSONBACKGROUND
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询HANDSONBACKGROUND列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from HANDSONBACKGROUND
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from HANDSONBACKGROUND
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

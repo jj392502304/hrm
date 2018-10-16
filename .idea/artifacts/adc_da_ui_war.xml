@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="adc-da-ui:war">
+    <output-path>$PROJECT_DIR$/adc-da-ui/target</output-path>
+    <root id="archive" name="adc-da-ui.war">
+      <element id="artifact" artifact-name="adc-da-ui:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.DepartmentalEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.DepartmentalEO" >
+    <id column="departmentprimarykey" property="departmentprimarykey" />
+    <result column="departmentordernumber" property="departmentordernumber" />
+    <result column="departmentalname" property="departmentalname" />
+    <result column="departmentaldescribe" property="departmentaldescribe" />
+    <result column="creationtime" property="creationtime" />
+    <result column="departmentkey" property="departmentkey" />
+    <result column="isenabled" property="isenabled" />
+    <result column="abbreviations" property="abbreviations" />
+  </resultMap>
+
+  <!-- DEPARTMENTAL table all fields -->
+  <sql id="Base_Column_List" >
+     departmentordernumber, departmentprimarykey, departmentalname, departmentaldescribe, creationtime, departmentkey, isenabled, abbreviations
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="departmentordernumber != null" >
+        and departmentordernumber ${departmentordernumberOperator} #{departmentordernumber}
+      </if>
+      <if test="departmentprimarykey != null" >
+        and departmentprimarykey ${departmentprimarykeyOperator} #{departmentprimarykey}
+      </if>
+      <if test="departmentalname != null" >
+        and departmentalname ${departmentalnameOperator} #{departmentalname}
+      </if>
+      <if test="departmentaldescribe != null" >
+        and departmentaldescribe ${departmentaldescribeOperator} #{departmentaldescribe}
+      </if>
+      <if test="creationtime != null" >
+        and creationtime ${creationtimeOperator} #{creationtime}
+      </if>
+      <if test="creationtime1 != null" >
+        and creationtime &gt;= #{creationtime1}
+      </if>
+      <if test="creationtime2 != null" >
+        and creationtime &lt;= #{creationtime2}
+      </if>
+      <if test="departmentkey != null" >
+        and departmentkey ${departmentkeyOperator} #{departmentkey}
+      </if>
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+      <if test="abbreviations != null" >
+        and abbreviations ${abbreviationsOperator} #{abbreviations}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.DepartmentalEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="departmentprimarykey">
+        SELECT SEQ_DEPARTMENTAL.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into DEPARTMENTAL(<include refid="Base_Column_List" />)
+    values (#{departmentordernumber, jdbcType=INTEGER}, #{departmentprimarykey, jdbcType=VARCHAR}, #{departmentalname, jdbcType=VARCHAR}, #{departmentaldescribe, jdbcType=VARCHAR}, #{creationtime, jdbcType=TIMESTAMP}, #{departmentkey, jdbcType=VARCHAR}, #{isenabled, jdbcType=INTEGER}, #{abbreviations, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.DepartmentalEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="departmentprimarykey">
+        SELECT SEQ_DEPARTMENTAL.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into DEPARTMENTAL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="departmentordernumber != null" >departmentordernumber,</if>
+                <if test="departmentprimarykey != null" >departmentprimarykey,</if>
+                <if test="departmentalname != null" >departmentalname,</if>
+                <if test="departmentaldescribe != null" >departmentaldescribe,</if>
+                <if test="creationtime != null" >creationtime,</if>
+                <if test="departmentkey != null" >departmentkey,</if>
+                <if test="isenabled != null" >isenabled,</if>
+                <if test="abbreviations != null" >abbreviations,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="departmentordernumber != null" >#{departmentordernumber, jdbcType=INTEGER},</if>
+                <if test="departmentprimarykey != null" >#{departmentprimarykey, jdbcType=VARCHAR},</if>
+                <if test="departmentalname != null" >#{departmentalname, jdbcType=VARCHAR},</if>
+                <if test="departmentaldescribe != null" >#{departmentaldescribe, jdbcType=VARCHAR},</if>
+                <if test="creationtime != null" >#{creationtime, jdbcType=TIMESTAMP},</if>
+                <if test="departmentkey != null" >#{departmentkey, jdbcType=VARCHAR},</if>
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+                <if test="abbreviations != null" >#{abbreviations, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.DepartmentalEO" >
+    update DEPARTMENTAL
+       set  departmentordernumber = #{departmentordernumber},
+            departmentalname = #{departmentalname},
+            departmentaldescribe = #{departmentaldescribe},
+            creationtime = #{creationtime},
+            departmentkey = #{departmentkey},
+            isenabled = #{isenabled},
+            abbreviations = #{abbreviations}
+     where  departmentprimarykey = #{departmentprimarykey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.DepartmentalEO" >
+    update DEPARTMENTAL
+    <set >
+      <if test="departmentordernumber != null" >
+        departmentordernumber = #{departmentordernumber},
+      </if>
+      <if test="departmentalname != null" >
+        departmentalname = #{departmentalname},
+      </if>
+      <if test="departmentaldescribe != null" >
+        departmentaldescribe = #{departmentaldescribe},
+      </if>
+      <if test="creationtime != null" >
+        creationtime = #{creationtime},
+      </if>
+      <if test="departmentkey != null" >
+        departmentkey = #{departmentkey},
+      </if>
+      <if test="isenabled != null" >
+        isenabled = #{isenabled},
+      </if>
+      <if test="abbreviations != null" >
+        abbreviations = #{abbreviations},
+      </if>
+    </set>
+     where departmentprimarykey = #{departmentprimarykey}
+  </update>
+
+  <!-- 根据id查询 DEPARTMENTAL -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from DEPARTMENTAL
+     where departmentprimarykey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from DEPARTMENTAL
+     where departmentprimarykey = #{value}
+
+  </delete>
+
+  <!-- DEPARTMENTAL 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from DEPARTMENTAL
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询DEPARTMENTAL列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from DEPARTMENTAL
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from DEPARTMENTAL
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

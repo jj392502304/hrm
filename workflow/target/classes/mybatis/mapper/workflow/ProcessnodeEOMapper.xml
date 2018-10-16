@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.ProcessnodeEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.ProcessnodeEO" >
+    <id column="nodekey" property="nodekey" />
+    <result column="procedurekey" property="procedurekey" />
+    <result column="nodenumber" property="nodenumber" />
+    <result column="remarks" property="remarks" />
+    <result column="nodestate" property="nodestate" />
+    <result column="createtime" property="createtime" />
+    <result column="attributekey" property="attributekey" />
+  </resultMap>
+
+  <!-- PROCESSNODE table all fields -->
+  <sql id="Base_Column_List" >
+     nodekey, procedurekey, nodenumber, remarks, nodestate, createtime, attributekey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="nodekey != null" >
+        and nodekey ${nodekeyOperator} #{nodekey}
+      </if>
+      <if test="procedurekey != null" >
+        and procedurekey ${procedurekeyOperator} #{procedurekey}
+      </if>
+      <if test="nodenumber != null" >
+        and nodenumber ${nodenumberOperator} #{nodenumber}
+      </if>
+      <if test="remarks != null" >
+        and remarks ${remarksOperator} #{remarks}
+      </if>
+      <if test="nodestate != null" >
+        and nodestate ${nodestateOperator} #{nodestate}
+      </if>
+      <if test="createtime != null" >
+        and createtime ${createtimeOperator} #{createtime}
+      </if>
+      <if test="createtime1 != null" >
+        and createtime &gt;= #{createtime1}
+      </if>
+      <if test="createtime2 != null" >
+        and createtime &lt;= #{createtime2}
+      </if>
+      <if test="attributekey != null" >
+        and attributekey ${attributekeyOperator} #{attributekey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.ProcessnodeEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="nodekey">
+        SELECT SEQ_PROCESSNODE.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into PROCESSNODE(<include refid="Base_Column_List" />)
+    values (#{nodekey, jdbcType=VARCHAR}, #{procedurekey, jdbcType=VARCHAR}, #{nodenumber, jdbcType=INTEGER}, #{remarks, jdbcType=VARCHAR}, #{nodestate, jdbcType=INTEGER}, #{createtime, jdbcType=TIMESTAMP}, #{attributekey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.ProcessnodeEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="nodekey">
+        SELECT SEQ_PROCESSNODE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PROCESSNODE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="nodekey != null" >nodekey,</if>
+                <if test="procedurekey != null" >procedurekey,</if>
+                <if test="nodenumber != null" >nodenumber,</if>
+                <if test="remarks != null" >remarks,</if>
+                <if test="nodestate != null" >nodestate,</if>
+                <if test="createtime != null" >createtime,</if>
+                <if test="attributekey != null" >attributekey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="nodekey != null" >#{nodekey, jdbcType=VARCHAR},</if>
+                <if test="procedurekey != null" >#{procedurekey, jdbcType=VARCHAR},</if>
+                <if test="nodenumber != null" >#{nodenumber, jdbcType=INTEGER},</if>
+                <if test="remarks != null" >#{remarks, jdbcType=VARCHAR},</if>
+                <if test="nodestate != null" >#{nodestate, jdbcType=INTEGER},</if>
+                <if test="createtime != null" >#{createtime, jdbcType=TIMESTAMP},</if>
+                <if test="attributekey != null" >#{attributekey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.ProcessnodeEO" >
+    update PROCESSNODE
+       set  procedurekey = #{procedurekey},
+            nodenumber = #{nodenumber},
+            remarks = #{remarks},
+            nodestate = #{nodestate},
+            createtime = #{createtime},
+            attributekey = #{attributekey}
+     where  nodekey = #{nodekey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.ProcessnodeEO" >
+    update PROCESSNODE
+    <set >
+      <if test="procedurekey != null" >
+        procedurekey = #{procedurekey},
+      </if>
+      <if test="nodenumber != null" >
+        nodenumber = #{nodenumber},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks},
+      </if>
+      <if test="nodestate != null" >
+        nodestate = #{nodestate},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime},
+      </if>
+      <if test="attributekey != null" >
+        attributekey = #{attributekey},
+      </if>
+    </set>
+     where nodekey = #{nodekey}
+  </update>
+
+  <!-- 根据id查询 PROCESSNODE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PROCESSNODE
+     where nodekey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PROCESSNODE
+     where nodekey = #{value}
+
+  </delete>
+
+  <!-- PROCESSNODE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PROCESSNODE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PROCESSNODE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PROCESSNODE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PROCESSNODE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

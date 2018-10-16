@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.PersondepartmentpositionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.PersondepartmentpositionEO" >
+    <id column="persondepartmentpositionid" property="persondepartmentpositionid" />
+    <result column="departmentjobkey" property="departmentjobkey" />
+    <result column="roleprimarykey" property="roleprimarykey" />
+    <result column="personnewskey" property="personnewskey" />
+  </resultMap>
+
+  <!-- PERSONDEPARTMENTPOSITION table all fields -->
+  <sql id="Base_Column_List" >
+     departmentjobkey, roleprimarykey, personnewskey, persondepartmentpositionid
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="departmentjobkey != null" >
+        and departmentjobkey ${departmentjobkeyOperator} #{departmentjobkey}
+      </if>
+      <if test="roleprimarykey != null" >
+        and roleprimarykey ${roleprimarykeyOperator} #{roleprimarykey}
+      </if>
+      <if test="personnewskey != null" >
+        and personnewskey ${personnewskeyOperator} #{personnewskey}
+      </if>
+      <if test="persondepartmentpositionid != null" >
+        and persondepartmentpositionid ${persondepartmentpositionidOperator} #{persondepartmentpositionid}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.PersondepartmentpositionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="persondepartmentpositionid">
+        SELECT SEQ_PERSONDEPARTMENTPOSITION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into PERSONDEPARTMENTPOSITION(<include refid="Base_Column_List" />)
+    values (#{departmentjobkey, jdbcType=VARCHAR}, #{roleprimarykey, jdbcType=VARCHAR}, #{personnewskey, jdbcType=VARCHAR}, #{persondepartmentpositionid, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.PersondepartmentpositionEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="persondepartmentpositionid">
+        SELECT SEQ_PERSONDEPARTMENTPOSITION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PERSONDEPARTMENTPOSITION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="departmentjobkey != null" >departmentjobkey,</if>
+                <if test="roleprimarykey != null" >roleprimarykey,</if>
+                <if test="personnewskey != null" >personnewskey,</if>
+                <if test="persondepartmentpositionid != null" >persondepartmentpositionid,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="departmentjobkey != null" >#{departmentjobkey, jdbcType=VARCHAR},</if>
+                <if test="roleprimarykey != null" >#{roleprimarykey, jdbcType=VARCHAR},</if>
+                <if test="personnewskey != null" >#{personnewskey, jdbcType=VARCHAR},</if>
+                <if test="persondepartmentpositionid != null" >#{persondepartmentpositionid, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.PersondepartmentpositionEO" >
+    update PERSONDEPARTMENTPOSITION
+       set  departmentjobkey = #{departmentjobkey},
+            roleprimarykey = #{roleprimarykey},
+            personnewskey = #{personnewskey}
+     where  persondepartmentpositionid = #{persondepartmentpositionid}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.PersondepartmentpositionEO" >
+    update PERSONDEPARTMENTPOSITION
+    <set >
+      <if test="departmentjobkey != null" >
+        departmentjobkey = #{departmentjobkey},
+      </if>
+      <if test="roleprimarykey != null" >
+        roleprimarykey = #{roleprimarykey},
+      </if>
+      <if test="personnewskey != null" >
+        personnewskey = #{personnewskey},
+      </if>
+    </set>
+     where persondepartmentpositionid = #{persondepartmentpositionid}
+  </update>
+
+  <!-- 根据id查询 PERSONDEPARTMENTPOSITION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PERSONDEPARTMENTPOSITION
+     where persondepartmentpositionid = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PERSONDEPARTMENTPOSITION
+     where persondepartmentpositionid = #{value}
+
+  </delete>
+
+  <!-- PERSONDEPARTMENTPOSITION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PERSONDEPARTMENTPOSITION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PERSONDEPARTMENTPOSITION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PERSONDEPARTMENTPOSITION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PERSONDEPARTMENTPOSITION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

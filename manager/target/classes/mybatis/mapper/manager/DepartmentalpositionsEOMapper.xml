@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.DepartmentalpositionsEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.DepartmentalpositionsEO" >
+    <id column="departmentjobkey" property="departmentjobkey" />
+    <result column="isenabled" property="isenabled" />
+    <result column="positionkey" property="positionkey" />
+    <result column="departmentalfreignkey" property="departmentalfreignkey" />
+  </resultMap>
+
+  <!-- DEPARTMENTALPOSITIONS table all fields -->
+  <sql id="Base_Column_List" >
+     isenabled, positionkey, departmentalfreignkey, departmentjobkey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+      <if test="positionkey != null" >
+        and positionkey ${positionkeyOperator} #{positionkey}
+      </if>
+      <if test="departmentalfreignkey != null" >
+        and departmentalfreignkey ${departmentalfreignkeyOperator} #{departmentalfreignkey}
+      </if>
+      <if test="departmentjobkey != null" >
+        and departmentjobkey ${departmentjobkeyOperator} #{departmentjobkey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.DepartmentalpositionsEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="departmentjobkey">
+        SELECT SEQ_DEPARTMENTALPOSITIONS.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into DEPARTMENTALPOSITIONS(<include refid="Base_Column_List" />)
+    values (#{isenabled, jdbcType=INTEGER}, #{positionkey, jdbcType=VARCHAR}, #{departmentalfreignkey, jdbcType=VARCHAR}, #{departmentjobkey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.DepartmentalpositionsEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="departmentjobkey">
+        SELECT SEQ_DEPARTMENTALPOSITIONS.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into DEPARTMENTALPOSITIONS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="isenabled != null" >isenabled,</if>
+                <if test="positionkey != null" >positionkey,</if>
+                <if test="departmentalfreignkey != null" >departmentalfreignkey,</if>
+                <if test="departmentjobkey != null" >departmentjobkey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+                <if test="positionkey != null" >#{positionkey, jdbcType=VARCHAR},</if>
+                <if test="departmentalfreignkey != null" >#{departmentalfreignkey, jdbcType=VARCHAR},</if>
+                <if test="departmentjobkey != null" >#{departmentjobkey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.DepartmentalpositionsEO" >
+    update DEPARTMENTALPOSITIONS
+       set  isenabled = #{isenabled},
+            positionkey = #{positionkey},
+            departmentalfreignkey = #{departmentalfreignkey}
+     where  departmentjobkey = #{departmentjobkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.DepartmentalpositionsEO" >
+    update DEPARTMENTALPOSITIONS
+    <set >
+      <if test="isenabled != null" >
+        isenabled = #{isenabled},
+      </if>
+      <if test="positionkey != null" >
+        positionkey = #{positionkey},
+      </if>
+      <if test="departmentalfreignkey != null" >
+        departmentalfreignkey = #{departmentalfreignkey},
+      </if>
+    </set>
+     where departmentjobkey = #{departmentjobkey}
+  </update>
+
+  <!-- 根据id查询 DEPARTMENTALPOSITIONS -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from DEPARTMENTALPOSITIONS
+     where departmentjobkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from DEPARTMENTALPOSITIONS
+     where departmentjobkey = #{value}
+
+  </delete>
+
+  <!-- DEPARTMENTALPOSITIONS 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from DEPARTMENTALPOSITIONS
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询DEPARTMENTALPOSITIONS列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from DEPARTMENTALPOSITIONS
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from DEPARTMENTALPOSITIONS
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

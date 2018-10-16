@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.PaperEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.PaperEO" >
+    <id column="mainkeyofpaper" property="mainkeyofpaper" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="name" property="name" />
+    <result column="releasetime" property="releasetime" />
+    <result column="periodicals" property="periodicals" />
+    <result column="authororder" property="authororder" />
+  </resultMap>
+
+  <!-- PAPER table all fields -->
+  <sql id="Base_Column_List" >
+     mainkeyofpaper, applymemberkey, name, releasetime, periodicals, authororder
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="mainkeyofpaper != null" >
+        and mainkeyofpaper ${mainkeyofpaperOperator} #{mainkeyofpaper}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="name != null" >
+        and name ${nameOperator} #{name}
+      </if>
+      <if test="releasetime != null" >
+        and releasetime ${releasetimeOperator} #{releasetime}
+      </if>
+      <if test="releasetime1 != null" >
+        and releasetime &gt;= #{releasetime1}
+      </if>
+      <if test="releasetime2 != null" >
+        and releasetime &lt;= #{releasetime2}
+      </if>
+      <if test="periodicals != null" >
+        and periodicals ${periodicalsOperator} #{periodicals}
+      </if>
+      <if test="authororder != null" >
+        and authororder ${authororderOperator} #{authororder}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.PaperEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="mainkeyofpaper">
+        SELECT SEQ_PAPER.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into PAPER(<include refid="Base_Column_List" />)
+    values (#{mainkeyofpaper, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{releasetime, jdbcType=TIMESTAMP}, #{periodicals, jdbcType=VARCHAR}, #{authororder, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.PaperEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="mainkeyofpaper">
+        SELECT SEQ_PAPER.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PAPER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="mainkeyofpaper != null" >mainkeyofpaper,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="name != null" >name,</if>
+                <if test="releasetime != null" >releasetime,</if>
+                <if test="periodicals != null" >periodicals,</if>
+                <if test="authororder != null" >authororder,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="mainkeyofpaper != null" >#{mainkeyofpaper, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="name != null" >#{name, jdbcType=VARCHAR},</if>
+                <if test="releasetime != null" >#{releasetime, jdbcType=TIMESTAMP},</if>
+                <if test="periodicals != null" >#{periodicals, jdbcType=VARCHAR},</if>
+                <if test="authororder != null" >#{authororder, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.PaperEO" >
+    update PAPER
+       set  applymemberkey = #{applymemberkey},
+            name = #{name},
+            releasetime = #{releasetime},
+            periodicals = #{periodicals},
+            authororder = #{authororder}
+     where  mainkeyofpaper = #{mainkeyofpaper}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.PaperEO" >
+    update PAPER
+    <set >
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="releasetime != null" >
+        releasetime = #{releasetime},
+      </if>
+      <if test="periodicals != null" >
+        periodicals = #{periodicals},
+      </if>
+      <if test="authororder != null" >
+        authororder = #{authororder},
+      </if>
+    </set>
+     where mainkeyofpaper = #{mainkeyofpaper}
+  </update>
+
+  <!-- 根据id查询 PAPER -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PAPER
+     where mainkeyofpaper = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PAPER
+     where mainkeyofpaper = #{value}
+
+  </delete>
+
+  <!-- PAPER 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PAPER
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PAPER列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PAPER
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PAPER
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

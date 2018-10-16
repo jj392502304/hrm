@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.SystemlogEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.SystemlogEO" >
+    <id column="systemlog" property="systemlog" />
+    <result column="logtype" property="logtype" />
+    <result column="templatename" property="templatename" />
+    <result column="loginformation" property="loginformation" />
+    <result column="creationtime" property="creationtime" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="informationsource" property="informationsource" />
+  </resultMap>
+
+  <!-- SYSTEMLOG table all fields -->
+  <sql id="Base_Column_List" >
+     systemlog, logtype, templatename, loginformation, creationtime, applymemberkey, informationsource
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="systemlog != null" >
+        and systemlog ${systemlogOperator} #{systemlog}
+      </if>
+      <if test="logtype != null" >
+        and logtype ${logtypeOperator} #{logtype}
+      </if>
+      <if test="templatename != null" >
+        and templatename ${templatenameOperator} #{templatename}
+      </if>
+      <if test="loginformation != null" >
+        and loginformation ${loginformationOperator} #{loginformation}
+      </if>
+      <if test="creationtime != null" >
+        and creationtime ${creationtimeOperator} #{creationtime}
+      </if>
+      <if test="creationtime1 != null" >
+        and creationtime &gt;= #{creationtime1}
+      </if>
+      <if test="creationtime2 != null" >
+        and creationtime &lt;= #{creationtime2}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="informationsource != null" >
+        and informationsource ${informationsourceOperator} #{informationsource}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.SystemlogEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="systemlog">
+        SELECT SEQ_SYSTEMLOG.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into SYSTEMLOG(<include refid="Base_Column_List" />)
+    values (#{systemlog, jdbcType=VARCHAR}, #{logtype, jdbcType=INTEGER}, #{templatename, jdbcType=VARCHAR}, #{loginformation, jdbcType=VARCHAR}, #{creationtime, jdbcType=TIMESTAMP}, #{applymemberkey, jdbcType=VARCHAR}, #{informationsource, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.SystemlogEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="systemlog">
+        SELECT SEQ_SYSTEMLOG.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into SYSTEMLOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="systemlog != null" >systemlog,</if>
+                <if test="logtype != null" >logtype,</if>
+                <if test="templatename != null" >templatename,</if>
+                <if test="loginformation != null" >loginformation,</if>
+                <if test="creationtime != null" >creationtime,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="informationsource != null" >informationsource,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="systemlog != null" >#{systemlog, jdbcType=VARCHAR},</if>
+                <if test="logtype != null" >#{logtype, jdbcType=INTEGER},</if>
+                <if test="templatename != null" >#{templatename, jdbcType=VARCHAR},</if>
+                <if test="loginformation != null" >#{loginformation, jdbcType=VARCHAR},</if>
+                <if test="creationtime != null" >#{creationtime, jdbcType=TIMESTAMP},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="informationsource != null" >#{informationsource, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.SystemlogEO" >
+    update SYSTEMLOG
+       set  logtype = #{logtype},
+            templatename = #{templatename},
+            loginformation = #{loginformation},
+            creationtime = #{creationtime},
+            applymemberkey = #{applymemberkey},
+            informationsource = #{informationsource}
+     where  systemlog = #{systemlog}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.SystemlogEO" >
+    update SYSTEMLOG
+    <set >
+      <if test="logtype != null" >
+        logtype = #{logtype},
+      </if>
+      <if test="templatename != null" >
+        templatename = #{templatename},
+      </if>
+      <if test="loginformation != null" >
+        loginformation = #{loginformation},
+      </if>
+      <if test="creationtime != null" >
+        creationtime = #{creationtime},
+      </if>
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="informationsource != null" >
+        informationsource = #{informationsource},
+      </if>
+    </set>
+     where systemlog = #{systemlog}
+  </update>
+
+  <!-- 根据id查询 SYSTEMLOG -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from SYSTEMLOG
+     where systemlog = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SYSTEMLOG
+     where systemlog = #{value}
+
+  </delete>
+
+  <!-- SYSTEMLOG 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from SYSTEMLOG
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询SYSTEMLOG列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from SYSTEMLOG
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from SYSTEMLOG
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

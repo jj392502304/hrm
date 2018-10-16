@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.ApplicationtemplateEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.ApplicationtemplateEO" >
+    <id column="pkapplicationtemplate" property="pkapplicationtemplate" />
+    <result column="modulename" property="modulename" />
+    <result column="moduletype" property="moduletype" />
+    <result column="modulestate" property="modulestate" />
+    <result column="personnewskey" property="personnewskey" />
+    <result column="creationtime" property="creationtime" />
+    <result column="share" property="share" />
+    <result column="departmentprimarykey" property="departmentprimarykey" />
+  </resultMap>
+
+  <!-- APPLICATIONTEMPLATE table all fields -->
+  <sql id="Base_Column_List" >
+     pkapplicationtemplate, modulename, moduletype, modulestate, personnewskey, creationtime, share, departmentprimarykey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkapplicationtemplate != null" >
+        and pkapplicationtemplate ${pkapplicationtemplateOperator} #{pkapplicationtemplate}
+      </if>
+      <if test="modulename != null" >
+        and modulename ${modulenameOperator} #{modulename}
+      </if>
+      <if test="moduletype != null" >
+        and moduletype ${moduletypeOperator} #{moduletype}
+      </if>
+      <if test="modulestate != null" >
+        and modulestate ${modulestateOperator} #{modulestate}
+      </if>
+      <if test="personnewskey != null" >
+        and personnewskey ${personnewskeyOperator} #{personnewskey}
+      </if>
+      <if test="creationtime != null" >
+        and creationtime ${creationtimeOperator} #{creationtime}
+      </if>
+      <if test="creationtime1 != null" >
+        and creationtime &gt;= #{creationtime1}
+      </if>
+      <if test="creationtime2 != null" >
+        and creationtime &lt;= #{creationtime2}
+      </if>
+      <if test="share != null" >
+        and share ${shareOperator} #{share}
+      </if>
+      <if test="departmentprimarykey != null" >
+        and departmentprimarykey ${departmentprimarykeyOperator} #{departmentprimarykey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.ApplicationtemplateEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkapplicationtemplate">
+        SELECT SEQ_APPLICATIONTEMPLATE.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into APPLICATIONTEMPLATE(<include refid="Base_Column_List" />)
+    values (#{pkapplicationtemplate, jdbcType=VARCHAR}, #{modulename, jdbcType=VARCHAR}, #{moduletype, jdbcType=INTEGER}, #{modulestate, jdbcType=INTEGER}, #{personnewskey, jdbcType=VARCHAR}, #{creationtime, jdbcType=TIMESTAMP}, #{share, jdbcType=INTEGER}, #{departmentprimarykey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.ApplicationtemplateEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkapplicationtemplate">
+        SELECT SEQ_APPLICATIONTEMPLATE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into APPLICATIONTEMPLATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkapplicationtemplate != null" >pkapplicationtemplate,</if>
+                <if test="modulename != null" >modulename,</if>
+                <if test="moduletype != null" >moduletype,</if>
+                <if test="modulestate != null" >modulestate,</if>
+                <if test="personnewskey != null" >personnewskey,</if>
+                <if test="creationtime != null" >creationtime,</if>
+                <if test="share != null" >share,</if>
+                <if test="departmentprimarykey != null" >departmentprimarykey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkapplicationtemplate != null" >#{pkapplicationtemplate, jdbcType=VARCHAR},</if>
+                <if test="modulename != null" >#{modulename, jdbcType=VARCHAR},</if>
+                <if test="moduletype != null" >#{moduletype, jdbcType=INTEGER},</if>
+                <if test="modulestate != null" >#{modulestate, jdbcType=INTEGER},</if>
+                <if test="personnewskey != null" >#{personnewskey, jdbcType=VARCHAR},</if>
+                <if test="creationtime != null" >#{creationtime, jdbcType=TIMESTAMP},</if>
+                <if test="share != null" >#{share, jdbcType=INTEGER},</if>
+                <if test="departmentprimarykey != null" >#{departmentprimarykey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.ApplicationtemplateEO" >
+    update APPLICATIONTEMPLATE
+       set  modulename = #{modulename},
+            moduletype = #{moduletype},
+            modulestate = #{modulestate},
+            personnewskey = #{personnewskey},
+            creationtime = #{creationtime},
+            share = #{share},
+            departmentprimarykey = #{departmentprimarykey}
+     where  pkapplicationtemplate = #{pkapplicationtemplate}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.ApplicationtemplateEO" >
+    update APPLICATIONTEMPLATE
+    <set >
+      <if test="modulename != null" >
+        modulename = #{modulename},
+      </if>
+      <if test="moduletype != null" >
+        moduletype = #{moduletype},
+      </if>
+      <if test="modulestate != null" >
+        modulestate = #{modulestate},
+      </if>
+      <if test="personnewskey != null" >
+        personnewskey = #{personnewskey},
+      </if>
+      <if test="creationtime != null" >
+        creationtime = #{creationtime},
+      </if>
+      <if test="share != null" >
+        share = #{share},
+      </if>
+      <if test="departmentprimarykey != null" >
+        departmentprimarykey = #{departmentprimarykey},
+      </if>
+    </set>
+     where pkapplicationtemplate = #{pkapplicationtemplate}
+  </update>
+
+  <!-- 根据id查询 APPLICATIONTEMPLATE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from APPLICATIONTEMPLATE
+     where pkapplicationtemplate = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from APPLICATIONTEMPLATE
+     where pkapplicationtemplate = #{value}
+
+  </delete>
+
+  <!-- APPLICATIONTEMPLATE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from APPLICATIONTEMPLATE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询APPLICATIONTEMPLATE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from APPLICATIONTEMPLATE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from APPLICATIONTEMPLATE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

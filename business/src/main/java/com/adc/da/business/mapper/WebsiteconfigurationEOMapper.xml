@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.WebsiteconfigurationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.WebsiteconfigurationEO" >
+    <result column="savetime" property="savetime" />
+    <result column="effective" property="effective" />
+    <result column="limitquantity" property="limitquantity" />
+    <result column="explicitstate" property="explicitstate" />
+    <result column="processsequencenumber" property="processsequencenumber" />
+    <result column="content" property="content" />
+    <result column="imageurl" property="imageurl" />
+    <result column="title" property="title" />
+    <result column="configurationtype" property="configurationtype" />
+    <result column="pkwebsiteconfiguration" property="pkwebsiteconfiguration" />
+  </resultMap>
+
+
+
+
+    <!-- WEBSITECONFIGURATION table all fields -->
+  <sql id="Base_Column_List" >
+     savetime, effective, limitquantity, explicitstate, processsequencenumber, content, imageurl, title, configurationtype, pkwebsiteconfiguration
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="savetime != null" >
+        and savetime ${savetimeOperator} #{savetime}
+      </if>
+      <if test="savetime1 != null" >
+        and savetime &gt;= #{savetime1}
+      </if>
+      <if test="savetime2 != null" >
+        and savetime &lt;= #{savetime2}
+      </if>
+      <if test="effective != null" >
+        and effective ${effectiveOperator} #{effective}
+      </if>
+      <if test="limitquantity != null" >
+        and limitquantity ${limitquantityOperator} #{limitquantity}
+      </if>
+      <if test="explicitstate != null" >
+        and explicitstate ${explicitstateOperator} #{explicitstate}
+      </if>
+      <if test="processsequencenumber != null" >
+        and processsequencenumber ${processsequencenumberOperator} #{processsequencenumber}
+      </if>
+      <if test="content != null" >
+        and content ${contentOperator} #{content}
+      </if>
+      <if test="imageurl != null" >
+        and imageurl ${imageurlOperator} #{imageurl}
+      </if>
+      <if test="title != null" >
+        and title ${titleOperator} #{title}
+      </if>
+      <if test="configurationtype != null" >
+        and configurationtype ${configurationtypeOperator} #{configurationtype}
+      </if>
+      <if test="pkwebsiteconfiguration != null" >
+        and pkwebsiteconfiguration ${pkwebsiteconfigurationOperator} #{pkwebsiteconfiguration}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.WebsiteconfigurationEO" >
+    insert into WEBSITECONFIGURATION(<include refid="Base_Column_List" />)
+    values (#{savetime, jdbcType=TIMESTAMP}, #{effective, jdbcType=INTEGER}, #{limitquantity, jdbcType=INTEGER}, #{explicitstate, jdbcType=INTEGER}, #{processsequencenumber, jdbcType=INTEGER}, #{content, jdbcType=VARCHAR}, #{imageurl, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{configurationtype, jdbcType=INTEGER}, #{pkwebsiteconfiguration, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.WebsiteconfigurationEO" >
+        insert into WEBSITECONFIGURATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="savetime != null" >savetime,</if>
+                <if test="effective != null" >effective,</if>
+                <if test="limitquantity != null" >limitquantity,</if>
+                <if test="explicitstate != null" >explicitstate,</if>
+                <if test="processsequencenumber != null" >processsequencenumber,</if>
+                <if test="content != null" >content,</if>
+                <if test="imageurl != null" >imageurl,</if>
+                <if test="title != null" >title,</if>
+                <if test="configurationtype != null" >configurationtype,</if>
+                <if test="pkwebsiteconfiguration != null" >pkwebsiteconfiguration,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="savetime != null" >#{savetime, jdbcType=TIMESTAMP},</if>
+                <if test="effective != null" >#{effective, jdbcType=INTEGER},</if>
+                <if test="limitquantity != null" >#{limitquantity, jdbcType=INTEGER},</if>
+                <if test="explicitstate != null" >#{explicitstate, jdbcType=INTEGER},</if>
+                <if test="processsequencenumber != null" >#{processsequencenumber, jdbcType=INTEGER},</if>
+                <if test="content != null" >#{content, jdbcType=VARCHAR},</if>
+                <if test="imageurl != null" >#{imageurl, jdbcType=VARCHAR},</if>
+                <if test="title != null" >#{title, jdbcType=VARCHAR},</if>
+                <if test="configurationtype != null" >#{configurationtype, jdbcType=INTEGER},</if>
+                <if test="pkwebsiteconfiguration != null" >#{pkwebsiteconfiguration, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- WEBSITECONFIGURATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from WEBSITECONFIGURATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询WEBSITECONFIGURATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from WEBSITECONFIGURATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from WEBSITECONFIGURATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+
+
+
+
+    <select id="getPageItem" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT <include refid="Base_Column_List"/>
+        FROM WEBSITECONFIGURATION where ExplicitState=1 AND
+        ConfigurationType=#{configurationType}
+
+    </select>
+
+
+
+</mapper>

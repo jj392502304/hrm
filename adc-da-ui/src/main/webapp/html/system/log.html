@@ -1,0 +1,180 @@
+<style>
+    .tabtools a{ color: #fff;  }
+</style>
+<div class="">
+    <div class="portlet box light-grey">
+
+        <div class="portlet-title">
+<!--列表 头部信息-->
+            <div class="caption"><i class="icon-globe"></i>日志列表</div>
+
+            <div class="tools tabtools">
+                <a id="userAdd" href="javascript:;" class="icon-plus"></a>
+                <a id="userUpdate" href="javascript:;" class="icon-pencil"></a>
+                <a id="userDelete" href="javascript:;" class="icon-remove"></a>
+            </div>
+
+        </div>
+
+        <div class="portlet-body">
+<!--  表头的 自己画-->
+            <table class="table table-striped table-bordered table-hover systable" id="sample_2">
+                <thead>
+                <tr>
+                    <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_2 .checkboxes" /></th>
+                    <th>日志1</th>
+                    <th >日志2</th>
+                    <th >日志3</th>
+                    <th >日志4</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="usAdd" class="span12">
+<!-- form表单要自己设计内容。 -->
+    <form class="form-horizontal">
+        <input type="hidden" id="usAccountAdd" name="usAccount" >
+        <div class="control-group" style="margin-top: 5px;">
+            <label class="control-label col-sm-2" for="usnameAdd">日志1：</label>
+            <div class="controls col-sm-4">
+                <input type="text" id="usnameAdd" name="usname" placeholder="日志1">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="uswNoAdd">日志2：</label>
+            <div class="controls">
+                <input type="text" id="uswNoAdd" name="uswNo" placeholder="日志2">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="usTelAdd">电话：</label>
+            <div class="controls">
+                <input type="text" id="usTelAdd" name="usTel" placeholder="电话">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" >性别：</label>
+            <div class="controls">
+                <label class=" ">
+                    <input type="radio" name="ussex" id="maleAdd" value="male" checked >男
+                    <input type="radio" name="ussex" id="femaleAdd" value="female" style="margin-left: 10px;">女
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="usdepAdd">部门：</label>
+            <div class="controls">
+                <input type="text" id="usdepAdd" name="usdep" placeholder="部门">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="usRoleAdd">角色名称：</label>
+            <div class="controls">
+                <select id="usRoleAdd" name="usRole" class="form-control" data-placeholder="角色名称" multiple="multiple" >
+                    <option value="1">one</option>
+                    <option value="2">two</option>
+                    <option value="3">three</option>
+                    <option value="4">four</option>
+                    <option value="5">five</option>
+                    <option value="6">six</option>
+                    <option value="7">seven</option>
+                    <option value="8">eight</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Email">E-mail：</label>
+            <div class="controls">
+                <input type="text" id="Email" name="email" placeholder="Email">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="usDescAdd">备注：</label>
+            <div class="controls">
+                <input type="text" id="usDescAdd" name="usDesc" placeholder="请输入备注信息">
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../js/html/adc_table.js"></script>
+<script>
+    /* 默认隐藏弹出表单*/
+    $('#usAdd').hide();
+    /* 列表各列信息填写 */
+    var aoColumns = [
+//        {"data":'',"createfnRender":function (obj) {
+//            return '<span>'+ parseInt(obj.iDataRow +1) +'</span>'
+//        }},
+        {"sDefaultContent":"",fnRender:function (obj,val) {
+            return '<input type="checkbox" class="checkboxes" value="1" />';
+        }},
+
+        { "mData" :'account',"sDefaultContent":"Edit"},
+        { "mData" : "lid"},
+        { "mData" : "operTime" },
+        { "mData" : "usid" }
+    ];
+    var url =addr+"/api/logc/logs?pageNo=1&pageSize=20";
+    var aTargets  = [0,1,3];
+    var tableId = 'sample_2';
+
+    adc_table.init(tableId,url,aoColumns,aTargets);
+
+    $(".tools").on('click','a',function () {
+        var html= "",title ="",htmlstr="";
+//        console.log($(this)[0].id);
+        switch ($(this)[0].id){
+            case 'userAdd':
+                html='';
+                html = '<div><label>用户名：</label><input type="text" /></div>';
+                htmlstr = $("#usAdd");
+                title = "新增用户信息";
+                break;
+            case 'userUpdate':
+                title = "修改用户信息";
+//                htmlstr = $("#usMessage");
+                break;
+            case 'userDelete':
+                title = "删除用户信息";
+                break;
+            case 'userMessage':
+                title = "查看用户信息";
+                break;
+        }
+        layer.open({
+            type: 1,
+            title:title,
+            skin: 'ayui-layer-molv,demo-class', //加上边框
+            area: ['500px', '300px'], //宽高
+            content: htmlstr,
+            anim: 2, //弹出动画
+            shadeClose: true, //开启遮罩关闭
+            btn: ['提交', '重置', '关闭'],
+            btnAlign:'c',
+            btn1: function(index, layero){
+                alert(index,layero);
+//                return false;
+            } ,
+            btn2: function(index, layero){
+                alert(index);
+                //return false 开启该代码可禁止点击该按钮关闭
+            } ,
+            btn3: function(index, layero){
+                alert(index);
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+
+        });
+    });
+
+    $(".pagination").on('click','li',function (e) {
+        console.log($(this)[0].className.indexOf('prev')>=0);
+    });
+    //loadData(JSON.stringify(data.aaData[0]));
+    $(".checkboxes").change(function () {
+       console.log(arguments);
+    });
+</script>

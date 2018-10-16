@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.AdditionalinformationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.AdditionalinformationEO" >
+    <id column="pkadditionalinformation" property="pkadditionalinformation" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="hobby" property="hobby" />
+    <result column="religiousbelief" property="religiousbelief" />
+    <result column="gainhonor" property="gainhonor" />
+    <result column="academicmonographs" property="academicmonographs" />
+    <result column="patentresults" property="patentresults" />
+    <result column="specialty" property="specialty" />
+    <result column="socialactivities" property="socialactivities" />
+  </resultMap>
+
+  <!-- ADDITIONALINFORMATION table all fields -->
+  <sql id="Base_Column_List" >
+     pkadditionalinformation, applymemberkey, hobby, religiousbelief, gainhonor, academicmonographs, patentresults, specialty, socialactivities
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkadditionalinformation != null" >
+        and pkadditionalinformation ${pkadditionalinformationOperator} #{pkadditionalinformation}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="hobby != null" >
+        and hobby ${hobbyOperator} #{hobby}
+      </if>
+      <if test="religiousbelief != null" >
+        and religiousbelief ${religiousbeliefOperator} #{religiousbelief}
+      </if>
+      <if test="gainhonor != null" >
+        and gainhonor ${gainhonorOperator} #{gainhonor}
+      </if>
+      <if test="academicmonographs != null" >
+        and academicmonographs ${academicmonographsOperator} #{academicmonographs}
+      </if>
+      <if test="patentresults != null" >
+        and patentresults ${patentresultsOperator} #{patentresults}
+      </if>
+      <if test="specialty != null" >
+        and specialty ${specialtyOperator} #{specialty}
+      </if>
+      <if test="socialactivities != null" >
+        and socialactivities ${socialactivitiesOperator} #{socialactivities}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.AdditionalinformationEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkadditionalinformation">
+        SELECT SEQ_ADDITIONALINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into ADDITIONALINFORMATION(<include refid="Base_Column_List" />)
+    values (#{pkadditionalinformation, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{hobby, jdbcType=VARCHAR}, #{religiousbelief, jdbcType=VARCHAR}, #{gainhonor, jdbcType=VARCHAR}, #{academicmonographs, jdbcType=VARCHAR}, #{patentresults, jdbcType=VARCHAR}, #{specialty, jdbcType=VARCHAR}, #{socialactivities, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.AdditionalinformationEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkadditionalinformation">
+        SELECT SEQ_ADDITIONALINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ADDITIONALINFORMATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkadditionalinformation != null" >pkadditionalinformation,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="hobby != null" >hobby,</if>
+                <if test="religiousbelief != null" >religiousbelief,</if>
+                <if test="gainhonor != null" >gainhonor,</if>
+                <if test="academicmonographs != null" >academicmonographs,</if>
+                <if test="patentresults != null" >patentresults,</if>
+                <if test="specialty != null" >specialty,</if>
+                <if test="socialactivities != null" >socialactivities,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkadditionalinformation != null" >#{pkadditionalinformation, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="hobby != null" >#{hobby, jdbcType=VARCHAR},</if>
+                <if test="religiousbelief != null" >#{religiousbelief, jdbcType=VARCHAR},</if>
+                <if test="gainhonor != null" >#{gainhonor, jdbcType=VARCHAR},</if>
+                <if test="academicmonographs != null" >#{academicmonographs, jdbcType=VARCHAR},</if>
+                <if test="patentresults != null" >#{patentresults, jdbcType=VARCHAR},</if>
+                <if test="specialty != null" >#{specialty, jdbcType=VARCHAR},</if>
+                <if test="socialactivities != null" >#{socialactivities, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.AdditionalinformationEO" >
+    update ADDITIONALINFORMATION
+       set  applymemberkey = #{applymemberkey},
+            hobby = #{hobby},
+            religiousbelief = #{religiousbelief},
+            gainhonor = #{gainhonor},
+            academicmonographs = #{academicmonographs},
+            patentresults = #{patentresults},
+            specialty = #{specialty},
+            socialactivities = #{socialactivities}
+     where  pkadditionalinformation = #{pkadditionalinformation}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.AdditionalinformationEO" >
+    update ADDITIONALINFORMATION
+    <set >
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="hobby != null" >
+        hobby = #{hobby},
+      </if>
+      <if test="religiousbelief != null" >
+        religiousbelief = #{religiousbelief},
+      </if>
+      <if test="gainhonor != null" >
+        gainhonor = #{gainhonor},
+      </if>
+      <if test="academicmonographs != null" >
+        academicmonographs = #{academicmonographs},
+      </if>
+      <if test="patentresults != null" >
+        patentresults = #{patentresults},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty},
+      </if>
+      <if test="socialactivities != null" >
+        socialactivities = #{socialactivities},
+      </if>
+    </set>
+     where pkadditionalinformation = #{pkadditionalinformation}
+  </update>
+
+  <!-- 根据id查询 ADDITIONALINFORMATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ADDITIONALINFORMATION
+     where pkadditionalinformation = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ADDITIONALINFORMATION
+     where pkadditionalinformation = #{value}
+
+  </delete>
+
+  <!-- ADDITIONALINFORMATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ADDITIONALINFORMATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ADDITIONALINFORMATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ADDITIONALINFORMATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ADDITIONALINFORMATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

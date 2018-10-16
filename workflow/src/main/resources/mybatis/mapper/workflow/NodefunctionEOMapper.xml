@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.NodefunctionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.NodefunctionEO" >
+    <id column="nodefunctionkey" property="nodefunctionkey" />
+    <result column="nodekey" property="nodekey" />
+    <result column="function" property="function" />
+  </resultMap>
+
+  <!-- NODEFUNCTION table all fields -->
+  <sql id="Base_Column_List" >
+     nodefunctionkey, nodekey, function
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="nodefunctionkey != null" >
+        and nodefunctionkey ${nodefunctionkeyOperator} #{nodefunctionkey}
+      </if>
+      <if test="nodekey != null" >
+        and nodekey ${nodekeyOperator} #{nodekey}
+      </if>
+      <if test="function != null" >
+        and function ${functionOperator} #{function}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.NodefunctionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="nodefunctionkey">
+        SELECT SEQ_NODEFUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into NODEFUNCTION(<include refid="Base_Column_List" />)
+    values (#{nodefunctionkey, jdbcType=VARCHAR}, #{nodekey, jdbcType=VARCHAR}, #{function, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.NodefunctionEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="nodefunctionkey">
+        SELECT SEQ_NODEFUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into NODEFUNCTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="nodefunctionkey != null" >nodefunctionkey,</if>
+                <if test="nodekey != null" >nodekey,</if>
+                <if test="function != null" >function,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="nodefunctionkey != null" >#{nodefunctionkey, jdbcType=VARCHAR},</if>
+                <if test="nodekey != null" >#{nodekey, jdbcType=VARCHAR},</if>
+                <if test="function != null" >#{function, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.NodefunctionEO" >
+    update NODEFUNCTION
+       set  nodekey = #{nodekey},
+            function = #{function}
+     where  nodefunctionkey = #{nodefunctionkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.NodefunctionEO" >
+    update NODEFUNCTION
+    <set >
+      <if test="nodekey != null" >
+        nodekey = #{nodekey},
+      </if>
+      <if test="function != null" >
+        function = #{function},
+      </if>
+    </set>
+     where nodefunctionkey = #{nodefunctionkey}
+  </update>
+
+  <!-- 根据id查询 NODEFUNCTION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from NODEFUNCTION
+     where nodefunctionkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NODEFUNCTION
+     where nodefunctionkey = #{value}
+
+  </delete>
+
+  <!-- NODEFUNCTION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from NODEFUNCTION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询NODEFUNCTION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from NODEFUNCTION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from NODEFUNCTION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

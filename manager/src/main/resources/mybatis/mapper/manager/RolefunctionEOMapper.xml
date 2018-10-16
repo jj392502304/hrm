@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.RolefunctionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.RolefunctionEO" >
+    <id column="rolefunctionkey" property="rolefunctionkey" />
+    <result column="pageurl" property="pageurl" />
+    <result column="functionkey" property="functionkey" />
+    <result column="pagename" property="pagename" />
+    <result column="modulename" property="modulename" />
+  </resultMap>
+
+  <!-- ROLEFUNCTION table all fields -->
+  <sql id="Base_Column_List" >
+     pageurl, functionkey, pagename, modulename, rolefunctionkey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pageurl != null" >
+        and pageurl ${pageurlOperator} #{pageurl}
+      </if>
+      <if test="functionkey != null" >
+        and functionkey ${functionkeyOperator} #{functionkey}
+      </if>
+      <if test="pagename != null" >
+        and pagename ${pagenameOperator} #{pagename}
+      </if>
+      <if test="modulename != null" >
+        and modulename ${modulenameOperator} #{modulename}
+      </if>
+      <if test="rolefunctionkey != null" >
+        and rolefunctionkey ${rolefunctionkeyOperator} #{rolefunctionkey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.RolefunctionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="rolefunctionkey">
+        SELECT SEQ_ROLEFUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into ROLEFUNCTION(<include refid="Base_Column_List" />)
+    values (#{pageurl, jdbcType=VARCHAR}, #{functionkey, jdbcType=VARCHAR}, #{pagename, jdbcType=VARCHAR}, #{modulename, jdbcType=VARCHAR}, #{rolefunctionkey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.RolefunctionEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="rolefunctionkey">
+        SELECT SEQ_ROLEFUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ROLEFUNCTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pageurl != null" >pageurl,</if>
+                <if test="functionkey != null" >functionkey,</if>
+                <if test="pagename != null" >pagename,</if>
+                <if test="modulename != null" >modulename,</if>
+                <if test="rolefunctionkey != null" >rolefunctionkey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pageurl != null" >#{pageurl, jdbcType=VARCHAR},</if>
+                <if test="functionkey != null" >#{functionkey, jdbcType=VARCHAR},</if>
+                <if test="pagename != null" >#{pagename, jdbcType=VARCHAR},</if>
+                <if test="modulename != null" >#{modulename, jdbcType=VARCHAR},</if>
+                <if test="rolefunctionkey != null" >#{rolefunctionkey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.RolefunctionEO" >
+    update ROLEFUNCTION
+       set  pageurl = #{pageurl},
+            functionkey = #{functionkey},
+            pagename = #{pagename},
+            modulename = #{modulename}
+     where  rolefunctionkey = #{rolefunctionkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.RolefunctionEO" >
+    update ROLEFUNCTION
+    <set >
+      <if test="pageurl != null" >
+        pageurl = #{pageurl},
+      </if>
+      <if test="functionkey != null" >
+        functionkey = #{functionkey},
+      </if>
+      <if test="pagename != null" >
+        pagename = #{pagename},
+      </if>
+      <if test="modulename != null" >
+        modulename = #{modulename},
+      </if>
+    </set>
+     where rolefunctionkey = #{rolefunctionkey}
+  </update>
+
+  <!-- 根据id查询 ROLEFUNCTION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ROLEFUNCTION
+     where rolefunctionkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ROLEFUNCTION
+     where rolefunctionkey = #{value}
+
+  </delete>
+
+  <!-- ROLEFUNCTION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ROLEFUNCTION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ROLEFUNCTION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ROLEFUNCTION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ROLEFUNCTION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

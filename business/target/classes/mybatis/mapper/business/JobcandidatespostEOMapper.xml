@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.JobcandidatespostEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.JobcandidatespostEO" >
+    <result column="pkschoolkey" property="pkschoolkey" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="titleofdutyatschool" property="titleofdutyatschool" />
+    <result column="starttime" property="starttime" />
+    <result column="jobdescriptioninschool" property="jobdescriptioninschool" />
+  </resultMap>
+
+  <!-- JOBCANDIDATESPOST table all fields -->
+  <sql id="Base_Column_List" >
+     pkschoolkey, applymemberkey, titleofdutyatschool, starttime, jobdescriptioninschool
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkschoolkey != null" >
+        and pkschoolkey ${pkschoolkeyOperator} #{pkschoolkey}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="titleofdutyatschool != null" >
+        and titleofdutyatschool ${titleofdutyatschoolOperator} #{titleofdutyatschool}
+      </if>
+      <if test="starttime != null" >
+        and starttime ${starttimeOperator} #{starttime}
+      </if>
+      <if test="starttime1 != null" >
+        and starttime &gt;= #{starttime1}
+      </if>
+      <if test="starttime2 != null" >
+        and starttime &lt;= #{starttime2}
+      </if>
+      <if test="jobdescriptioninschool != null" >
+        and jobdescriptioninschool ${jobdescriptioninschoolOperator} #{jobdescriptioninschool}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.JobcandidatespostEO" >
+    insert into JOBCANDIDATESPOST(<include refid="Base_Column_List" />)
+    values (#{pkschoolkey, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{titleofdutyatschool, jdbcType=VARCHAR}, #{starttime, jdbcType=TIMESTAMP}, #{jobdescriptioninschool, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.JobcandidatespostEO" >
+        insert into JOBCANDIDATESPOST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkschoolkey != null" >pkschoolkey,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="titleofdutyatschool != null" >titleofdutyatschool,</if>
+                <if test="starttime != null" >starttime,</if>
+                <if test="jobdescriptioninschool != null" >jobdescriptioninschool,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkschoolkey != null" >#{pkschoolkey, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="titleofdutyatschool != null" >#{titleofdutyatschool, jdbcType=VARCHAR},</if>
+                <if test="starttime != null" >#{starttime, jdbcType=TIMESTAMP},</if>
+                <if test="jobdescriptioninschool != null" >#{jobdescriptioninschool, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- JOBCANDIDATESPOST 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from JOBCANDIDATESPOST
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询JOBCANDIDATESPOST列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from JOBCANDIDATESPOST
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from JOBCANDIDATESPOST
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.UserroleEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.UserroleEO" >
+    <id column="roleprimarykey" property="roleprimarykey" />
+    <result column="describe" property="describe" />
+    <result column="enadletime" property="enadletime" />
+    <result column="creationtime" property="creationtime" />
+    <result column="isenabled" property="isenabled" />
+    <result column="rolename" property="rolename" />
+  </resultMap>
+    <resultMap id="PersonDepartmentPositionResultMap" type="com.adc.da.manager.entity.PersondepartmentpositionEO" >
+        <id column="persondepartmentpositionid" property="persondepartmentpositionid" />
+        <result column="departmentjobkey" property="departmentjobkey" />
+        <result column="roleprimarykey" property="roleprimarykey" />
+        <result column="personnewskey" property="personnewskey" />
+    </resultMap>
+  <!-- USERROLE table all fields -->
+  <sql id="Base_Column_List" >
+     describe, enadletime, creationtime, isenabled, rolename, roleprimarykey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="describe != null" >
+        and describe ${describeOperator} #{describe}
+      </if>
+      <if test="enadletime != null" >
+        and enadletime ${enadletimeOperator} #{enadletime}
+      </if>
+      <if test="enadletime1 != null" >
+        and enadletime &gt;= #{enadletime1}
+      </if>
+      <if test="enadletime2 != null" >
+        and enadletime &lt;= #{enadletime2}
+      </if>
+      <if test="creationtime != null" >
+        and creationtime ${creationtimeOperator} #{creationtime}
+      </if>
+      <if test="creationtime1 != null" >
+        and creationtime &gt;= #{creationtime1}
+      </if>
+      <if test="creationtime2 != null" >
+        and creationtime &lt;= #{creationtime2}
+      </if>
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+      <if test="rolename != null" >
+        and rolename ${rolenameOperator} #{rolename}
+      </if>
+      <if test="roleprimarykey != null" >
+        and roleprimarykey ${roleprimarykeyOperator} #{roleprimarykey}
+      </if>
+    </trim>
+  </sql>
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.UserroleEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="roleprimarykey">
+        SELECT SEQ_USERROLE.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into USERROLE(<include refid="Base_Column_List" />)
+    values (#{describe, jdbcType=VARCHAR}, #{enadletime, jdbcType=TIMESTAMP}, #{creationtime, jdbcType=TIMESTAMP}, #{isenabled, jdbcType=INTEGER}, #{rolename, jdbcType=VARCHAR}, #{roleprimarykey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.UserroleEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="roleprimarykey">
+        SELECT SEQ_USERROLE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into USERROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="describe != null" >describe,</if>
+                <if test="enadletime != null" >enadletime,</if>
+                <if test="creationtime != null" >creationtime,</if>
+                <if test="isenabled != null" >isenabled,</if>
+                <if test="rolename != null" >rolename,</if>
+                <if test="roleprimarykey != null" >roleprimarykey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="describe != null" >#{describe, jdbcType=VARCHAR},</if>
+                <if test="enadletime != null" >#{enadletime, jdbcType=TIMESTAMP},</if>
+                <if test="creationtime != null" >#{creationtime, jdbcType=TIMESTAMP},</if>
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+                <if test="rolename != null" >#{rolename, jdbcType=VARCHAR},</if>
+                <if test="roleprimarykey != null" >#{roleprimarykey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.UserroleEO" >
+    update USERROLE
+       set  describe = #{describe},
+            enadletime = #{enadletime},
+            creationtime = #{creationtime},
+            isenabled = #{isenabled},
+            rolename = #{rolename}
+     where  roleprimarykey = #{roleprimarykey}
+  </update>
+    <!-- 根据pk，修改记录 批量-->
+    <update id="updataIsenabled" parameterType="java.util.List" >
+        update USERROLE
+        set
+        isenabled = 0
+        where  roleprimarykey IN
+        <foreach collection="list" separator="," index="index" item="item" open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.UserroleEO" >
+    update USERROLE
+    <set >
+      <if test="describe != null" >
+        describe = #{describe},
+      </if>
+      <if test="enadletime != null" >
+        enadletime = #{enadletime},
+      </if>
+      <if test="creationtime != null" >
+        creationtime = #{creationtime},
+      </if>
+      <if test="isenabled != null" >
+        isenabled = #{isenabled},
+      </if>
+      <if test="rolename != null" >
+        rolename = #{rolename},
+      </if>
+    </set>
+     where roleprimarykey = #{roleprimarykey}
+  </update>
+  <!-- 根据id查询 USERROLE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from USERROLE
+     where roleprimarykey = #{value}
+
+  </select>
+ <!-- 查询角色是否存在-->
+    <select id="selectRoleByName" resultMap="BaseResultMap" parameterType="com.adc.da.manager.entity.UserroleEO">
+        SELECT * FROM Userrole WHERE ROLENAME=#{rolename}
+        <if test="roleprimarykey != null">
+          AND roleprimarykey NOT IN (#{roleprimarykey})
+        </if>
+    </select>
+    <!-- 根据id查询角色是否有业务-->
+    <select id="getIsEmptyByRoleKey" resultMap="PersonDepartmentPositionResultMap" parameterType="java.util.List">
+        SELECT RolePrimaryKey FROM PersonDepartmentPosition WHERE RolePrimaryKey IN
+         <foreach collection="list" separator="," index="index" item="item" close=")" open="(">
+             #{item}
+         </foreach>
+         GROUP BY RolePrimaryKey
+    </select>
+
+    <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from USERROLE
+     where roleprimarykey = #{value}
+
+  </delete>
+    <delete id="deleteByPrimaryKeyList" parameterType="java.util.List">
+        delete from USERROLE
+     where roleprimarykey IN
+     <foreach collection="list" index="index" separator="," close=")" open="(" item="item">
+         #{item}
+     </foreach>
+    </delete>
+  <!-- USERROLE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from USERROLE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询USERROLE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from USERROLE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from USERROLE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

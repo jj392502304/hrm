@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.NodetrackingEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.NodetrackingEO" >
+    <id column="nodetrackingprimarykey" property="nodetrackingprimarykey" />
+    <result column="nodeprimarykey" property="nodeprimarykey" />
+    <result column="approvalprimarykey" property="approvalprimarykey" />
+    <result column="feedbackcontentkey" property="feedbackcontentkey" />
+    <result column="stateofapproval" property="stateofapproval" />
+    <result column="approvalnumber" property="approvalnumber" />
+    <result column="approvalnote" property="approvalnote" />
+    <result column="nextapprovalnode" property="nextapprovalnode" />
+  </resultMap>
+
+  <!-- NODETRACKING table all fields -->
+  <sql id="Base_Column_List" >
+     nextapprovalnode, approvalnote, approvalnumber, stateofapproval, feedbackcontentkey, approvalprimarykey, nodeprimarykey, nodetrackingprimarykey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="nodetrackingprimarykey != null" >
+        and nodetrackingprimarykey ${nodetrackingprimarykeyOperator} #{nodetrackingprimarykey}
+      </if>
+      <if test="nodeprimarykey != null" >
+        and nodeprimarykey ${nodeprimarykeyOperator} #{nodeprimarykey}
+      </if>
+      <if test="approvalprimarykey != null" >
+        and approvalprimarykey ${approvalprimarykeyOperator} #{approvalprimarykey}
+      </if>
+      <if test="feedbackcontentkey != null" >
+        and feedbackcontentkey ${feedbackcontentkeyOperator} #{feedbackcontentkey}
+      </if>
+      <if test="stateofapproval != null" >
+        and stateofapproval ${stateofapprovalOperator} #{stateofapproval}
+      </if>
+      <if test="approvalnumber != null" >
+        and approvalnumber ${approvalnumberOperator} #{approvalnumber}
+      </if>
+      <if test="approvalnote != null" >
+        and approvalnote ${approvalnoteOperator} #{approvalnote}
+      </if>
+      <if test="nextapprovalnode != null" >
+        and nextapprovalnode ${nextapprovalnodeOperator} #{nextapprovalnode}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.NodetrackingEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="nodetrackingprimarykey">
+        SELECT SEQ_NODETRACKING.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into NODETRACKING(<include refid="Base_Column_List" />)
+    values (#{nodetrackingprimarykey, jdbcType=VARCHAR}, #{nodeprimarykey, jdbcType=VARCHAR}, #{approvalprimarykey, jdbcType=VARCHAR}, #{feedbackcontentkey, jdbcType=VARCHAR}, #{stateofapproval, jdbcType=INTEGER}, #{approvalnumber, jdbcType=INTEGER}, #{approvalnote, jdbcType=VARCHAR}, #{nextapprovalnode, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.NodetrackingEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="nodetrackingprimarykey">
+        SELECT SEQ_NODETRACKING.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into NODETRACKING
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="nodetrackingprimarykey != null" >nodetrackingprimarykey,</if>
+                <if test="nodeprimarykey != null" >nodeprimarykey,</if>
+                <if test="approvalprimarykey != null" >approvalprimarykey,</if>
+                <if test="feedbackcontentkey != null" >feedbackcontentkey,</if>
+                <if test="stateofapproval != null" >stateofapproval,</if>
+                <if test="approvalnumber != null" >approvalnumber,</if>
+                <if test="approvalnote != null" >approvalnote,</if>
+                <if test="nextapprovalnode != null" >nextapprovalnode,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="nodetrackingprimarykey != null" >#{nodetrackingprimarykey, jdbcType=VARCHAR},</if>
+                <if test="nodeprimarykey != null" >#{nodeprimarykey, jdbcType=VARCHAR},</if>
+                <if test="approvalprimarykey != null" >#{approvalprimarykey, jdbcType=VARCHAR},</if>
+                <if test="feedbackcontentkey != null" >#{feedbackcontentkey, jdbcType=VARCHAR},</if>
+                <if test="stateofapproval != null" >#{stateofapproval, jdbcType=INTEGER},</if>
+                <if test="approvalnumber != null" >#{approvalnumber, jdbcType=INTEGER},</if>
+                <if test="approvalnote != null" >#{approvalnote, jdbcType=VARCHAR},</if>
+                <if test="nextapprovalnode != null" >#{nextapprovalnode, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.NodetrackingEO" >
+    update NODETRACKING
+       set  nodeprimarykey = #{nodeprimarykey},
+            approvalprimarykey = #{approvalprimarykey},
+            feedbackcontentkey = #{feedbackcontentkey},
+            stateofapproval = #{stateofapproval},
+            approvalnumber = #{approvalnumber},
+            approvalnote = #{approvalnote},
+            nextapprovalnode = #{nextapprovalnode}
+     where  nodetrackingprimarykey = #{nodetrackingprimarykey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.NodetrackingEO" >
+    update NODETRACKING
+    <set >
+      <if test="nodeprimarykey != null" >
+        nodeprimarykey = #{nodeprimarykey},
+      </if>
+      <if test="approvalprimarykey != null" >
+        approvalprimarykey = #{approvalprimarykey},
+      </if>
+      <if test="feedbackcontentkey != null" >
+        feedbackcontentkey = #{feedbackcontentkey},
+      </if>
+      <if test="stateofapproval != null" >
+        stateofapproval = #{stateofapproval},
+      </if>
+      <if test="approvalnumber != null" >
+        approvalnumber = #{approvalnumber},
+      </if>
+      <if test="approvalnote != null" >
+        approvalnote = #{approvalnote},
+      </if>
+      <if test="nextapprovalnode != null" >
+        nextapprovalnode = #{nextapprovalnode},
+      </if>
+    </set>
+     where nodetrackingprimarykey = #{nodetrackingprimarykey}
+  </update>
+
+  <!-- 根据id查询 NODETRACKING -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from NODETRACKING
+     where nodetrackingprimarykey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NODETRACKING
+     where nodetrackingprimarykey = #{value}
+
+  </delete>
+
+  <!-- NODETRACKING 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from NODETRACKING
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询NODETRACKING列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from NODETRACKING
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from NODETRACKING
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

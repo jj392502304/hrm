@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.NodeattributeEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.NodeattributeEO" >
+    <id column="attributekey" property="attributekey" />
+    <result column="attributenumber" property="attributenumber" />
+    <result column="attributename" property="attributename" />
+    <result column="attributedescription" property="attributedescription" />
+    <result column="departmentprimarykey" property="departmentprimarykey" />
+  </resultMap>
+
+  <!-- NODEATTRIBUTE table all fields -->
+  <sql id="Base_Column_List" >
+     attributekey, attributenumber, attributename, attributedescription, departmentprimarykey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="attributekey != null" >
+        and attributekey ${attributekeyOperator} #{attributekey}
+      </if>
+      <if test="attributenumber != null" >
+        and attributenumber ${attributenumberOperator} #{attributenumber}
+      </if>
+      <if test="attributename != null" >
+        and attributename ${attributenameOperator} #{attributename}
+      </if>
+      <if test="attributedescription != null" >
+        and attributedescription ${attributedescriptionOperator} #{attributedescription}
+      </if>
+      <if test="departmentprimarykey != null" >
+        and departmentprimarykey ${departmentprimarykeyOperator} #{departmentprimarykey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.NodeattributeEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="attributekey">
+        SELECT SEQ_NODEATTRIBUTE.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into NODEATTRIBUTE(<include refid="Base_Column_List" />)
+    values (#{attributekey, jdbcType=VARCHAR}, #{attributenumber, jdbcType=VARCHAR}, #{attributename, jdbcType=VARCHAR}, #{attributedescription, jdbcType=VARCHAR}, #{departmentprimarykey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.NodeattributeEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="attributekey">
+        SELECT SEQ_NODEATTRIBUTE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into NODEATTRIBUTE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="attributekey != null" >attributekey,</if>
+                <if test="attributenumber != null" >attributenumber,</if>
+                <if test="attributename != null" >attributename,</if>
+                <if test="attributedescription != null" >attributedescription,</if>
+                <if test="departmentprimarykey != null" >departmentprimarykey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="attributekey != null" >#{attributekey, jdbcType=VARCHAR},</if>
+                <if test="attributenumber != null" >#{attributenumber, jdbcType=VARCHAR},</if>
+                <if test="attributename != null" >#{attributename, jdbcType=VARCHAR},</if>
+                <if test="attributedescription != null" >#{attributedescription, jdbcType=VARCHAR},</if>
+                <if test="departmentprimarykey != null" >#{departmentprimarykey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.NodeattributeEO" >
+    update NODEATTRIBUTE
+       set  attributenumber = #{attributenumber},
+            attributename = #{attributename},
+            attributedescription = #{attributedescription},
+            departmentprimarykey = #{departmentprimarykey}
+     where  attributekey = #{attributekey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.NodeattributeEO" >
+    update NODEATTRIBUTE
+    <set >
+      <if test="attributenumber != null" >
+        attributenumber = #{attributenumber},
+      </if>
+      <if test="attributename != null" >
+        attributename = #{attributename},
+      </if>
+      <if test="attributedescription != null" >
+        attributedescription = #{attributedescription},
+      </if>
+      <if test="departmentprimarykey != null" >
+        departmentprimarykey = #{departmentprimarykey},
+      </if>
+    </set>
+     where attributekey = #{attributekey}
+  </update>
+
+  <!-- 根据id查询 NODEATTRIBUTE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from NODEATTRIBUTE
+     where attributekey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NODEATTRIBUTE
+     where attributekey = #{value}
+
+  </delete>
+
+  <!-- NODEATTRIBUTE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from NODEATTRIBUTE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询NODEATTRIBUTE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from NODEATTRIBUTE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from NODEATTRIBUTE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.FunctionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.FunctionEO" >
+    <id column="functionkey" property="functionkey" />
+    <result column="functioninstructions" property="functioninstructions" />
+    <result column="functionname" property="functionname" />
+  </resultMap>
+
+  <!-- FUNCTION table all fields -->
+  <sql id="Base_Column_List" >
+     functioninstructions, functionname, functionkey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="functioninstructions != null" >
+        and functioninstructions ${functioninstructionsOperator} #{functioninstructions}
+      </if>
+      <if test="functionname != null" >
+        and functionname ${functionnameOperator} #{functionname}
+      </if>
+      <if test="functionkey != null" >
+        and functionkey ${functionkeyOperator} #{functionkey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.FunctionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="functionkey">
+        SELECT SEQ_FUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into FUNCTION(<include refid="Base_Column_List" />)
+    values (#{functioninstructions, jdbcType=VARCHAR}, #{functionname, jdbcType=VARCHAR}, #{functionkey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.FunctionEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="functionkey">
+        SELECT SEQ_FUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into FUNCTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="functioninstructions != null" >functioninstructions,</if>
+                <if test="functionname != null" >functionname,</if>
+                <if test="functionkey != null" >functionkey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="functioninstructions != null" >#{functioninstructions, jdbcType=VARCHAR},</if>
+                <if test="functionname != null" >#{functionname, jdbcType=VARCHAR},</if>
+                <if test="functionkey != null" >#{functionkey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.FunctionEO" >
+    update FUNCTION
+       set  functioninstructions = #{functioninstructions},
+            functionname = #{functionname}
+     where  functionkey = #{functionkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.FunctionEO" >
+    update FUNCTION
+    <set >
+      <if test="functioninstructions != null" >
+        functioninstructions = #{functioninstructions},
+      </if>
+      <if test="functionname != null" >
+        functionname = #{functionname},
+      </if>
+    </set>
+     where functionkey = #{functionkey}
+  </update>
+
+  <!-- 根据id查询 FUNCTION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from FUNCTION
+     where functionkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from FUNCTION
+     where functionkey = #{value}
+
+  </delete>
+
+  <!-- FUNCTION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from FUNCTION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询FUNCTION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from FUNCTION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from FUNCTION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

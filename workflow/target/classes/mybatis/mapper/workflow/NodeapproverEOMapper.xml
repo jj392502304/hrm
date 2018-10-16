@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.NodeapproverEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.NodeapproverEO" >
+    <result column="nodeapproverkey" property="nodeapproverkey" />
+    <result column="approverkey" property="approverkey" />
+    <result column="nodekey" property="nodekey" />
+  </resultMap>
+
+  <!-- NODEAPPROVER table all fields -->
+  <sql id="Base_Column_List" >
+     nodeapproverkey, approverkey, nodekey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="nodeapproverkey != null" >
+        and nodeapproverkey ${nodeapproverkeyOperator} #{nodeapproverkey}
+      </if>
+      <if test="approverkey != null" >
+        and approverkey ${approverkeyOperator} #{approverkey}
+      </if>
+      <if test="nodekey != null" >
+        and nodekey ${nodekeyOperator} #{nodekey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.NodeapproverEO" >
+    insert into NODEAPPROVER(<include refid="Base_Column_List" />)
+    values (#{nodeapproverkey, jdbcType=VARCHAR}, #{approverkey, jdbcType=VARCHAR}, #{nodekey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.NodeapproverEO" >
+        insert into NODEAPPROVER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="nodeapproverkey != null" >nodeapproverkey,</if>
+                <if test="approverkey != null" >approverkey,</if>
+                <if test="nodekey != null" >nodekey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="nodeapproverkey != null" >#{nodeapproverkey, jdbcType=VARCHAR},</if>
+                <if test="approverkey != null" >#{approverkey, jdbcType=VARCHAR},</if>
+                <if test="nodekey != null" >#{nodekey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- NODEAPPROVER 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from NODEAPPROVER
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询NODEAPPROVER列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from NODEAPPROVER
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from NODEAPPROVER
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

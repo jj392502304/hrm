@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.MailmoduletemplateEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.MailmoduletemplateEO" >
+    <result column="pkmailmoduletemplate" property="pkmailmoduletemplate" />
+    <result column="servicemodulename" property="servicemodulename" />
+    <result column="dynamictype" property="dynamictype" />
+    <result column="personnewskey" property="personnewskey" />
+    <result column="isenabled" property="isenabled" />
+    <result column="mailcreatetime" property="mailcreatetime" />
+    <result column="mailmoduletitle" property="mailmoduletitle" />
+    <result column="mailmodulecontent" property="mailmodulecontent" />
+  </resultMap>
+
+  <!-- MAILMODULETEMPLATE table all fields -->
+  <sql id="Base_Column_List" >
+     pkmailmoduletemplate, servicemodulename, dynamictype, personnewskey, isenabled, mailcreatetime, mailmoduletitle, mailmodulecontent
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkmailmoduletemplate != null" >
+        and pkmailmoduletemplate ${pkmailmoduletemplateOperator} #{pkmailmoduletemplate}
+      </if>
+      <if test="servicemodulename != null" >
+        and servicemodulename ${servicemodulenameOperator} #{servicemodulename}
+      </if>
+      <if test="dynamictype != null" >
+        and dynamictype ${dynamictypeOperator} #{dynamictype}
+      </if>
+      <if test="personnewskey != null" >
+        and personnewskey ${personnewskeyOperator} #{personnewskey}
+      </if>
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+      <if test="mailcreatetime != null" >
+        and mailcreatetime ${mailcreatetimeOperator} #{mailcreatetime}
+      </if>
+      <if test="mailcreatetime1 != null" >
+        and mailcreatetime &gt;= #{mailcreatetime1}
+      </if>
+      <if test="mailcreatetime2 != null" >
+        and mailcreatetime &lt;= #{mailcreatetime2}
+      </if>
+      <if test="mailmoduletitle != null" >
+        and mailmoduletitle ${mailmoduletitleOperator} #{mailmoduletitle}
+      </if>
+      <if test="mailmodulecontent != null" >
+        and mailmodulecontent ${mailmodulecontentOperator} #{mailmodulecontent}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.MailmoduletemplateEO" >
+    insert into MAILMODULETEMPLATE(<include refid="Base_Column_List" />)
+    values (#{pkmailmoduletemplate, jdbcType=VARCHAR}, #{servicemodulename, jdbcType=VARCHAR}, #{dynamictype, jdbcType=INTEGER}, #{personnewskey, jdbcType=VARCHAR}, #{isenabled, jdbcType=INTEGER}, #{mailcreatetime, jdbcType=TIMESTAMP}, #{mailmoduletitle, jdbcType=VARCHAR}, #{mailmodulecontent, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.MailmoduletemplateEO" >
+        insert into MAILMODULETEMPLATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkmailmoduletemplate != null" >pkmailmoduletemplate,</if>
+                <if test="servicemodulename != null" >servicemodulename,</if>
+                <if test="dynamictype != null" >dynamictype,</if>
+                <if test="personnewskey != null" >personnewskey,</if>
+                <if test="isenabled != null" >isenabled,</if>
+                <if test="mailcreatetime != null" >mailcreatetime,</if>
+                <if test="mailmoduletitle != null" >mailmoduletitle,</if>
+                <if test="mailmodulecontent != null" >mailmodulecontent,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkmailmoduletemplate != null" >#{pkmailmoduletemplate, jdbcType=VARCHAR},</if>
+                <if test="servicemodulename != null" >#{servicemodulename, jdbcType=VARCHAR},</if>
+                <if test="dynamictype != null" >#{dynamictype, jdbcType=INTEGER},</if>
+                <if test="personnewskey != null" >#{personnewskey, jdbcType=VARCHAR},</if>
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+                <if test="mailcreatetime != null" >#{mailcreatetime, jdbcType=TIMESTAMP},</if>
+                <if test="mailmoduletitle != null" >#{mailmoduletitle, jdbcType=VARCHAR},</if>
+                <if test="mailmodulecontent != null" >#{mailmodulecontent, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- MAILMODULETEMPLATE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from MAILMODULETEMPLATE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询MAILMODULETEMPLATE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from MAILMODULETEMPLATE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from MAILMODULETEMPLATE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

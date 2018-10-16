@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.SchoolinformationmanagementEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.SchoolinformationmanagementEO" >
+    <id column="pkschoolinformation" property="pkschoolinformation" />
+    <result column="schoolname" property="schoolname" />
+    <result column="schooladdress" property="schooladdress" />
+    <result column="isenabled" property="isenabled" />
+    <result column="applicationtime" property="applicationtime" />
+    <result column="pkcity" property="pkcity" />
+    <result column="cod" property="cod" />
+    <result column="competentdepartment" property="competentdepartment" />
+    <result column="region" property="region" />
+    <result column="schoollevel" property="schoollevel" />
+  </resultMap>
+
+  <!-- SCHOOLINFORMATIONMANAGEMENT table all fields -->
+  <sql id="Base_Column_List" >
+     pkschoolinformation, schoolname, schooladdress, isenabled, applicationtime, pkcity, cod, competentdepartment, region, schoollevel
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkschoolinformation != null" >
+        and pkschoolinformation ${pkschoolinformationOperator} #{pkschoolinformation}
+      </if>
+      <if test="schoolname != null" >
+        and schoolname ${schoolnameOperator} #{schoolname}
+      </if>
+      <if test="schooladdress != null" >
+        and schooladdress ${schooladdressOperator} #{schooladdress}
+      </if>
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+      <if test="applicationtime != null" >
+        and applicationtime ${applicationtimeOperator} #{applicationtime}
+      </if>
+      <if test="applicationtime1 != null" >
+        and applicationtime &gt;= #{applicationtime1}
+      </if>
+      <if test="applicationtime2 != null" >
+        and applicationtime &lt;= #{applicationtime2}
+      </if>
+      <if test="pkcity != null" >
+        and pkcity ${pkcityOperator} #{pkcity}
+      </if>
+      <if test="cod != null" >
+        and cod ${codOperator} #{cod}
+      </if>
+      <if test="competentdepartment != null" >
+        and competentdepartment ${competentdepartmentOperator} #{competentdepartment}
+      </if>
+      <if test="region != null" >
+        and region ${regionOperator} #{region}
+      </if>
+      <if test="schoollevel != null" >
+        and schoollevel ${schoollevelOperator} #{schoollevel}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.SchoolinformationmanagementEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkschoolinformation">
+        SELECT SEQ_SCHOOLINFORMATIONMANAGEMENT.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into SCHOOLINFORMATIONMANAGEMENT(<include refid="Base_Column_List" />)
+    values (#{pkschoolinformation, jdbcType=VARCHAR}, #{schoolname, jdbcType=VARCHAR}, #{schooladdress, jdbcType=VARCHAR}, #{isenabled, jdbcType=INTEGER}, #{applicationtime, jdbcType=TIMESTAMP}, #{pkcity, jdbcType=VARCHAR}, #{cod, jdbcType=VARCHAR}, #{competentdepartment, jdbcType=VARCHAR}, #{region, jdbcType=VARCHAR}, #{schoollevel, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.SchoolinformationmanagementEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkschoolinformation">
+        SELECT SEQ_SCHOOLINFORMATIONMANAGEMENT.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into SCHOOLINFORMATIONMANAGEMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkschoolinformation != null" >pkschoolinformation,</if>
+                <if test="schoolname != null" >schoolname,</if>
+                <if test="schooladdress != null" >schooladdress,</if>
+                <if test="isenabled != null" >isenabled,</if>
+                <if test="applicationtime != null" >applicationtime,</if>
+                <if test="pkcity != null" >pkcity,</if>
+                <if test="cod != null" >cod,</if>
+                <if test="competentdepartment != null" >competentdepartment,</if>
+                <if test="region != null" >region,</if>
+                <if test="schoollevel != null" >schoollevel,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkschoolinformation != null" >#{pkschoolinformation, jdbcType=VARCHAR},</if>
+                <if test="schoolname != null" >#{schoolname, jdbcType=VARCHAR},</if>
+                <if test="schooladdress != null" >#{schooladdress, jdbcType=VARCHAR},</if>
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+                <if test="applicationtime != null" >#{applicationtime, jdbcType=TIMESTAMP},</if>
+                <if test="pkcity != null" >#{pkcity, jdbcType=VARCHAR},</if>
+                <if test="cod != null" >#{cod, jdbcType=VARCHAR},</if>
+                <if test="competentdepartment != null" >#{competentdepartment, jdbcType=VARCHAR},</if>
+                <if test="region != null" >#{region, jdbcType=VARCHAR},</if>
+                <if test="schoollevel != null" >#{schoollevel, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.SchoolinformationmanagementEO" >
+    update SCHOOLINFORMATIONMANAGEMENT
+       set  schoolname = #{schoolname},
+            schooladdress = #{schooladdress},
+            isenabled = #{isenabled},
+            applicationtime = #{applicationtime},
+            pkcity = #{pkcity},
+            cod = #{cod},
+            competentdepartment = #{competentdepartment},
+            region = #{region},
+            schoollevel = #{schoollevel}
+     where  pkschoolinformation = #{pkschoolinformation}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.SchoolinformationmanagementEO" >
+    update SCHOOLINFORMATIONMANAGEMENT
+    <set >
+      <if test="schoolname != null" >
+        schoolname = #{schoolname},
+      </if>
+      <if test="schooladdress != null" >
+        schooladdress = #{schooladdress},
+      </if>
+      <if test="isenabled != null" >
+        isenabled = #{isenabled},
+      </if>
+      <if test="applicationtime != null" >
+        applicationtime = #{applicationtime},
+      </if>
+      <if test="pkcity != null" >
+        pkcity = #{pkcity},
+      </if>
+      <if test="cod != null" >
+        cod = #{cod},
+      </if>
+      <if test="competentdepartment != null" >
+        competentdepartment = #{competentdepartment},
+      </if>
+      <if test="region != null" >
+        region = #{region},
+      </if>
+      <if test="schoollevel != null" >
+        schoollevel = #{schoollevel},
+      </if>
+    </set>
+     where pkschoolinformation = #{pkschoolinformation}
+  </update>
+
+  <!-- 根据id查询 SCHOOLINFORMATIONMANAGEMENT -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from SCHOOLINFORMATIONMANAGEMENT
+     where pkschoolinformation = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SCHOOLINFORMATIONMANAGEMENT
+     where pkschoolinformation = #{value}
+
+  </delete>
+
+  <!-- SCHOOLINFORMATIONMANAGEMENT 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from SCHOOLINFORMATIONMANAGEMENT
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询SCHOOLINFORMATIONMANAGEMENT列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from SCHOOLINFORMATIONMANAGEMENT
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from SCHOOLINFORMATIONMANAGEMENT
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

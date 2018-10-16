@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.UserloginEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.UserloginEO" >
+    <id column="loginid" property="loginid" />
+    <result column="enadletime" property="enadletime" />
+    <result column="createtime" property="createtime" />
+    <result column="isenable" property="isenable" />
+    <result column="personnewskey" property="personnewskey" />
+    <result column="password" property="password" />
+    <result column="accountnumber" property="accountnumber" />
+  </resultMap>
+
+  <!-- USERLOGIN table all fields -->
+  <sql id="Base_Column_List" >
+     enadletime, createtime, isenable, personnewskey, password, accountnumber, loginid
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="enadletime != null" >
+        and enadletime ${enadletimeOperator} #{enadletime}
+      </if>
+      <if test="enadletime1 != null" >
+        and enadletime &gt;= #{enadletime1}
+      </if>
+      <if test="enadletime2 != null" >
+        and enadletime &lt;= #{enadletime2}
+      </if>
+      <if test="createtime != null" >
+        and createtime ${createtimeOperator} #{createtime}
+      </if>
+      <if test="createtime1 != null" >
+        and createtime &gt;= #{createtime1}
+      </if>
+      <if test="createtime2 != null" >
+        and createtime &lt;= #{createtime2}
+      </if>
+      <if test="isenable != null" >
+        and isenable ${isenableOperator} #{isenable}
+      </if>
+      <if test="personnewskey != null" >
+        and personnewskey ${personnewskeyOperator} #{personnewskey}
+      </if>
+      <if test="password != null" >
+        and password ${passwordOperator} #{password}
+      </if>
+      <if test="accountnumber != null" >
+        and accountnumber ${accountnumberOperator} #{accountnumber}
+      </if>
+      <if test="loginid != null" >
+        and loginid ${loginidOperator} #{loginid}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.UserloginEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="loginid">
+        SELECT SEQ_USERLOGIN.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into USERLOGIN(<include refid="Base_Column_List" />)
+    values (#{enadletime, jdbcType=TIMESTAMP}, #{createtime, jdbcType=TIMESTAMP}, #{isenable, jdbcType=INTEGER}, #{personnewskey, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{accountnumber, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.UserloginEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="loginid">
+        SELECT SEQ_USERLOGIN.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into USERLOGIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="enadletime != null" >enadletime,</if>
+                <if test="createtime != null" >createtime,</if>
+                <if test="isenable != null" >isenable,</if>
+                <if test="personnewskey != null" >personnewskey,</if>
+                <if test="password != null" >password,</if>
+                <if test="accountnumber != null" >accountnumber,</if>
+                <if test="loginid != null" >loginid,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="enadletime != null" >#{enadletime, jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null" >#{createtime, jdbcType=TIMESTAMP},</if>
+                <if test="isenable != null" >#{isenable, jdbcType=INTEGER},</if>
+                <if test="personnewskey != null" >#{personnewskey, jdbcType=VARCHAR},</if>
+                <if test="password != null" >#{password, jdbcType=VARCHAR},</if>
+                <if test="accountnumber != null" >#{accountnumber, jdbcType=VARCHAR},</if>
+                <if test="loginid != null" >#{loginid, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.UserloginEO" >
+    update USERLOGIN
+       set  enadletime = #{enadletime},
+            createtime = #{createtime},
+            isenable = #{isenable},
+            personnewskey = #{personnewskey},
+            password = #{password},
+            accountnumber = #{accountnumber}
+     where  loginid = #{loginid}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.UserloginEO" >
+    update USERLOGIN
+    <set >
+      <if test="enadletime != null" >
+        enadletime = #{enadletime},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime},
+      </if>
+      <if test="isenable != null" >
+        isenable = #{isenable},
+      </if>
+      <if test="personnewskey != null" >
+        personnewskey = #{personnewskey},
+      </if>
+      <if test="password != null" >
+        password = #{password},
+      </if>
+      <if test="accountnumber != null" >
+        accountnumber = #{accountnumber},
+      </if>
+    </set>
+     where loginid = #{loginid}
+  </update>
+
+  <!-- 根据id查询 USERLOGIN -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from USERLOGIN
+     where loginid = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from USERLOGIN
+     where loginid = #{value}
+
+  </delete>
+
+  <!-- USERLOGIN 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from USERLOGIN
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询USERLOGIN列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from USERLOGIN
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from USERLOGIN
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

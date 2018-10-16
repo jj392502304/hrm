@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.ApplymemberEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.ApplymemberEO" >
+    <id column="applymemberkey" property="applymemberkey" />
+    <result column="name" property="name" />
+    <result column="professionalname" property="professionalname" />
+    <result column="gender" property="gender" />
+    <result column="birth" property="birth" />
+    <result column="email" property="email" />
+    <result column="phone" property="phone" />
+    <result column="highestdegree" property="highestdegree" />
+    <result column="workinglife" property="workinglife" />
+    <result column="idnumber" property="idnumber" />
+    <result column="idphoto" property="idphoto" />
+    <result column="blacklist" property="blacklist" />
+    <result column="personnelstate" property="personnelstate" />
+    <result column="schoolinformation" property="schoolinformation" />
+    <result column="password" property="password" />
+    <result column="account" property="account" />
+    <result column="totalscore" property="totalscore" />
+    <result column="createinformation" property="createinformation" />
+    <result column="updateinformation" property="updateinformation" />
+    <result column="graduationtime" property="graduationtime" />
+    <result column="presentaddress" property="presentaddress" />
+    <result column="hukou" property="hukou" />
+    <result column="politicaloutlook" property="politicaloutlook" />
+    <result column="nation" property="nation" />
+    <result column="origin" property="origin" />
+    <result column="englishclass" property="englishclass" />
+    <result column="englishachievement" property="englishachievement" />
+    <result column="positioninschool" property="positioninschool" />
+    <result column="awardwinning" property="awardwinning" />
+    <result column="professionalranking" property="professionalranking" />
+    <result column="graduating" property="graduating" />
+    <result column="workinghours" property="workinghours" />
+    <result column="technicaltitle" property="technicaltitle" />
+    <result column="religiousbelief" property="religiousbelief" />
+    <result column="japaneselevel" property="japaneselevel" />
+    <result column="mailingaddress" property="mailingaddress" />
+    <result column="annexresume" property="annexresume" />
+    <result column="volunteer" property="volunteer" />
+  </resultMap>
+
+  <!-- APPLYMEMBER table all fields -->
+  <sql id="Base_Column_List" >
+     applymemberkey, name, professionalname, gender, birth, email, phone, highestdegree, workinglife, idnumber, idphoto, blacklist, personnelstate, schoolinformation, password, account, totalscore, createinformation, updateinformation, graduationtime, presentaddress, hukou, politicaloutlook, nation, origin, englishclass, englishachievement, positioninschool, awardwinning, professionalranking, graduating, workinghours, technicaltitle, religiousbelief, japaneselevel, mailingaddress, annexresume, volunteer
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="name != null" >
+        and name ${nameOperator} #{name}
+      </if>
+      <if test="professionalname != null" >
+        and professionalname ${professionalnameOperator} #{professionalname}
+      </if>
+      <if test="gender != null" >
+        and gender ${genderOperator} #{gender}
+      </if>
+      <if test="birth != null" >
+        and birth ${birthOperator} #{birth}
+      </if>
+      <if test="birth1 != null" >
+        and birth &gt;= #{birth1}
+      </if>
+      <if test="birth2 != null" >
+        and birth &lt;= #{birth2}
+      </if>
+      <if test="email != null" >
+        and email ${emailOperator} #{email}
+      </if>
+      <if test="phone != null" >
+        and phone ${phoneOperator} #{phone}
+      </if>
+      <if test="highestdegree != null" >
+        and highestdegree ${highestdegreeOperator} #{highestdegree}
+      </if>
+      <if test="workinglife != null" >
+        and workinglife ${workinglifeOperator} #{workinglife}
+      </if>
+      <if test="idnumber != null" >
+        and idnumber ${idnumberOperator} #{idnumber}
+      </if>
+      <if test="idphoto != null" >
+        and idphoto ${idphotoOperator} #{idphoto}
+      </if>
+      <if test="blacklist != null" >
+        and blacklist ${blacklistOperator} #{blacklist}
+      </if>
+      <if test="personnelstate != null" >
+        and personnelstate ${personnelstateOperator} #{personnelstate}
+      </if>
+      <if test="schoolinformation != null" >
+        and schoolinformation ${schoolinformationOperator} #{schoolinformation}
+      </if>
+      <if test="password != null" >
+        and password ${passwordOperator} #{password}
+      </if>
+      <if test="account != null" >
+        and account ${accountOperator} #{account}
+      </if>
+      <if test="totalscore != null" >
+        and totalscore ${totalscoreOperator} #{totalscore}
+      </if>
+      <if test="createinformation != null" >
+        and createinformation ${createinformationOperator} #{createinformation}
+      </if>
+      <if test="updateinformation != null" >
+        and updateinformation ${updateinformationOperator} #{updateinformation}
+      </if>
+      <if test="graduationtime != null" >
+        and graduationtime ${graduationtimeOperator} #{graduationtime}
+      </if>
+      <if test="graduationtime1 != null" >
+        and graduationtime &gt;= #{graduationtime1}
+      </if>
+      <if test="graduationtime2 != null" >
+        and graduationtime &lt;= #{graduationtime2}
+      </if>
+      <if test="presentaddress != null" >
+        and presentaddress ${presentaddressOperator} #{presentaddress}
+      </if>
+      <if test="hukou != null" >
+        and hukou ${hukouOperator} #{hukou}
+      </if>
+      <if test="politicaloutlook != null" >
+        and politicaloutlook ${politicaloutlookOperator} #{politicaloutlook}
+      </if>
+      <if test="nation != null" >
+        and nation ${nationOperator} #{nation}
+      </if>
+      <if test="origin != null" >
+        and origin ${originOperator} #{origin}
+      </if>
+      <if test="englishclass != null" >
+        and englishclass ${englishclassOperator} #{englishclass}
+      </if>
+      <if test="englishachievement != null" >
+        and englishachievement ${englishachievementOperator} #{englishachievement}
+      </if>
+      <if test="positioninschool != null" >
+        and positioninschool ${positioninschoolOperator} #{positioninschool}
+      </if>
+      <if test="awardwinning != null" >
+        and awardwinning ${awardwinningOperator} #{awardwinning}
+      </if>
+      <if test="professionalranking != null" >
+        and professionalranking ${professionalrankingOperator} #{professionalranking}
+      </if>
+      <if test="graduating != null" >
+        and graduating ${graduatingOperator} #{graduating}
+      </if>
+      <if test="workinghours != null" >
+        and workinghours ${workinghoursOperator} #{workinghours}
+      </if>
+      <if test="workinghours1 != null" >
+        and workinghours &gt;= #{workinghours1}
+      </if>
+      <if test="workinghours2 != null" >
+        and workinghours &lt;= #{workinghours2}
+      </if>
+      <if test="technicaltitle != null" >
+        and technicaltitle ${technicaltitleOperator} #{technicaltitle}
+      </if>
+      <if test="religiousbelief != null" >
+        and religiousbelief ${religiousbeliefOperator} #{religiousbelief}
+      </if>
+      <if test="japaneselevel != null" >
+        and japaneselevel ${japaneselevelOperator} #{japaneselevel}
+      </if>
+      <if test="mailingaddress != null" >
+        and mailingaddress ${mailingaddressOperator} #{mailingaddress}
+      </if>
+      <if test="annexresume != null" >
+        and annexresume ${annexresumeOperator} #{annexresume}
+      </if>
+      <if test="volunteer != null" >
+        and volunteer ${volunteerOperator} #{volunteer}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.ApplymemberEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="applymemberkey">
+        SELECT SEQ_APPLYMEMBER.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into APPLYMEMBER(<include refid="Base_Column_List" />)
+    values (#{applymemberkey, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{professionalname, jdbcType=VARCHAR}, #{gender, jdbcType=VARCHAR}, #{birth, jdbcType=TIMESTAMP}, #{email, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{highestdegree, jdbcType=VARCHAR}, #{workinglife, jdbcType=VARCHAR}, #{idnumber, jdbcType=VARCHAR}, #{idphoto, jdbcType=VARCHAR}, #{blacklist, jdbcType=INTEGER}, #{personnelstate, jdbcType=INTEGER}, #{schoolinformation, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{account, jdbcType=VARCHAR}, #{totalscore, jdbcType=FLOAT}, #{createinformation, jdbcType=VARCHAR}, #{updateinformation, jdbcType=VARCHAR}, #{graduationtime, jdbcType=TIMESTAMP}, #{presentaddress, jdbcType=VARCHAR}, #{hukou, jdbcType=VARCHAR}, #{politicaloutlook, jdbcType=VARCHAR}, #{nation, jdbcType=VARCHAR}, #{origin, jdbcType=VARCHAR}, #{englishclass, jdbcType=VARCHAR}, #{englishachievement, jdbcType=VARCHAR}, #{positioninschool, jdbcType=VARCHAR}, #{awardwinning, jdbcType=VARCHAR}, #{professionalranking, jdbcType=VARCHAR}, #{graduating, jdbcType=VARCHAR}, #{workinghours, jdbcType=TIMESTAMP}, #{technicaltitle, jdbcType=VARCHAR}, #{religiousbelief, jdbcType=VARCHAR}, #{japaneselevel, jdbcType=VARCHAR}, #{mailingaddress, jdbcType=VARCHAR}, #{annexresume, jdbcType=VARCHAR}, #{volunteer, jdbcType=INTEGER})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.ApplymemberEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="applymemberkey">
+        SELECT SEQ_APPLYMEMBER.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into APPLYMEMBER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="name != null" >name,</if>
+                <if test="professionalname != null" >professionalname,</if>
+                <if test="gender != null" >gender,</if>
+                <if test="birth != null" >birth,</if>
+                <if test="email != null" >email,</if>
+                <if test="phone != null" >phone,</if>
+                <if test="highestdegree != null" >highestdegree,</if>
+                <if test="workinglife != null" >workinglife,</if>
+                <if test="idnumber != null" >idnumber,</if>
+                <if test="idphoto != null" >idphoto,</if>
+                <if test="blacklist != null" >blacklist,</if>
+                <if test="personnelstate != null" >personnelstate,</if>
+                <if test="schoolinformation != null" >schoolinformation,</if>
+                <if test="password != null" >password,</if>
+                <if test="account != null" >account,</if>
+                <if test="totalscore != null" >totalscore,</if>
+                <if test="createinformation != null" >createinformation,</if>
+                <if test="updateinformation != null" >updateinformation,</if>
+                <if test="graduationtime != null" >graduationtime,</if>
+                <if test="presentaddress != null" >presentaddress,</if>
+                <if test="hukou != null" >hukou,</if>
+                <if test="politicaloutlook != null" >politicaloutlook,</if>
+                <if test="nation != null" >nation,</if>
+                <if test="origin != null" >origin,</if>
+                <if test="englishclass != null" >englishclass,</if>
+                <if test="englishachievement != null" >englishachievement,</if>
+                <if test="positioninschool != null" >positioninschool,</if>
+                <if test="awardwinning != null" >awardwinning,</if>
+                <if test="professionalranking != null" >professionalranking,</if>
+                <if test="graduating != null" >graduating,</if>
+                <if test="workinghours != null" >workinghours,</if>
+                <if test="technicaltitle != null" >technicaltitle,</if>
+                <if test="religiousbelief != null" >religiousbelief,</if>
+                <if test="japaneselevel != null" >japaneselevel,</if>
+                <if test="mailingaddress != null" >mailingaddress,</if>
+                <if test="annexresume != null" >annexresume,</if>
+                <if test="volunteer != null" >volunteer,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="name != null" >#{name, jdbcType=VARCHAR},</if>
+                <if test="professionalname != null" >#{professionalname, jdbcType=VARCHAR},</if>
+                <if test="gender != null" >#{gender, jdbcType=VARCHAR},</if>
+                <if test="birth != null" >#{birth, jdbcType=TIMESTAMP},</if>
+                <if test="email != null" >#{email, jdbcType=VARCHAR},</if>
+                <if test="phone != null" >#{phone, jdbcType=VARCHAR},</if>
+                <if test="highestdegree != null" >#{highestdegree, jdbcType=VARCHAR},</if>
+                <if test="workinglife != null" >#{workinglife, jdbcType=VARCHAR},</if>
+                <if test="idnumber != null" >#{idnumber, jdbcType=VARCHAR},</if>
+                <if test="idphoto != null" >#{idphoto, jdbcType=VARCHAR},</if>
+                <if test="blacklist != null" >#{blacklist, jdbcType=INTEGER},</if>
+                <if test="personnelstate != null" >#{personnelstate, jdbcType=INTEGER},</if>
+                <if test="schoolinformation != null" >#{schoolinformation, jdbcType=VARCHAR},</if>
+                <if test="password != null" >#{password, jdbcType=VARCHAR},</if>
+                <if test="account != null" >#{account, jdbcType=VARCHAR},</if>
+                <if test="totalscore != null" >#{totalscore, jdbcType=FLOAT},</if>
+                <if test="createinformation != null" >#{createinformation, jdbcType=VARCHAR},</if>
+                <if test="updateinformation != null" >#{updateinformation, jdbcType=VARCHAR},</if>
+                <if test="graduationtime != null" >#{graduationtime, jdbcType=TIMESTAMP},</if>
+                <if test="presentaddress != null" >#{presentaddress, jdbcType=VARCHAR},</if>
+                <if test="hukou != null" >#{hukou, jdbcType=VARCHAR},</if>
+                <if test="politicaloutlook != null" >#{politicaloutlook, jdbcType=VARCHAR},</if>
+                <if test="nation != null" >#{nation, jdbcType=VARCHAR},</if>
+                <if test="origin != null" >#{origin, jdbcType=VARCHAR},</if>
+                <if test="englishclass != null" >#{englishclass, jdbcType=VARCHAR},</if>
+                <if test="englishachievement != null" >#{englishachievement, jdbcType=VARCHAR},</if>
+                <if test="positioninschool != null" >#{positioninschool, jdbcType=VARCHAR},</if>
+                <if test="awardwinning != null" >#{awardwinning, jdbcType=VARCHAR},</if>
+                <if test="professionalranking != null" >#{professionalranking, jdbcType=VARCHAR},</if>
+                <if test="graduating != null" >#{graduating, jdbcType=VARCHAR},</if>
+                <if test="workinghours != null" >#{workinghours, jdbcType=TIMESTAMP},</if>
+                <if test="technicaltitle != null" >#{technicaltitle, jdbcType=VARCHAR},</if>
+                <if test="religiousbelief != null" >#{religiousbelief, jdbcType=VARCHAR},</if>
+                <if test="japaneselevel != null" >#{japaneselevel, jdbcType=VARCHAR},</if>
+                <if test="mailingaddress != null" >#{mailingaddress, jdbcType=VARCHAR},</if>
+                <if test="annexresume != null" >#{annexresume, jdbcType=VARCHAR},</if>
+                <if test="volunteer != null" >#{volunteer, jdbcType=INTEGER},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.ApplymemberEO" >
+    update APPLYMEMBER
+       set  name = #{name},
+            professionalname = #{professionalname},
+            gender = #{gender},
+            birth = #{birth},
+            email = #{email},
+            phone = #{phone},
+            highestdegree = #{highestdegree},
+            workinglife = #{workinglife},
+            idnumber = #{idnumber},
+            idphoto = #{idphoto},
+            blacklist = #{blacklist},
+            personnelstate = #{personnelstate},
+            schoolinformation = #{schoolinformation},
+            password = #{password},
+            account = #{account},
+            totalscore = #{totalscore},
+            createinformation = #{createinformation},
+            updateinformation = #{updateinformation},
+            graduationtime = #{graduationtime},
+            presentaddress = #{presentaddress},
+            hukou = #{hukou},
+            politicaloutlook = #{politicaloutlook},
+            nation = #{nation},
+            origin = #{origin},
+            englishclass = #{englishclass},
+            englishachievement = #{englishachievement},
+            positioninschool = #{positioninschool},
+            awardwinning = #{awardwinning},
+            professionalranking = #{professionalranking},
+            graduating = #{graduating},
+            workinghours = #{workinghours},
+            technicaltitle = #{technicaltitle},
+            religiousbelief = #{religiousbelief},
+            japaneselevel = #{japaneselevel},
+            mailingaddress = #{mailingaddress},
+            annexresume = #{annexresume},
+            volunteer = #{volunteer}
+     where  applymemberkey = #{applymemberkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.ApplymemberEO" >
+    update APPLYMEMBER
+    <set >
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="professionalname != null" >
+        professionalname = #{professionalname},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender},
+      </if>
+      <if test="birth != null" >
+        birth = #{birth},
+      </if>
+      <if test="email != null" >
+        email = #{email},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone},
+      </if>
+      <if test="highestdegree != null" >
+        highestdegree = #{highestdegree},
+      </if>
+      <if test="workinglife != null" >
+        workinglife = #{workinglife},
+      </if>
+      <if test="idnumber != null" >
+        idnumber = #{idnumber},
+      </if>
+      <if test="idphoto != null" >
+        idphoto = #{idphoto},
+      </if>
+      <if test="blacklist != null" >
+        blacklist = #{blacklist},
+      </if>
+      <if test="personnelstate != null" >
+        personnelstate = #{personnelstate},
+      </if>
+      <if test="schoolinformation != null" >
+        schoolinformation = #{schoolinformation},
+      </if>
+      <if test="password != null" >
+        password = #{password},
+      </if>
+      <if test="account != null" >
+        account = #{account},
+      </if>
+      <if test="totalscore != null" >
+        totalscore = #{totalscore},
+      </if>
+      <if test="createinformation != null" >
+        createinformation = #{createinformation},
+      </if>
+      <if test="updateinformation != null" >
+        updateinformation = #{updateinformation},
+      </if>
+      <if test="graduationtime != null" >
+        graduationtime = #{graduationtime},
+      </if>
+      <if test="presentaddress != null" >
+        presentaddress = #{presentaddress},
+      </if>
+      <if test="hukou != null" >
+        hukou = #{hukou},
+      </if>
+      <if test="politicaloutlook != null" >
+        politicaloutlook = #{politicaloutlook},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation},
+      </if>
+      <if test="origin != null" >
+        origin = #{origin},
+      </if>
+      <if test="englishclass != null" >
+        englishclass = #{englishclass},
+      </if>
+      <if test="englishachievement != null" >
+        englishachievement = #{englishachievement},
+      </if>
+      <if test="positioninschool != null" >
+        positioninschool = #{positioninschool},
+      </if>
+      <if test="awardwinning != null" >
+        awardwinning = #{awardwinning},
+      </if>
+      <if test="professionalranking != null" >
+        professionalranking = #{professionalranking},
+      </if>
+      <if test="graduating != null" >
+        graduating = #{graduating},
+      </if>
+      <if test="workinghours != null" >
+        workinghours = #{workinghours},
+      </if>
+      <if test="technicaltitle != null" >
+        technicaltitle = #{technicaltitle},
+      </if>
+      <if test="religiousbelief != null" >
+        religiousbelief = #{religiousbelief},
+      </if>
+      <if test="japaneselevel != null" >
+        japaneselevel = #{japaneselevel},
+      </if>
+      <if test="mailingaddress != null" >
+        mailingaddress = #{mailingaddress},
+      </if>
+      <if test="annexresume != null" >
+        annexresume = #{annexresume},
+      </if>
+      <if test="volunteer != null" >
+        volunteer = #{volunteer},
+      </if>
+    </set>
+     where applymemberkey = #{applymemberkey}
+  </update>
+
+  <!-- 根据id查询 APPLYMEMBER -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from APPLYMEMBER
+     where applymemberkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from APPLYMEMBER
+     where applymemberkey = #{value}
+
+  </delete>
+
+  <!-- APPLYMEMBER 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from APPLYMEMBER
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询APPLYMEMBER列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from APPLYMEMBER
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from APPLYMEMBER
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+
+
+    <!--根据应聘人员账户和密码查询,用于应聘人员登录-->
+    <select id="selectApplymemberByAccountAndPassword" resultType="com.adc.da.business.entity.ApplymemberEO">
+        select
+        <include refid="Base_Column_List"/>
+        from APPLYMEMBER
+        <where>
+            <trim suffixOverrides="and">
+                <if test="account != null and account != '' ">
+                    account = #{account} and
+                </if>
+                <if test="password != null and password != '' ">
+                    password = #{password}
+                </if>
+            </trim>
+        </where>
+    </select>
+
+   <!--根据登录帐户修改密码 -->
+    <update id="updateApplymemberPasswordByAccount" parameterType="java.lang.String">
+        update APPLYMEMBER
+        <set>
+            password = #{newPassword}
+        </set>
+        where account = #{account}
+    </update>
+
+    <!--注册用户时查询用户名是否已经存在 -->
+    <select id="selectNameRegistered" resultType="java.lang.String">
+        select
+        account
+        from APPLYMEMBER
+        <where>
+                <if test="account != null and account != '' ">
+                    account = #{account}
+                </if>
+        </where>
+    </select>
+</mapper>

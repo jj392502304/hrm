@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.ProjectmanagementEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.ProjectmanagementEO" >
+    <id column="pkprojectmanagement" property="pkprojectmanagement" />
+    <result column="projectname" property="projectname" />
+    <result column="creationtime" property="creationtime" />
+    <result column="departmentprimarykey" property="departmentprimarykey" />
+    <result column="personnewskey" property="personnewskey" />
+    <result column="personnewsid" property="personnewsid" />
+  </resultMap>
+
+  <!-- PROJECTMANAGEMENT table all fields -->
+  <sql id="Base_Column_List" >
+     pkprojectmanagement, projectname, creationtime, departmentprimarykey, personnewskey, personnewsid
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkprojectmanagement != null" >
+        and pkprojectmanagement ${pkprojectmanagementOperator} #{pkprojectmanagement}
+      </if>
+      <if test="projectname != null" >
+        and projectname ${projectnameOperator} #{projectname}
+      </if>
+      <if test="creationtime != null" >
+        and creationtime ${creationtimeOperator} #{creationtime}
+      </if>
+      <if test="departmentprimarykey != null" >
+        and departmentprimarykey ${departmentprimarykeyOperator} #{departmentprimarykey}
+      </if>
+      <if test="personnewskey != null" >
+        and personnewskey ${personnewskeyOperator} #{personnewskey}
+      </if>
+      <if test="personnewsid != null" >
+        and personnewsid ${personnewsidOperator} #{personnewsid}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.ProjectmanagementEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkprojectmanagement">
+        SELECT SEQ_PROJECTMANAGEMENT.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into PROJECTMANAGEMENT(<include refid="Base_Column_List" />)
+    values (#{pkprojectmanagement, jdbcType=VARCHAR}, #{projectname, jdbcType=VARCHAR}, #{creationtime, jdbcType=VARCHAR}, #{departmentprimarykey, jdbcType=VARCHAR}, #{personnewskey, jdbcType=VARCHAR}, #{personnewsid, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.ProjectmanagementEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkprojectmanagement">
+        SELECT SEQ_PROJECTMANAGEMENT.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PROJECTMANAGEMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkprojectmanagement != null" >pkprojectmanagement,</if>
+                <if test="projectname != null" >projectname,</if>
+                <if test="creationtime != null" >creationtime,</if>
+                <if test="departmentprimarykey != null" >departmentprimarykey,</if>
+                <if test="personnewskey != null" >personnewskey,</if>
+                <if test="personnewsid != null" >personnewsid,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkprojectmanagement != null" >#{pkprojectmanagement, jdbcType=VARCHAR},</if>
+                <if test="projectname != null" >#{projectname, jdbcType=VARCHAR},</if>
+                <if test="creationtime != null" >#{creationtime, jdbcType=VARCHAR},</if>
+                <if test="departmentprimarykey != null" >#{departmentprimarykey, jdbcType=VARCHAR},</if>
+                <if test="personnewskey != null" >#{personnewskey, jdbcType=VARCHAR},</if>
+                <if test="personnewsid != null" >#{personnewsid, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.ProjectmanagementEO" >
+    update PROJECTMANAGEMENT
+       set  projectname = #{projectname},
+            creationtime = #{creationtime},
+            departmentprimarykey = #{departmentprimarykey},
+            personnewskey = #{personnewskey},
+            personnewsid = #{personnewsid}
+     where  pkprojectmanagement = #{pkprojectmanagement}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.ProjectmanagementEO" >
+    update PROJECTMANAGEMENT
+    <set >
+      <if test="projectname != null" >
+        projectname = #{projectname},
+      </if>
+      <if test="creationtime != null" >
+        creationtime = #{creationtime},
+      </if>
+      <if test="departmentprimarykey != null" >
+        departmentprimarykey = #{departmentprimarykey},
+      </if>
+      <if test="personnewskey != null" >
+        personnewskey = #{personnewskey},
+      </if>
+      <if test="personnewsid != null" >
+        personnewsid = #{personnewsid},
+      </if>
+    </set>
+     where pkprojectmanagement = #{pkprojectmanagement}
+  </update>
+
+  <!-- 根据id查询 PROJECTMANAGEMENT -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PROJECTMANAGEMENT
+     where pkprojectmanagement = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PROJECTMANAGEMENT
+     where pkprojectmanagement = #{value}
+
+  </delete>
+
+  <!-- PROJECTMANAGEMENT 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PROJECTMANAGEMENT
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PROJECTMANAGEMENT列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PROJECTMANAGEMENT
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PROJECTMANAGEMENT
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

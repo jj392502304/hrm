@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.ApprovalserviceEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.ApprovalserviceEO" >
+    <id column="approvalprimarykey" property="approvalprimarykey" />
+    <result column="processprimarykey" property="processprimarykey" />
+    <result column="businessdataprimarykey" property="businessdataprimarykey" />
+    <result column="nextstateofapproval" property="nextstateofapproval" />
+  </resultMap>
+
+  <!-- APPROVALSERVICE table all fields -->
+  <sql id="Base_Column_List" >
+     approvalprimarykey, processprimarykey, businessdataprimarykey, nextstateofapproval
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="approvalprimarykey != null" >
+        and approvalprimarykey ${approvalprimarykeyOperator} #{approvalprimarykey}
+      </if>
+      <if test="processprimarykey != null" >
+        and processprimarykey ${processprimarykeyOperator} #{processprimarykey}
+      </if>
+      <if test="businessdataprimarykey != null" >
+        and businessdataprimarykey ${businessdataprimarykeyOperator} #{businessdataprimarykey}
+      </if>
+      <if test="nextstateofapproval != null" >
+        and nextstateofapproval ${nextstateofapprovalOperator} #{nextstateofapproval}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.ApprovalserviceEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="approvalprimarykey">
+        SELECT SEQ_APPROVALSERVICE.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into APPROVALSERVICE(<include refid="Base_Column_List" />)
+    values (#{approvalprimarykey, jdbcType=VARCHAR}, #{processprimarykey, jdbcType=VARCHAR}, #{businessdataprimarykey, jdbcType=VARCHAR}, #{nextstateofapproval, jdbcType=INTEGER})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.ApprovalserviceEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="approvalprimarykey">
+        SELECT SEQ_APPROVALSERVICE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into APPROVALSERVICE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="approvalprimarykey != null" >approvalprimarykey,</if>
+                <if test="processprimarykey != null" >processprimarykey,</if>
+                <if test="businessdataprimarykey != null" >businessdataprimarykey,</if>
+                <if test="nextstateofapproval != null" >nextstateofapproval,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="approvalprimarykey != null" >#{approvalprimarykey, jdbcType=VARCHAR},</if>
+                <if test="processprimarykey != null" >#{processprimarykey, jdbcType=VARCHAR},</if>
+                <if test="businessdataprimarykey != null" >#{businessdataprimarykey, jdbcType=VARCHAR},</if>
+                <if test="nextstateofapproval != null" >#{nextstateofapproval, jdbcType=INTEGER},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.ApprovalserviceEO" >
+    update APPROVALSERVICE
+       set  processprimarykey = #{processprimarykey},
+            businessdataprimarykey = #{businessdataprimarykey},
+            nextstateofapproval = #{nextstateofapproval}
+     where  approvalprimarykey = #{approvalprimarykey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.ApprovalserviceEO" >
+    update APPROVALSERVICE
+    <set >
+      <if test="processprimarykey != null" >
+        processprimarykey = #{processprimarykey},
+      </if>
+      <if test="businessdataprimarykey != null" >
+        businessdataprimarykey = #{businessdataprimarykey},
+      </if>
+      <if test="nextstateofapproval != null" >
+        nextstateofapproval = #{nextstateofapproval},
+      </if>
+    </set>
+     where approvalprimarykey = #{approvalprimarykey}
+  </update>
+
+  <!-- 根据id查询 APPROVALSERVICE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from APPROVALSERVICE
+     where approvalprimarykey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from APPROVALSERVICE
+     where approvalprimarykey = #{value}
+
+  </delete>
+
+  <!-- APPROVALSERVICE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from APPROVALSERVICE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询APPROVALSERVICE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from APPROVALSERVICE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from APPROVALSERVICE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

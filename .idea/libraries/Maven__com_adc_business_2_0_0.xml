@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Maven: com.adc:business:2.0.0">
+    <CLASSES>
+      <root url="jar://E:/MavenRepository/com/adc/business/2.0.0/business-2.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/utils/business-2.0.0-javadoc.jar!/" />
+      <root url="jar://E:/MavenRepository/com/adc/business/2.0.0/business-2.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/utils/business-2.0.0-sources.jar!/" />
+      <root url="jar://E:/MavenRepository/com/adc/business/2.0.0/business-2.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

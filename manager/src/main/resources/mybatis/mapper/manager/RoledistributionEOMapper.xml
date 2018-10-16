@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.RoledistributionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.RoledistributionEO" >
+    <id column="roledistributionkey" property="roledistributionkey" />
+    <result column="rolefunctionkey" property="rolefunctionkey" />
+    <result column="roleforeignkey" property="roleforeignkey" />
+  </resultMap>
+
+    <resultMap id="RolefunctionEOtMap" type="com.adc.da.manager.entity.RolefunctionEO" >
+        <id column="rolefunctionkey" property="rolefunctionkey" />
+        <result column="pageurl" property="pageurl" />
+        <result column="functionkey" property="functionkey" />
+        <result column="pagename" property="pagename" />
+        <result column="modulename" property="modulename" />
+        <result column="functionname" property="functionname"/>
+    </resultMap>
+  <!-- ROLEDISTRIBUTION table all fields -->
+  <sql id="Base_Column_List" >
+     rolefunctionkey, RolePrimaryKey, roledistributionkey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="rolefunctionkey != null" >
+        and rolefunctionkey ${rolefunctionkeyOperator} #{rolefunctionkey}
+      </if>
+      <if test="roleforeignkey != null" >
+        and RolePrimaryKey ${roleforeignkeyOperator} #{roleforeignkey}
+      </if>
+      <if test="roledistributionkey != null" >
+        and roledistributionkey ${roledistributionkeyOperator} #{roledistributionkey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.RoledistributionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="roledistributionkey">
+        SELECT SEQ_ROLEDISTRIBUTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into ROLEDISTRIBUTION(<include refid="Base_Column_List" />)
+    values (#{rolefunctionkey, jdbcType=VARCHAR}, #{roleforeignkey, jdbcType=VARCHAR}, #{roledistributionkey, jdbcType=VARCHAR})
+  </insert>
+    <!-- 插入多条记录 -->
+    <insert id="insertList" parameterType="java.util.List" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="roledistributionkey">
+            SELECT SEQ_ROLEDISTRIBUTION.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into ROLEDISTRIBUTION(<include refid="Base_Column_List" />)
+        <foreach collection="list" index="index" item="item" separator="union all">
+            (SELECT
+            #{item.rolefunctionkey, jdbcType=VARCHAR}, #{item.RolePrimaryKey, jdbcType=VARCHAR}, #{item.roledistributionkey, jdbcType=VARCHAR}
+            FROM dual)
+        </foreach>
+    </insert>
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.RoledistributionEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="roledistributionkey">
+        SELECT SEQ_ROLEDISTRIBUTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ROLEDISTRIBUTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="rolefunctionkey != null" >rolefunctionkey,</if>
+                <if test="roleforeignkey != null" >roleforeignkey,</if>
+                <if test="roledistributionkey != null" >roledistributionkey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="rolefunctionkey != null" >#{rolefunctionkey, jdbcType=VARCHAR},</if>
+                <if test="roleforeignkey != null" >#{roleforeignkey, jdbcType=VARCHAR},</if>
+                <if test="roledistributionkey != null" >#{roledistributionkey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.RoledistributionEO" >
+    update ROLEDISTRIBUTION
+       set  rolefunctionkey = #{rolefunctionkey},
+            roleforeignkey = #{roleforeignkey}
+     where  roledistributionkey = #{roledistributionkey}
+  </update>
+    <!--修改多条记录-->
+    <update id="updateList" parameterType="com.adc.da.manager.entity.RoledistributionEO">
+        <foreach collection="list" item="item" open="begin" close="end;" index="index" separator=";">
+            update ROLEDISTRIBUTION
+            <set >
+                <if test="item.rolefunctionkey != null" >
+                    rolefunctionkey = #{item.rolefunctionkey},
+                </if>
+                <if test="item.roleforeignkey != null" >
+                    RolePrimaryKey = #{item.roleforeignkey},
+                </if>
+            </set>
+            where roledistributionkey = #{item.roledistributionkey}
+        </foreach>
+    </update>
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.RoledistributionEO" >
+    update ROLEDISTRIBUTION
+    <set >
+      <if test="rolefunctionkey != null" >
+        rolefunctionkey = #{rolefunctionkey},
+      </if>
+      <if test="roleforeignkey != null" >
+          RolePrimaryKey = #{roleforeignkey},
+      </if>
+    </set>
+     where roledistributionkey = #{roledistributionkey}
+  </update>
+
+  <!-- 根据id查询 ROLEDISTRIBUTION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ROLEDISTRIBUTION
+     where roledistributionkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ROLEDISTRIBUTION
+     where roledistributionkey = #{value}
+
+  </delete>
+
+    <!-- 删除记录通过角色id -->
+    <delete id="deleteByRoleprimarykey" parameterType="java.util.List">
+        delete from ROLEDISTRIBUTION
+        where RolePrimaryKey IN
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+
+    </delete>
+    <!--通过功能名称查询权限的所有信息-->
+    <select id="getFunctionByName" resultMap="RolefunctionEOtMap" parameterType="java.util.List">
+        SELECT role.*,functionname FROM ROLEFUNCTION role JOIN "FUNCTION" fun ON role.Functionkey = fun.Functionkey
+        WHERE 1=1 AND fun.Functionname IN
+        <foreach collection="list" item="item" separator="," index="index" close=")" open="(">
+            #{item.functionname}
+        </foreach>
+    </select>
+    <!--通过角色id查询角色功能-->
+    <select id="getRolefunctionByRoleId" resultMap="RolefunctionEOtMap" parameterType="java.lang.String">
+        SELECT role.*,functionname FROM ROLEFUNCTION role JOIN ROLEDISTRIBUTION dis ON role.roleFunctionkey=dis.roleFunctionkey
+        JOIN function fun ON fun.Functionkey=role.Functionkey
+        WHERE dis.RolePrimaryKey = #{roleprimarykey}
+    </select>
+  <!-- ROLEDISTRIBUTION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ROLEDISTRIBUTION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ROLEDISTRIBUTION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ROLEDISTRIBUTION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ROLEDISTRIBUTION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

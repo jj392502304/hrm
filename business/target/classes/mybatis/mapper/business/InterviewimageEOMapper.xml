@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.InterviewimageEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.InterviewimageEO" >
+    <id column="interviewimagekey" property="interviewimagekey" />
+    <result column="interviewrecordskey" property="interviewrecordskey" />
+    <result column="imageurl" property="imageurl" />
+    <result column="imagetitle" property="imagetitle" />
+  </resultMap>
+
+  <!-- INTERVIEWIMAGE table all fields -->
+  <sql id="Base_Column_List" >
+     interviewimagekey, interviewrecordskey, imageurl, imagetitle
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="interviewimagekey != null" >
+        and interviewimagekey ${interviewimagekeyOperator} #{interviewimagekey}
+      </if>
+      <if test="interviewrecordskey != null" >
+        and interviewrecordskey ${interviewrecordskeyOperator} #{interviewrecordskey}
+      </if>
+      <if test="imageurl != null" >
+        and imageurl ${imageurlOperator} #{imageurl}
+      </if>
+      <if test="imagetitle != null" >
+        and imagetitle ${imagetitleOperator} #{imagetitle}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.InterviewimageEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="interviewimagekey">
+        SELECT SEQ_INTERVIEWIMAGE.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into INTERVIEWIMAGE(<include refid="Base_Column_List" />)
+    values (#{interviewimagekey, jdbcType=VARCHAR}, #{interviewrecordskey, jdbcType=VARCHAR}, #{imageurl, jdbcType=VARCHAR}, #{imagetitle, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.InterviewimageEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="interviewimagekey">
+        SELECT SEQ_INTERVIEWIMAGE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into INTERVIEWIMAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="interviewimagekey != null" >interviewimagekey,</if>
+                <if test="interviewrecordskey != null" >interviewrecordskey,</if>
+                <if test="imageurl != null" >imageurl,</if>
+                <if test="imagetitle != null" >imagetitle,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="interviewimagekey != null" >#{interviewimagekey, jdbcType=VARCHAR},</if>
+                <if test="interviewrecordskey != null" >#{interviewrecordskey, jdbcType=VARCHAR},</if>
+                <if test="imageurl != null" >#{imageurl, jdbcType=VARCHAR},</if>
+                <if test="imagetitle != null" >#{imagetitle, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.InterviewimageEO" >
+    update INTERVIEWIMAGE
+       set  interviewrecordskey = #{interviewrecordskey},
+            imageurl = #{imageurl},
+            imagetitle = #{imagetitle}
+     where  interviewimagekey = #{interviewimagekey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.InterviewimageEO" >
+    update INTERVIEWIMAGE
+    <set >
+      <if test="interviewrecordskey != null" >
+        interviewrecordskey = #{interviewrecordskey},
+      </if>
+      <if test="imageurl != null" >
+        imageurl = #{imageurl},
+      </if>
+      <if test="imagetitle != null" >
+        imagetitle = #{imagetitle},
+      </if>
+    </set>
+     where interviewimagekey = #{interviewimagekey}
+  </update>
+
+  <!-- 根据id查询 INTERVIEWIMAGE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from INTERVIEWIMAGE
+     where interviewimagekey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from INTERVIEWIMAGE
+     where interviewimagekey = #{value}
+
+  </delete>
+
+  <!-- INTERVIEWIMAGE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from INTERVIEWIMAGE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询INTERVIEWIMAGE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from INTERVIEWIMAGE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from INTERVIEWIMAGE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

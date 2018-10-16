@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.RecruitmentinformationEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.business.entity.RecruitmentinformationEO">
+        <result column="istemplate" property="istemplate"/>
+        <result column="procedurekey" property="procedurekey"/>
+        <result column="personnewskeyid" property="personnewskeyid"/>
+        <result column="personnewskey" property="personnewskey"/>
+        <result column="recruitmentcode" property="recruitmentcode"/>
+        <result column="recruitmentname" property="recruitmentname"/>
+        <result column="expirytime" property="expirytime"/>
+        <result column="hiringmanager" property="hiringmanager"/>
+        <result column="worknature" property="worknature"/>
+        <result column="pkresumescore" property="pkresumescore"/>
+        <result column="mobileapppkapplicationtemplate" property="mobileapppkapplicationtemplate"/>
+        <result column="onlineapppkapplicationtemplate" property="onlineapppkapplicationtemplate"/>
+        <result column="contracttypr" property="contracttypr"/>
+        <result column="education" property="education"/>
+        <result column="personnewsid" property="personnewsid"/>
+        <result column="procedureid" property="procedureid"/>
+        <result column="downtime" property="downtime"/>
+        <result column="departmentprimarykey" property="departmentprimarykey"/>
+        <result column="interviewplacekey" property="interviewplacekey"/>
+        <result column="arrivaldate" property="arrivaldate"/>
+        <result column="distributionchannel" property="distributionchannel"/>
+        <result column="qualification" property="qualification"/>
+        <result column="professionalduties" property="professionalduties"/>
+        <result column="salaryupline" property="salaryupline"/>
+        <result column="salarybottomline" property="salarybottomline"/>
+        <result column="jobtype" property="jobtype"/>
+        <result column="workingplace" property="workingplace"/>
+        <result column="releasetime" property="releasetime"/>
+        <result column="creationtime" property="creationtime"/>
+        <result column="isrelease" property="isrelease"/>
+        <result column="issubmit" property="issubmit"/>
+        <result column="recruitmentrequirements" property="recruitmentrequirements"/>
+        <result column="recruitmentnumber" property="recruitmentnumber"/>
+        <result column="recruitmenttime" property="recruitmenttime"/>
+        <result column="recruitmenttype" property="recruitmenttype"/>
+        <result column="pkprojectmanagement" property="pkprojectmanagement"/>
+        <result column="pkrecruitmentinformation" property="pkrecruitmentinformation"/>
+        <result column="textName" property="textName"/>
+    </resultMap>
+
+    <!-- RECRUITMENTINFORMATION table all fields -->
+    <sql id="Base_Column_List">
+     istemplate, procedurekey, personnewskeyid, personnewskey, recruitmentcode, recruitmentname, expirytime, hiringmanager, worknature, pkresumescore, mobileapppkapplicationtemplate, onlineapppkapplicationtemplate, contracttypr, education, personnewsid, procedureid, downtime, departmentprimarykey, interviewplacekey, arrivaldate, distributionchannel, qualification, professionalduties, salaryupline, salarybottomline, jobtype, workingplace, releasetime, creationtime, isrelease, issubmit, recruitmentrequirements, recruitmentnumber, recruitmenttime, recruitmenttype, pkprojectmanagement, pkrecruitmentinformation
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="istemplate != null">
+                and istemplate ${istemplateOperator} #{istemplate}
+            </if>
+            <if test="procedurekey != null">
+                and procedurekey ${procedurekeyOperator} #{procedurekey}
+            </if>
+            <if test="personnewskeyid != null">
+                and personnewskeyid ${personnewskeyidOperator} #{personnewskeyid}
+            </if>
+            <if test="personnewskey != null">
+                and personnewskey ${personnewskeyOperator} #{personnewskey}
+            </if>
+            <if test="recruitmentcode != null">
+                and recruitmentcode ${recruitmentcodeOperator} #{recruitmentcode}
+            </if>
+            <if test="recruitmentname != null">
+                and recruitmentname ${recruitmentnameOperator} #{recruitmentname}
+            </if>
+            <if test="expirytime != null">
+                and expirytime ${expirytimeOperator} #{expirytime}
+            </if>
+            <if test="expirytime1 != null">
+                and expirytime &gt;= #{expirytime1}
+            </if>
+            <if test="expirytime2 != null">
+                and expirytime &lt;= #{expirytime2}
+            </if>
+            <if test="hiringmanager != null">
+                and hiringmanager ${hiringmanagerOperator} #{hiringmanager}
+            </if>
+            <if test="worknature != null">
+                and worknature ${worknatureOperator} #{worknature}
+            </if>
+            <if test="pkresumescore != null">
+                and pkresumescore ${pkresumescoreOperator} #{pkresumescore}
+            </if>
+            <if test="mobileapppkapplicationtemplate != null">
+                and mobileapppkapplicationtemplate ${mobileapppkapplicationtemplateOperator}
+                #{mobileapppkapplicationtemplate}
+            </if>
+            <if test="onlineapppkapplicationtemplate != null">
+                and onlineapppkapplicationtemplate ${onlineapppkapplicationtemplateOperator}
+                #{onlineapppkapplicationtemplate}
+            </if>
+            <if test="contracttypr != null">
+                and contracttypr ${contracttyprOperator} #{contracttypr}
+            </if>
+            <if test="education != null">
+                and education ${educationOperator} #{education}
+            </if>
+            <if test="personnewsid != null">
+                and personnewsid ${personnewsidOperator} #{personnewsid}
+            </if>
+            <if test="procedureid != null">
+                and procedureid ${procedureidOperator} #{procedureid}
+            </if>
+            <if test="downtime != null">
+                and downtime ${downtimeOperator} #{downtime}
+            </if>
+            <if test="downtime1 != null">
+                and downtime &gt;= #{downtime1}
+            </if>
+            <if test="downtime2 != null">
+                and downtime &lt;= #{downtime2}
+            </if>
+            <if test="departmentprimarykey != null">
+                and departmentprimarykey ${departmentprimarykeyOperator} #{departmentprimarykey}
+            </if>
+            <if test="interviewplacekey != null">
+                and interviewplacekey ${interviewplacekeyOperator} #{interviewplacekey}
+            </if>
+            <if test="arrivaldate != null">
+                and arrivaldate ${arrivaldateOperator} #{arrivaldate}
+            </if>
+            <if test="arrivaldate1 != null">
+                and arrivaldate &gt;= #{arrivaldate1}
+            </if>
+            <if test="arrivaldate2 != null">
+                and arrivaldate &lt;= #{arrivaldate2}
+            </if>
+            <if test="distributionchannel != null">
+                and distributionchannel ${distributionchannelOperator} #{distributionchannel}
+            </if>
+            <if test="qualification != null">
+                and qualification ${qualificationOperator} #{qualification}
+            </if>
+            <if test="professionalduties != null">
+                and professionalduties ${professionaldutiesOperator} #{professionalduties}
+            </if>
+            <if test="salaryupline != null">
+                and salaryupline ${salaryuplineOperator} #{salaryupline}
+            </if>
+            <if test="salarybottomline != null">
+                and salarybottomline ${salarybottomlineOperator} #{salarybottomline}
+            </if>
+            <if test="jobtype != null">
+                and jobtype ${jobtypeOperator} #{jobtype}
+            </if>
+            <if test="workingplace != null">
+                and workingplace ${workingplaceOperator} #{workingplace}
+            </if>
+            <if test="releasetime != null">
+                and releasetime ${releasetimeOperator} #{releasetime}
+            </if>
+            <if test="releasetime1 != null">
+                and releasetime &gt;= #{releasetime1}
+            </if>
+            <if test="releasetime2 != null">
+                and releasetime &lt;= #{releasetime2}
+            </if>
+            <if test="creationtime != null">
+                and creationtime ${creationtimeOperator} #{creationtime}
+            </if>
+            <if test="creationtime1 != null">
+                and creationtime &gt;= #{creationtime1}
+            </if>
+            <if test="creationtime2 != null">
+                and creationtime &lt;= #{creationtime2}
+            </if>
+            <if test="isrelease != null">
+                and isrelease ${isreleaseOperator} #{isrelease}
+            </if>
+            <if test="issubmit != null">
+                and issubmit ${issubmitOperator} #{issubmit}
+            </if>
+            <if test="recruitmentrequirements != null">
+                and recruitmentrequirements ${recruitmentrequirementsOperator} #{recruitmentrequirements}
+            </if>
+            <if test="recruitmentnumber != null">
+                and recruitmentnumber ${recruitmentnumberOperator} #{recruitmentnumber}
+            </if>
+            <if test="recruitmenttime != null">
+                and recruitmenttime ${recruitmenttimeOperator} #{recruitmenttime}
+            </if>
+            <if test="recruitmenttime1 != null">
+                and recruitmenttime &gt;= #{recruitmenttime1}
+            </if>
+            <if test="recruitmenttime2 != null">
+                and recruitmenttime &lt;= #{recruitmenttime2}
+            </if>
+            <if test="recruitmenttype != null">
+                and recruitmenttype ${recruitmenttypeOperator} #{recruitmenttype}
+            </if>
+            <if test="pkprojectmanagement != null">
+                and pkprojectmanagement ${pkprojectmanagementOperator} #{pkprojectmanagement}
+            </if>
+            <if test="pkrecruitmentinformation != null">
+                and pkrecruitmentinformation ${pkrecruitmentinformationOperator} #{pkrecruitmentinformation}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.business.entity.RecruitmentinformationEO">
+        insert into RECRUITMENTINFORMATION(<include refid="Base_Column_List"/>)
+        values (#{istemplate, jdbcType=INTEGER}, #{procedurekey, jdbcType=VARCHAR},
+        #{personnewskeyid, jdbcType=VARCHAR}, #{personnewskey, jdbcType=VARCHAR}, #{recruitmentcode, jdbcType=VARCHAR},
+        #{recruitmentname, jdbcType=VARCHAR}, #{expirytime, jdbcType=TIMESTAMP}, #{hiringmanager, jdbcType=VARCHAR},
+        #{worknature, jdbcType=INTEGER}, #{pkresumescore, jdbcType=VARCHAR},
+        #{mobileapppkapplicationtemplate, jdbcType=VARCHAR}, #{onlineapppkapplicationtemplate, jdbcType=VARCHAR},
+        #{contracttypr, jdbcType=INTEGER}, #{education, jdbcType=INTEGER}, #{personnewsid, jdbcType=VARCHAR},
+        #{procedureid, jdbcType=VARCHAR}, #{downtime, jdbcType=TIMESTAMP}, #{departmentprimarykey, jdbcType=VARCHAR},
+        #{interviewplacekey, jdbcType=VARCHAR}, #{arrivaldate, jdbcType=TIMESTAMP},
+        #{distributionchannel, jdbcType=VARCHAR}, #{qualification, jdbcType=VARCHAR},
+        #{professionalduties, jdbcType=VARCHAR}, #{salaryupline, jdbcType=VARCHAR},
+        #{salarybottomline, jdbcType=VARCHAR}, #{jobtype, jdbcType=VARCHAR}, #{workingplace, jdbcType=VARCHAR},
+        #{releasetime, jdbcType=TIMESTAMP}, #{creationtime, jdbcType=TIMESTAMP}, #{isrelease, jdbcType=INTEGER},
+        #{issubmit, jdbcType=INTEGER}, #{recruitmentrequirements, jdbcType=VARCHAR},
+        #{recruitmentnumber, jdbcType=INTEGER}, #{recruitmenttime, jdbcType=TIMESTAMP},
+        #{recruitmenttype, jdbcType=INTEGER}, #{pkprojectmanagement, jdbcType=VARCHAR},
+        #{pkrecruitmentinformation, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.business.entity.RecruitmentinformationEO">
+        insert into RECRUITMENTINFORMATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="istemplate != null">istemplate,</if>
+            <if test="procedurekey != null">procedurekey,</if>
+            <if test="personnewskeyid != null">personnewskeyid,</if>
+            <if test="personnewskey != null">personnewskey,</if>
+            <if test="recruitmentcode != null">recruitmentcode,</if>
+            <if test="recruitmentname != null">recruitmentname,</if>
+            <if test="expirytime != null">expirytime,</if>
+            <if test="hiringmanager != null">hiringmanager,</if>
+            <if test="worknature != null">worknature,</if>
+            <if test="pkresumescore != null">pkresumescore,</if>
+            <if test="mobileapppkapplicationtemplate != null">mobileapppkapplicationtemplate,</if>
+            <if test="onlineapppkapplicationtemplate != null">onlineapppkapplicationtemplate,</if>
+            <if test="contracttypr != null">contracttypr,</if>
+            <if test="education != null">education,</if>
+            <if test="personnewsid != null">personnewsid,</if>
+            <if test="procedureid != null">procedureid,</if>
+            <if test="downtime != null">downtime,</if>
+            <if test="departmentprimarykey != null">departmentprimarykey,</if>
+            <if test="interviewplacekey != null">interviewplacekey,</if>
+            <if test="arrivaldate != null">arrivaldate,</if>
+            <if test="distributionchannel != null">distributionchannel,</if>
+            <if test="qualification != null">qualification,</if>
+            <if test="professionalduties != null">professionalduties,</if>
+            <if test="salaryupline != null">salaryupline,</if>
+            <if test="salarybottomline != null">salarybottomline,</if>
+            <if test="jobtype != null">jobtype,</if>
+            <if test="workingplace != null">workingplace,</if>
+            <if test="releasetime != null">releasetime,</if>
+            <if test="creationtime != null">creationtime,</if>
+            <if test="isrelease != null">isrelease,</if>
+            <if test="issubmit != null">issubmit,</if>
+            <if test="recruitmentrequirements != null">recruitmentrequirements,</if>
+            <if test="recruitmentnumber != null">recruitmentnumber,</if>
+            <if test="recruitmenttime != null">recruitmenttime,</if>
+            <if test="recruitmenttype != null">recruitmenttype,</if>
+            <if test="pkprojectmanagement != null">pkprojectmanagement,</if>
+            <if test="pkrecruitmentinformation != null">pkrecruitmentinformation,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="istemplate != null">#{istemplate, jdbcType=INTEGER},</if>
+            <if test="procedurekey != null">#{procedurekey, jdbcType=VARCHAR},</if>
+            <if test="personnewskeyid != null">#{personnewskeyid, jdbcType=VARCHAR},</if>
+            <if test="personnewskey != null">#{personnewskey, jdbcType=VARCHAR},</if>
+            <if test="recruitmentcode != null">#{recruitmentcode, jdbcType=VARCHAR},</if>
+            <if test="recruitmentname != null">#{recruitmentname, jdbcType=VARCHAR},</if>
+            <if test="expirytime != null">#{expirytime, jdbcType=TIMESTAMP},</if>
+            <if test="hiringmanager != null">#{hiringmanager, jdbcType=VARCHAR},</if>
+            <if test="worknature != null">#{worknature, jdbcType=INTEGER},</if>
+            <if test="pkresumescore != null">#{pkresumescore, jdbcType=VARCHAR},</if>
+            <if test="mobileapppkapplicationtemplate != null">#{mobileapppkapplicationtemplate, jdbcType=VARCHAR},</if>
+            <if test="onlineapppkapplicationtemplate != null">#{onlineapppkapplicationtemplate, jdbcType=VARCHAR},</if>
+            <if test="contracttypr != null">#{contracttypr, jdbcType=INTEGER},</if>
+            <if test="education != null">#{education, jdbcType=INTEGER},</if>
+            <if test="personnewsid != null">#{personnewsid, jdbcType=VARCHAR},</if>
+            <if test="procedureid != null">#{procedureid, jdbcType=VARCHAR},</if>
+            <if test="downtime != null">#{downtime, jdbcType=TIMESTAMP},</if>
+            <if test="departmentprimarykey != null">#{departmentprimarykey, jdbcType=VARCHAR},</if>
+            <if test="interviewplacekey != null">#{interviewplacekey, jdbcType=VARCHAR},</if>
+            <if test="arrivaldate != null">#{arrivaldate, jdbcType=TIMESTAMP},</if>
+            <if test="distributionchannel != null">#{distributionchannel, jdbcType=VARCHAR},</if>
+            <if test="qualification != null">#{qualification, jdbcType=VARCHAR},</if>
+            <if test="professionalduties != null">#{professionalduties, jdbcType=VARCHAR},</if>
+            <if test="salaryupline != null">#{salaryupline, jdbcType=VARCHAR},</if>
+            <if test="salarybottomline != null">#{salarybottomline, jdbcType=VARCHAR},</if>
+            <if test="jobtype != null">#{jobtype, jdbcType=VARCHAR},</if>
+            <if test="workingplace != null">#{workingplace, jdbcType=VARCHAR},</if>
+            <if test="releasetime != null">#{releasetime, jdbcType=TIMESTAMP},</if>
+            <if test="creationtime != null">#{creationtime, jdbcType=TIMESTAMP},</if>
+            <if test="isrelease != null">#{isrelease, jdbcType=INTEGER},</if>
+            <if test="issubmit != null">#{issubmit, jdbcType=INTEGER},</if>
+            <if test="recruitmentrequirements != null">#{recruitmentrequirements, jdbcType=VARCHAR},</if>
+            <if test="recruitmentnumber != null">#{recruitmentnumber, jdbcType=INTEGER},</if>
+            <if test="recruitmenttime != null">#{recruitmenttime, jdbcType=TIMESTAMP},</if>
+            <if test="recruitmenttype != null">#{recruitmenttype, jdbcType=INTEGER},</if>
+            <if test="pkprojectmanagement != null">#{pkprojectmanagement, jdbcType=VARCHAR},</if>
+            <if test="pkrecruitmentinformation != null">#{pkrecruitmentinformation, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- RECRUITMENTINFORMATION 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from RECRUITMENTINFORMATION
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询RECRUITMENTINFORMATION列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from RECRUITMENTINFORMATION
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from RECRUITMENTINFORMATION
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+    <!--
+    <select id="getRecruitmentType" resultType="com.adc.da.business.entity.RecruitmentinformationEO" parameterType="java.lang.Integer">
+     select a.RECRUITMENTTYPE,(
+       CASE
+        a.RECRUITMENTTYPE
+        WHEN  1 then '校园招聘'
+        WHEN  2 then '社会招聘'
+        WHEN  3 then '实习生招聘'
+        WHEN  4 then '博士后工作站'
+       END
+
+      )textName
+      from(
+       SELECT  DISTINCT  recruitmenttype from RECRUITMENTINFORMATION ORDER BY RECRUITMENTTYPE
+      )a
+    </select>-->
+
+    <select id="getRecruitmentTypes" resultType="java.lang.Integer">
+        select DISTINCT
+    </select>
+
+
+</mapper>

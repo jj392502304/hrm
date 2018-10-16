@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.CityinformationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.CityinformationEO" >
+    <id column="pkcity" property="pkcity" />
+    <result column="cityname" property="cityname" />
+    <result column="isenabled" property="isenabled" />
+    <result column="applicationtime" property="applicationtime" />
+    <result column="cityintroduction" property="cityintroduction" />
+    <result column="citycoordinates" property="citycoordinates" />
+  </resultMap>
+
+  <!-- CITYINFORMATION table all fields -->
+  <sql id="Base_Column_List" >
+     citycoordinates, cityintroduction, applicationtime, isenabled, cityname, pkcity
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkcity != null" >
+        and pkcity ${pkcityOperator} #{pkcity}
+      </if>
+      <if test="cityname != null" >
+        and cityname ${citynameOperator} #{cityname}
+      </if>
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+      <if test="applicationtime != null" >
+        and applicationtime ${applicationtimeOperator} #{applicationtime}
+      </if>
+      <if test="applicationtime1 != null" >
+        and applicationtime &gt;= #{applicationtime1}
+      </if>
+      <if test="applicationtime2 != null" >
+        and applicationtime &lt;= #{applicationtime2}
+      </if>
+      <if test="cityintroduction != null" >
+        and cityintroduction ${cityintroductionOperator} #{cityintroduction}
+      </if>
+      <if test="citycoordinates != null" >
+        and citycoordinates ${citycoordinatesOperator} #{citycoordinates}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.CityinformationEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkcity">
+        SELECT SEQ_CITYINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into CITYINFORMATION(<include refid="Base_Column_List" />)
+    values (#{pkcity, jdbcType=VARCHAR}, #{cityname, jdbcType=VARCHAR}, #{isenabled, jdbcType=INTEGER}, #{applicationtime, jdbcType=TIMESTAMP}, #{cityintroduction, jdbcType=VARCHAR}, #{citycoordinates, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.CityinformationEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkcity">
+        SELECT SEQ_CITYINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into CITYINFORMATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkcity != null" >pkcity,</if>
+                <if test="cityname != null" >cityname,</if>
+                <if test="isenabled != null" >isenabled,</if>
+                <if test="applicationtime != null" >applicationtime,</if>
+                <if test="cityintroduction != null" >cityintroduction,</if>
+                <if test="citycoordinates != null" >citycoordinates,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkcity != null" >#{pkcity, jdbcType=VARCHAR},</if>
+                <if test="cityname != null" >#{cityname, jdbcType=VARCHAR},</if>
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+                <if test="applicationtime != null" >#{applicationtime, jdbcType=TIMESTAMP},</if>
+                <if test="cityintroduction != null" >#{cityintroduction, jdbcType=VARCHAR},</if>
+                <if test="citycoordinates != null" >#{citycoordinates, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.CityinformationEO" >
+    update CITYINFORMATION
+       set  cityname = #{cityname},
+            isenabled = #{isenabled},
+            applicationtime = #{applicationtime},
+            cityintroduction = #{cityintroduction},
+            citycoordinates = #{citycoordinates}
+     where  pkcity = #{pkcity}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.CityinformationEO" >
+    update CITYINFORMATION
+    <set >
+      <if test="cityname != null" >
+        cityname = #{cityname},
+      </if>
+      <if test="isenabled != null" >
+        isenabled = #{isenabled},
+      </if>
+      <if test="applicationtime != null" >
+        applicationtime = #{applicationtime},
+      </if>
+      <if test="cityintroduction != null" >
+        cityintroduction = #{cityintroduction},
+      </if>
+      <if test="citycoordinates != null" >
+        citycoordinates = #{citycoordinates},
+      </if>
+    </set>
+     where pkcity = #{pkcity}
+  </update>
+
+  <!-- 根据id查询 CITYINFORMATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from CITYINFORMATION
+     where pkcity = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CITYINFORMATION
+     where pkcity = #{value}
+
+  </delete>
+
+  <!-- CITYINFORMATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from CITYINFORMATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询CITYINFORMATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from CITYINFORMATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from CITYINFORMATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

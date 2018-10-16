@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.PracticeexperienceEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.PracticeexperienceEO" >
+    <result column="pkpracticeexperience" property="pkpracticeexperience" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="unitname" property="unitname" />
+    <result column="practisetime" property="practisetime" />
+    <result column="practisecontent" property="practisecontent" />
+  </resultMap>
+
+  <!-- PRACTICEEXPERIENCE table all fields -->
+  <sql id="Base_Column_List" >
+     pkpracticeexperience, applymemberkey, unitname, practisetime, practisecontent
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkpracticeexperience != null" >
+        and pkpracticeexperience ${pkpracticeexperienceOperator} #{pkpracticeexperience}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="unitname != null" >
+        and unitname ${unitnameOperator} #{unitname}
+      </if>
+      <if test="practisetime != null" >
+        and practisetime ${practisetimeOperator} #{practisetime}
+      </if>
+      <if test="practisetime1 != null" >
+        and practisetime &gt;= #{practisetime1}
+      </if>
+      <if test="practisetime2 != null" >
+        and practisetime &lt;= #{practisetime2}
+      </if>
+      <if test="practisecontent != null" >
+        and practisecontent ${practisecontentOperator} #{practisecontent}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.PracticeexperienceEO" >
+    insert into PRACTICEEXPERIENCE(<include refid="Base_Column_List" />)
+    values (#{pkpracticeexperience, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{unitname, jdbcType=VARCHAR}, #{practisetime, jdbcType=TIMESTAMP}, #{practisecontent, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.PracticeexperienceEO" >
+        insert into PRACTICEEXPERIENCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkpracticeexperience != null" >pkpracticeexperience,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="unitname != null" >unitname,</if>
+                <if test="practisetime != null" >practisetime,</if>
+                <if test="practisecontent != null" >practisecontent,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkpracticeexperience != null" >#{pkpracticeexperience, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="unitname != null" >#{unitname, jdbcType=VARCHAR},</if>
+                <if test="practisetime != null" >#{practisetime, jdbcType=TIMESTAMP},</if>
+                <if test="practisecontent != null" >#{practisecontent, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- PRACTICEEXPERIENCE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PRACTICEEXPERIENCE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PRACTICEEXPERIENCE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PRACTICEEXPERIENCE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PRACTICEEXPERIENCE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

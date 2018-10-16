@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/adc-da-file/adc-da-file.iml" filepath="$PROJECT_DIR$/adc-da-file/adc-da-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adc-da-login/adc-da-login.iml" filepath="$PROJECT_DIR$/adc-da-login/adc-da-login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adc-da-main/adc-da-main.iml" filepath="$PROJECT_DIR$/adc-da-main/adc-da-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adc-da-quartz/adc-da-quartz.iml" filepath="$PROJECT_DIR$/adc-da-quartz/adc-da-quartz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adc-da-sys/adc-da-sys.iml" filepath="$PROJECT_DIR$/adc-da-sys/adc-da-sys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adc-da-ui/adc-da-ui.iml" filepath="$PROJECT_DIR$/adc-da-ui/adc-da-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/business/business.iml" filepath="$PROJECT_DIR$/business/business.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/manager.iml" filepath="$PROJECT_DIR$/manager/manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recruitment.iml" filepath="$PROJECT_DIR$/recruitment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workflow/workflow.iml" filepath="$PROJECT_DIR$/workflow/workflow.iml" />
+    </modules>
+  </component>
+</project>

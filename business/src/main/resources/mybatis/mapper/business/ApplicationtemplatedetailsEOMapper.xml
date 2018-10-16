@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.ApplicationtemplatedetailsEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.ApplicationtemplatedetailsEO" >
+    <id column="pkapplicationtemplatedetails" property="pkapplicationtemplatedetails" />
+    <result column="pkapplicationinformationmodule" property="pkapplicationinformationmodule" />
+    <result column="pkapplicationinfomation" property="pkapplicationinfomation" />
+    <result column="isenabled" property="isenabled" />
+  </resultMap>
+
+  <!-- APPLICATIONTEMPLATEDETAILS table all fields -->
+  <sql id="Base_Column_List" >
+     pkapplicationtemplatedetails, pkapplicationinformationmodule, pkapplicationinfomation, isenabled
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkapplicationtemplatedetails != null" >
+        and pkapplicationtemplatedetails ${pkapplicationtemplatedetailsOperator} #{pkapplicationtemplatedetails}
+      </if>
+      <if test="pkapplicationinformationmodule != null" >
+        and pkapplicationinformationmodule ${pkapplicationinformationmoduleOperator} #{pkapplicationinformationmodule}
+      </if>
+      <if test="pkapplicationinfomation != null" >
+        and pkapplicationinfomation ${pkapplicationinfomationOperator} #{pkapplicationinfomation}
+      </if>
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.ApplicationtemplatedetailsEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkapplicationtemplatedetails">
+        SELECT SEQ_APPLICATIONTEMPLATEDETAILS.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into APPLICATIONTEMPLATEDETAILS(<include refid="Base_Column_List" />)
+    values (#{pkapplicationtemplatedetails, jdbcType=VARCHAR}, #{pkapplicationinformationmodule, jdbcType=VARCHAR}, #{pkapplicationinfomation, jdbcType=VARCHAR}, #{isenabled, jdbcType=INTEGER})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.ApplicationtemplatedetailsEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkapplicationtemplatedetails">
+        SELECT SEQ_APPLICATIONTEMPLATEDETAILS.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into APPLICATIONTEMPLATEDETAILS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkapplicationtemplatedetails != null" >pkapplicationtemplatedetails,</if>
+                <if test="pkapplicationinformationmodule != null" >pkapplicationinformationmodule,</if>
+                <if test="pkapplicationinfomation != null" >pkapplicationinfomation,</if>
+                <if test="isenabled != null" >isenabled,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkapplicationtemplatedetails != null" >#{pkapplicationtemplatedetails, jdbcType=VARCHAR},</if>
+                <if test="pkapplicationinformationmodule != null" >#{pkapplicationinformationmodule, jdbcType=VARCHAR},</if>
+                <if test="pkapplicationinfomation != null" >#{pkapplicationinfomation, jdbcType=VARCHAR},</if>
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.ApplicationtemplatedetailsEO" >
+    update APPLICATIONTEMPLATEDETAILS
+       set  pkapplicationinformationmodule = #{pkapplicationinformationmodule},
+            pkapplicationinfomation = #{pkapplicationinfomation},
+            isenabled = #{isenabled}
+     where  pkapplicationtemplatedetails = #{pkapplicationtemplatedetails}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.ApplicationtemplatedetailsEO" >
+    update APPLICATIONTEMPLATEDETAILS
+    <set >
+      <if test="pkapplicationinformationmodule != null" >
+        pkapplicationinformationmodule = #{pkapplicationinformationmodule},
+      </if>
+      <if test="pkapplicationinfomation != null" >
+        pkapplicationinfomation = #{pkapplicationinfomation},
+      </if>
+      <if test="isenabled != null" >
+        isenabled = #{isenabled},
+      </if>
+    </set>
+     where pkapplicationtemplatedetails = #{pkapplicationtemplatedetails}
+  </update>
+
+  <!-- 根据id查询 APPLICATIONTEMPLATEDETAILS -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from APPLICATIONTEMPLATEDETAILS
+     where pkapplicationtemplatedetails = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from APPLICATIONTEMPLATEDETAILS
+     where pkapplicationtemplatedetails = #{value}
+
+  </delete>
+
+  <!-- APPLICATIONTEMPLATEDETAILS 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from APPLICATIONTEMPLATEDETAILS
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询APPLICATIONTEMPLATEDETAILS列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from APPLICATIONTEMPLATEDETAILS
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from APPLICATIONTEMPLATEDETAILS
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

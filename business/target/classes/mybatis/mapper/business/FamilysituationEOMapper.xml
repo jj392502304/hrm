@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.FamilysituationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.FamilysituationEO" >
+    <id column="pkfamilysituation" property="pkfamilysituation" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="name" property="name" />
+    <result column="relation" property="relation" />
+    <result column="workunit" property="workunit" />
+    <result column="duty" property="duty" />
+    <result column="phone" property="phone" />
+    <result column="age" property="age" />
+    <result column="political" property="political" />
+  </resultMap>
+
+  <!-- FAMILYSITUATION table all fields -->
+  <sql id="Base_Column_List" >
+     pkfamilysituation, applymemberkey, name, relation, workunit, duty, phone, age, political
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkfamilysituation != null" >
+        and pkfamilysituation ${pkfamilysituationOperator} #{pkfamilysituation}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="name != null" >
+        and name ${nameOperator} #{name}
+      </if>
+      <if test="relation != null" >
+        and relation ${relationOperator} #{relation}
+      </if>
+      <if test="workunit != null" >
+        and workunit ${workunitOperator} #{workunit}
+      </if>
+      <if test="duty != null" >
+        and duty ${dutyOperator} #{duty}
+      </if>
+      <if test="phone != null" >
+        and phone ${phoneOperator} #{phone}
+      </if>
+      <if test="age != null" >
+        and age ${ageOperator} #{age}
+      </if>
+      <if test="political != null" >
+        and political ${politicalOperator} #{political}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.FamilysituationEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkfamilysituation">
+        SELECT SEQ_FAMILYSITUATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into FAMILYSITUATION(<include refid="Base_Column_List" />)
+    values (#{pkfamilysituation, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{relation, jdbcType=VARCHAR}, #{workunit, jdbcType=VARCHAR}, #{duty, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{age, jdbcType=INTEGER}, #{political, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.FamilysituationEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkfamilysituation">
+        SELECT SEQ_FAMILYSITUATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into FAMILYSITUATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkfamilysituation != null" >pkfamilysituation,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="name != null" >name,</if>
+                <if test="relation != null" >relation,</if>
+                <if test="workunit != null" >workunit,</if>
+                <if test="duty != null" >duty,</if>
+                <if test="phone != null" >phone,</if>
+                <if test="age != null" >age,</if>
+                <if test="political != null" >political,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkfamilysituation != null" >#{pkfamilysituation, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="name != null" >#{name, jdbcType=VARCHAR},</if>
+                <if test="relation != null" >#{relation, jdbcType=VARCHAR},</if>
+                <if test="workunit != null" >#{workunit, jdbcType=VARCHAR},</if>
+                <if test="duty != null" >#{duty, jdbcType=VARCHAR},</if>
+                <if test="phone != null" >#{phone, jdbcType=VARCHAR},</if>
+                <if test="age != null" >#{age, jdbcType=INTEGER},</if>
+                <if test="political != null" >#{political, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.FamilysituationEO" >
+    update FAMILYSITUATION
+       set  applymemberkey = #{applymemberkey},
+            name = #{name},
+            relation = #{relation},
+            workunit = #{workunit},
+            duty = #{duty},
+            phone = #{phone},
+            age = #{age},
+            political = #{political}
+     where  pkfamilysituation = #{pkfamilysituation}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.FamilysituationEO" >
+    update FAMILYSITUATION
+    <set >
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="relation != null" >
+        relation = #{relation},
+      </if>
+      <if test="workunit != null" >
+        workunit = #{workunit},
+      </if>
+      <if test="duty != null" >
+        duty = #{duty},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone},
+      </if>
+      <if test="age != null" >
+        age = #{age},
+      </if>
+      <if test="political != null" >
+        political = #{political},
+      </if>
+    </set>
+     where pkfamilysituation = #{pkfamilysituation}
+  </update>
+
+  <!-- 根据id查询 FAMILYSITUATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from FAMILYSITUATION
+     where pkfamilysituation = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from FAMILYSITUATION
+     where pkfamilysituation = #{value}
+
+  </delete>
+
+  <!-- FAMILYSITUATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from FAMILYSITUATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询FAMILYSITUATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from FAMILYSITUATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from FAMILYSITUATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

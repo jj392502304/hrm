@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.adc.da.quartz.dao.ScheduleJobEODao">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.adc.da.quartz.entity.ScheduleJobEO">
+		<id column="job_id" property="jobId" />
+		<result column="bean_name" property="beanName" />
+		<result column="method_name" property="methodName" />
+		<result column="cron_expression" property="cronExpression" />
+		<result column="params" property="params" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<!-- TS_USER table all fields -->
+	<sql id="Base_Column_List">
+		job_id, bean_name, method_name, cron_expression, params, status, remark,
+		create_time
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="Base_Where_Clause">
+		where 1=1
+		<trim suffixOverrides=",">
+			<if test="jobId != null">
+				and job_id ${jobIdOperator} #{jobId}
+			</if>
+			<if test="beanName != null">
+				and bean_name ${beanNameOperator} #{beanName}
+			</if>
+			<if test="methodName != null">
+				and method_name ${methodNameOperator} #{methodName}
+			</if>
+			<if test="cronExpression != null">
+				and cron_expression ${cronExpressionOperator} #{cronExpression}
+			</if>
+			<if test="params != null">
+				and params ${paramsOperator} #{params}
+			</if>
+			<if test="status != null">
+				and status ${statusOperator} #{status}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.adc.da.quartz.entity.ScheduleJobEO">
+		<selectKey resultType="Integer" keyProperty="jobId" order="BEFORE">
+			select SEQ_SCHEDULE_JOB.nextval as jobId from dual
+		</selectKey>
+		insert into SCHEDULE_JOB
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			job_id,
+			<if test="beanName != null">
+				bean_name,
+			</if>
+			<if test="methodName != null">
+				method_name,
+			</if>
+			<if test="cronExpression != null">
+				cron_expression,
+			</if>
+			<if test="params != null">
+				params,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="createTime != null">
+				create_Time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{jobId},
+			<if test="beanName != null">
+				#{beanName, jdbcType=VARCHAR},
+			</if>
+			<if test="methodName != null">
+				#{methodName, jdbcType=VARCHAR},
+			</if>
+			<if test="cronExpression != null">
+				#{cronExpression, jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				#{params, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status, jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime, jdbcType=DATE},
+			</if>
+		</trim>
+		<!-- (<include refid="Base_Column_List" />) -->
+		<!-- values (#{usid}, #{account}, #{delFlag}, #{password}, #{usname}, #{createTime}) -->
+	</insert>
+
+	<!-- 根据pk，修改记录 -->
+	<update id="updateByPrimaryKey" parameterType="com.adc.da.quartz.entity.ScheduleJobEO">
+		update SCHEDULE_JOB
+		set bean_name = #{beanName},
+		method_name = #{methodName},
+		cron_expression = #{cronExpression},
+		params = #{params},
+		status = #{status},
+		remark = #{remark},
+		create_time = #{createTime}
+		where job_id = #{jobId}
+	</update>
+
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.adc.da.quartz.entity.ScheduleJobEO">
+		update SCHEDULE_JOB
+		<set>
+			<if test="beanName != null">
+				bean_name = #{beanName},
+			</if>
+			<if test="methodName != null">
+				method_name = #{methodName},
+			</if>
+			<if test="cronExpression != null">
+				cron_expression = #{cronExpression},
+			</if>
+			<if test="params != null">
+				params = #{params},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</set>
+		where job_id = #{jobId}
+	</update>
+
+	<!-- 批量更新状态 -->
+	<update id="updateBatch">
+		update schedule_job set status = #{status} where job_id in
+		<foreach item="jobId" collection="list" open="(" separator=","
+			close=")">
+			#{jobId}
+		</foreach>
+	</update>
+
+	<!-- 根据id查询 SCHEDULE_JOB -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from SCHEDULE_JOB
+		where job_id = #{value}
+
+	</select>
+
+	<!-- 删除记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from SCHEDULE_JOB
+		where job_id = #{value}
+	</delete>
+
+	<!-- TS_USER 列表总数 -->
+	<select id="queryByCount" resultType="java.lang.Integer"
+		parameterType="com.adc.da.base.page.BasePage">
+		select count(1) from SCHEDULE_JOB
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<!-- 查询SCHEDULE_JOB列表 -->
+	<select id="queryByList" resultMap="BaseResultMap"
+		parameterType="com.adc.da.base.page.BasePage">
+		select
+		<include refid="Base_Column_List" />
+		from SCHEDULE_JOB
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+	</select>
+
+	<select id="queryAllJobs" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from SCHEDULE_JOB
+	</select>
+
+	<select id="queryByPage" resultMap="BaseResultMap"
+		parameterType="com.adc.da.base.page.BasePage">
+		select
+		<include refid="Base_Column_List" />
+		from
+		(select tmp_tb.* , rownum rn from
+		(select
+		<include refid="Base_Column_List" />
+		from SCHEDULE_JOB
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		) tmp_tb where rownum &lt;= ${pager.endIndex})
+		where rn &gt;= ${pager.startIndex}
+	</select>
+</mapper>

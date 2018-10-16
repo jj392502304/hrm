@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.MailsendlogEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.MailsendlogEO" >
+    <id column="pkmailsendlog" property="pkmailsendlog" />
+    <result column="mailsendingtime" property="mailsendingtime" />
+    <result column="mailsendingstatus" property="mailsendingstatus" />
+    <result column="mailreturnstatus" property="mailreturnstatus" />
+    <result column="pkmailmoduletemplate" property="pkmailmoduletemplate" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="returntime" property="returntime" />
+  </resultMap>
+
+  <!-- MAILSENDLOG table all fields -->
+  <sql id="Base_Column_List" >
+     pkmailsendlog, mailsendingtime, mailsendingstatus, mailreturnstatus, pkmailmoduletemplate, applymemberkey, returntime
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkmailsendlog != null" >
+        and pkmailsendlog ${pkmailsendlogOperator} #{pkmailsendlog}
+      </if>
+      <if test="mailsendingtime != null" >
+        and mailsendingtime ${mailsendingtimeOperator} #{mailsendingtime}
+      </if>
+      <if test="mailsendingtime1 != null" >
+        and mailsendingtime &gt;= #{mailsendingtime1}
+      </if>
+      <if test="mailsendingtime2 != null" >
+        and mailsendingtime &lt;= #{mailsendingtime2}
+      </if>
+      <if test="mailsendingstatus != null" >
+        and mailsendingstatus ${mailsendingstatusOperator} #{mailsendingstatus}
+      </if>
+      <if test="mailreturnstatus != null" >
+        and mailreturnstatus ${mailreturnstatusOperator} #{mailreturnstatus}
+      </if>
+      <if test="pkmailmoduletemplate != null" >
+        and pkmailmoduletemplate ${pkmailmoduletemplateOperator} #{pkmailmoduletemplate}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="returntime != null" >
+        and returntime ${returntimeOperator} #{returntime}
+      </if>
+      <if test="returntime1 != null" >
+        and returntime &gt;= #{returntime1}
+      </if>
+      <if test="returntime2 != null" >
+        and returntime &lt;= #{returntime2}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.MailsendlogEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkmailsendlog">
+        SELECT SEQ_MAILSENDLOG.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into MAILSENDLOG(<include refid="Base_Column_List" />)
+    values (#{pkmailsendlog, jdbcType=VARCHAR}, #{mailsendingtime, jdbcType=TIMESTAMP}, #{mailsendingstatus, jdbcType=INTEGER}, #{mailreturnstatus, jdbcType=INTEGER}, #{pkmailmoduletemplate, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{returntime, jdbcType=TIMESTAMP})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.MailsendlogEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkmailsendlog">
+        SELECT SEQ_MAILSENDLOG.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into MAILSENDLOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkmailsendlog != null" >pkmailsendlog,</if>
+                <if test="mailsendingtime != null" >mailsendingtime,</if>
+                <if test="mailsendingstatus != null" >mailsendingstatus,</if>
+                <if test="mailreturnstatus != null" >mailreturnstatus,</if>
+                <if test="pkmailmoduletemplate != null" >pkmailmoduletemplate,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="returntime != null" >returntime,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkmailsendlog != null" >#{pkmailsendlog, jdbcType=VARCHAR},</if>
+                <if test="mailsendingtime != null" >#{mailsendingtime, jdbcType=TIMESTAMP},</if>
+                <if test="mailsendingstatus != null" >#{mailsendingstatus, jdbcType=INTEGER},</if>
+                <if test="mailreturnstatus != null" >#{mailreturnstatus, jdbcType=INTEGER},</if>
+                <if test="pkmailmoduletemplate != null" >#{pkmailmoduletemplate, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="returntime != null" >#{returntime, jdbcType=TIMESTAMP},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.MailsendlogEO" >
+    update MAILSENDLOG
+       set  mailsendingtime = #{mailsendingtime},
+            mailsendingstatus = #{mailsendingstatus},
+            mailreturnstatus = #{mailreturnstatus},
+            pkmailmoduletemplate = #{pkmailmoduletemplate},
+            applymemberkey = #{applymemberkey},
+            returntime = #{returntime}
+     where  pkmailsendlog = #{pkmailsendlog}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.MailsendlogEO" >
+    update MAILSENDLOG
+    <set >
+      <if test="mailsendingtime != null" >
+        mailsendingtime = #{mailsendingtime},
+      </if>
+      <if test="mailsendingstatus != null" >
+        mailsendingstatus = #{mailsendingstatus},
+      </if>
+      <if test="mailreturnstatus != null" >
+        mailreturnstatus = #{mailreturnstatus},
+      </if>
+      <if test="pkmailmoduletemplate != null" >
+        pkmailmoduletemplate = #{pkmailmoduletemplate},
+      </if>
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="returntime != null" >
+        returntime = #{returntime},
+      </if>
+    </set>
+     where pkmailsendlog = #{pkmailsendlog}
+  </update>
+
+  <!-- 根据id查询 MAILSENDLOG -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from MAILSENDLOG
+     where pkmailsendlog = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from MAILSENDLOG
+     where pkmailsendlog = #{value}
+
+  </delete>
+
+  <!-- MAILSENDLOG 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from MAILSENDLOG
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询MAILSENDLOG列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from MAILSENDLOG
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from MAILSENDLOG
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

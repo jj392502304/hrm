@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.OperationflowEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.OperationflowEO" >
+    <id column="procedurekey" property="procedurekey" />
+    <result column="modulename" property="modulename" />
+    <result column="isenabled" property="isenabled" />
+    <result column="remarks" property="remarks" />
+    <result column="createtime" property="createtime" />
+    <result column="founder" property="founder" />
+    <result column="flowtype" property="flowtype" />
+  </resultMap>
+
+  <!-- OPERATIONFLOW table all fields -->
+  <sql id="Base_Column_List" >
+     procedurekey, modulename, isenabled, remarks, createtime, founder, flowtype
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="procedurekey != null" >
+        and procedurekey ${procedurekeyOperator} #{procedurekey}
+      </if>
+      <if test="modulename != null" >
+        and modulename ${modulenameOperator} #{modulename}
+      </if>
+      <if test="isenabled != null" >
+        and isenabled ${isenabledOperator} #{isenabled}
+      </if>
+      <if test="remarks != null" >
+        and remarks ${remarksOperator} #{remarks}
+      </if>
+      <if test="createtime != null" >
+        and createtime ${createtimeOperator} #{createtime}
+      </if>
+      <if test="createtime1 != null" >
+        and createtime &gt;= #{createtime1}
+      </if>
+      <if test="createtime2 != null" >
+        and createtime &lt;= #{createtime2}
+      </if>
+      <if test="founder != null" >
+        and founder ${founderOperator} #{founder}
+      </if>
+      <if test="flowtype != null" >
+        and flowtype ${flowtypeOperator} #{flowtype}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.OperationflowEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="procedurekey">
+        SELECT SEQ_OPERATIONFLOW.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into OPERATIONFLOW(<include refid="Base_Column_List" />)
+    values (#{procedurekey, jdbcType=VARCHAR}, #{modulename, jdbcType=VARCHAR}, #{isenabled, jdbcType=INTEGER}, #{remarks, jdbcType=VARCHAR}, #{createtime, jdbcType=TIMESTAMP}, #{founder, jdbcType=VARCHAR}, #{flowtype, jdbcType=INTEGER})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.OperationflowEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="procedurekey">
+        SELECT SEQ_OPERATIONFLOW.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into OPERATIONFLOW
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="procedurekey != null" >procedurekey,</if>
+                <if test="modulename != null" >modulename,</if>
+                <if test="isenabled != null" >isenabled,</if>
+                <if test="remarks != null" >remarks,</if>
+                <if test="createtime != null" >createtime,</if>
+                <if test="founder != null" >founder,</if>
+                <if test="flowtype != null" >flowtype,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="procedurekey != null" >#{procedurekey, jdbcType=VARCHAR},</if>
+                <if test="modulename != null" >#{modulename, jdbcType=VARCHAR},</if>
+                <if test="isenabled != null" >#{isenabled, jdbcType=INTEGER},</if>
+                <if test="remarks != null" >#{remarks, jdbcType=VARCHAR},</if>
+                <if test="createtime != null" >#{createtime, jdbcType=TIMESTAMP},</if>
+                <if test="founder != null" >#{founder, jdbcType=VARCHAR},</if>
+                <if test="flowtype != null" >#{flowtype, jdbcType=INTEGER},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.OperationflowEO" >
+    update OPERATIONFLOW
+       set  modulename = #{modulename},
+            isenabled = #{isenabled},
+            remarks = #{remarks},
+            createtime = #{createtime},
+            founder = #{founder},
+            flowtype = #{flowtype}
+     where  procedurekey = #{procedurekey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.OperationflowEO" >
+    update OPERATIONFLOW
+    <set >
+      <if test="modulename != null" >
+        modulename = #{modulename},
+      </if>
+      <if test="isenabled != null" >
+        isenabled = #{isenabled},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime},
+      </if>
+      <if test="founder != null" >
+        founder = #{founder},
+      </if>
+      <if test="flowtype != null" >
+        flowtype = #{flowtype},
+      </if>
+    </set>
+     where procedurekey = #{procedurekey}
+  </update>
+
+  <!-- 根据id查询 OPERATIONFLOW -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from OPERATIONFLOW
+     where procedurekey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from OPERATIONFLOW
+     where procedurekey = #{value}
+
+  </delete>
+
+  <!-- OPERATIONFLOW 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from OPERATIONFLOW
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询OPERATIONFLOW列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from OPERATIONFLOW
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from OPERATIONFLOW
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

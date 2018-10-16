@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.ApplicationinformationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.ApplicationinformationEO" >
+    <id column="pkapplicationinfomation" property="pkapplicationinfomation" />
+    <result column="chinesefield" property="chinesefield" />
+    <result column="englishfield" property="englishfield" />
+    <result column="spacelabel" property="spacelabel" />
+    <result column="verificationstandard" property="verificationstandard" />
+    <result column="available" property="available" />
+    <result column="controlinitialvalue" property="controlinitialvalue" />
+    <result column="classification" property="classification" />
+  </resultMap>
+
+  <!-- APPLICATIONINFORMATION table all fields -->
+  <sql id="Base_Column_List" >
+     pkapplicationinfomation, chinesefield, englishfield, spacelabel, verificationstandard, available, controlinitialvalue, classification
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkapplicationinfomation != null" >
+        and pkapplicationinfomation ${pkapplicationinfomationOperator} #{pkapplicationinfomation}
+      </if>
+      <if test="chinesefield != null" >
+        and chinesefield ${chinesefieldOperator} #{chinesefield}
+      </if>
+      <if test="englishfield != null" >
+        and englishfield ${englishfieldOperator} #{englishfield}
+      </if>
+      <if test="spacelabel != null" >
+        and spacelabel ${spacelabelOperator} #{spacelabel}
+      </if>
+      <if test="verificationstandard != null" >
+        and verificationstandard ${verificationstandardOperator} #{verificationstandard}
+      </if>
+      <if test="available != null" >
+        and available ${availableOperator} #{available}
+      </if>
+      <if test="controlinitialvalue != null" >
+        and controlinitialvalue ${controlinitialvalueOperator} #{controlinitialvalue}
+      </if>
+      <if test="classification != null" >
+        and classification ${classificationOperator} #{classification}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.ApplicationinformationEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkapplicationinfomation">
+        SELECT SEQ_APPLICATIONINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into APPLICATIONINFORMATION(<include refid="Base_Column_List" />)
+    values (#{pkapplicationinfomation, jdbcType=VARCHAR}, #{chinesefield, jdbcType=VARCHAR}, #{englishfield, jdbcType=VARCHAR}, #{spacelabel, jdbcType=INTEGER}, #{verificationstandard, jdbcType=VARCHAR}, #{available, jdbcType=INTEGER}, #{controlinitialvalue, jdbcType=VARCHAR}, #{classification, jdbcType=INTEGER})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.ApplicationinformationEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkapplicationinfomation">
+        SELECT SEQ_APPLICATIONINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into APPLICATIONINFORMATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkapplicationinfomation != null" >pkapplicationinfomation,</if>
+                <if test="chinesefield != null" >chinesefield,</if>
+                <if test="englishfield != null" >englishfield,</if>
+                <if test="spacelabel != null" >spacelabel,</if>
+                <if test="verificationstandard != null" >verificationstandard,</if>
+                <if test="available != null" >available,</if>
+                <if test="controlinitialvalue != null" >controlinitialvalue,</if>
+                <if test="classification != null" >classification,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkapplicationinfomation != null" >#{pkapplicationinfomation, jdbcType=VARCHAR},</if>
+                <if test="chinesefield != null" >#{chinesefield, jdbcType=VARCHAR},</if>
+                <if test="englishfield != null" >#{englishfield, jdbcType=VARCHAR},</if>
+                <if test="spacelabel != null" >#{spacelabel, jdbcType=INTEGER},</if>
+                <if test="verificationstandard != null" >#{verificationstandard, jdbcType=VARCHAR},</if>
+                <if test="available != null" >#{available, jdbcType=INTEGER},</if>
+                <if test="controlinitialvalue != null" >#{controlinitialvalue, jdbcType=VARCHAR},</if>
+                <if test="classification != null" >#{classification, jdbcType=INTEGER},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.ApplicationinformationEO" >
+    update APPLICATIONINFORMATION
+       set  chinesefield = #{chinesefield},
+            englishfield = #{englishfield},
+            spacelabel = #{spacelabel},
+            verificationstandard = #{verificationstandard},
+            available = #{available},
+            controlinitialvalue = #{controlinitialvalue},
+            classification = #{classification}
+     where  pkapplicationinfomation = #{pkapplicationinfomation}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.ApplicationinformationEO" >
+    update APPLICATIONINFORMATION
+    <set >
+      <if test="chinesefield != null" >
+        chinesefield = #{chinesefield},
+      </if>
+      <if test="englishfield != null" >
+        englishfield = #{englishfield},
+      </if>
+      <if test="spacelabel != null" >
+        spacelabel = #{spacelabel},
+      </if>
+      <if test="verificationstandard != null" >
+        verificationstandard = #{verificationstandard},
+      </if>
+      <if test="available != null" >
+        available = #{available},
+      </if>
+      <if test="controlinitialvalue != null" >
+        controlinitialvalue = #{controlinitialvalue},
+      </if>
+      <if test="classification != null" >
+        classification = #{classification},
+      </if>
+    </set>
+     where pkapplicationinfomation = #{pkapplicationinfomation}
+  </update>
+
+  <!-- 根据id查询 APPLICATIONINFORMATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from APPLICATIONINFORMATION
+     where pkapplicationinfomation = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from APPLICATIONINFORMATION
+     where pkapplicationinfomation = #{value}
+
+  </delete>
+
+  <!-- APPLICATIONINFORMATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from APPLICATIONINFORMATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询APPLICATIONINFORMATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from APPLICATIONINFORMATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from APPLICATIONINFORMATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

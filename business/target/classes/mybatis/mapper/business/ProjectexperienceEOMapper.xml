@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.ProjectexperienceEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.ProjectexperienceEO" >
+    <id column="pkprojectexperience" property="pkprojectexperience" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="entryname" property="entryname" />
+    <result column="experientialtime" property="experientialtime" />
+    <result column="description" property="description" />
+    <result column="projectresponsibilities" property="projectresponsibilities" />
+    <result column="post" property="post" />
+    <result column="projectman" property="projectman" />
+    <result column="projectresults" property="projectresults" />
+  </resultMap>
+
+  <!-- PROJECTEXPERIENCE table all fields -->
+  <sql id="Base_Column_List" >
+     pkprojectexperience, applymemberkey, entryname, experientialtime, description, projectresponsibilities, post, projectman, projectresults
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkprojectexperience != null" >
+        and pkprojectexperience ${pkprojectexperienceOperator} #{pkprojectexperience}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="entryname != null" >
+        and entryname ${entrynameOperator} #{entryname}
+      </if>
+      <if test="experientialtime != null" >
+        and experientialtime ${experientialtimeOperator} #{experientialtime}
+      </if>
+      <if test="experientialtime1 != null" >
+        and experientialtime &gt;= #{experientialtime1}
+      </if>
+      <if test="experientialtime2 != null" >
+        and experientialtime &lt;= #{experientialtime2}
+      </if>
+      <if test="description != null" >
+        and description ${descriptionOperator} #{description}
+      </if>
+      <if test="projectresponsibilities != null" >
+        and projectresponsibilities ${projectresponsibilitiesOperator} #{projectresponsibilities}
+      </if>
+      <if test="post != null" >
+        and post ${postOperator} #{post}
+      </if>
+      <if test="projectman != null" >
+        and projectman ${projectmanOperator} #{projectman}
+      </if>
+      <if test="projectresults != null" >
+        and projectresults ${projectresultsOperator} #{projectresults}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.ProjectexperienceEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkprojectexperience">
+        SELECT SEQ_PROJECTEXPERIENCE.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into PROJECTEXPERIENCE(<include refid="Base_Column_List" />)
+    values (#{pkprojectexperience, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{entryname, jdbcType=VARCHAR}, #{experientialtime, jdbcType=TIMESTAMP}, #{description, jdbcType=VARCHAR}, #{projectresponsibilities, jdbcType=VARCHAR}, #{post, jdbcType=VARCHAR}, #{projectman, jdbcType=INTEGER}, #{projectresults, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.ProjectexperienceEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkprojectexperience">
+        SELECT SEQ_PROJECTEXPERIENCE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PROJECTEXPERIENCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkprojectexperience != null" >pkprojectexperience,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="entryname != null" >entryname,</if>
+                <if test="experientialtime != null" >experientialtime,</if>
+                <if test="description != null" >description,</if>
+                <if test="projectresponsibilities != null" >projectresponsibilities,</if>
+                <if test="post != null" >post,</if>
+                <if test="projectman != null" >projectman,</if>
+                <if test="projectresults != null" >projectresults,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkprojectexperience != null" >#{pkprojectexperience, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="entryname != null" >#{entryname, jdbcType=VARCHAR},</if>
+                <if test="experientialtime != null" >#{experientialtime, jdbcType=TIMESTAMP},</if>
+                <if test="description != null" >#{description, jdbcType=VARCHAR},</if>
+                <if test="projectresponsibilities != null" >#{projectresponsibilities, jdbcType=VARCHAR},</if>
+                <if test="post != null" >#{post, jdbcType=VARCHAR},</if>
+                <if test="projectman != null" >#{projectman, jdbcType=INTEGER},</if>
+                <if test="projectresults != null" >#{projectresults, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.ProjectexperienceEO" >
+    update PROJECTEXPERIENCE
+       set  applymemberkey = #{applymemberkey},
+            entryname = #{entryname},
+            experientialtime = #{experientialtime},
+            description = #{description},
+            projectresponsibilities = #{projectresponsibilities},
+            post = #{post},
+            projectman = #{projectman},
+            projectresults = #{projectresults}
+     where  pkprojectexperience = #{pkprojectexperience}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.ProjectexperienceEO" >
+    update PROJECTEXPERIENCE
+    <set >
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="entryname != null" >
+        entryname = #{entryname},
+      </if>
+      <if test="experientialtime != null" >
+        experientialtime = #{experientialtime},
+      </if>
+      <if test="description != null" >
+        description = #{description},
+      </if>
+      <if test="projectresponsibilities != null" >
+        projectresponsibilities = #{projectresponsibilities},
+      </if>
+      <if test="post != null" >
+        post = #{post},
+      </if>
+      <if test="projectman != null" >
+        projectman = #{projectman},
+      </if>
+      <if test="projectresults != null" >
+        projectresults = #{projectresults},
+      </if>
+    </set>
+     where pkprojectexperience = #{pkprojectexperience}
+  </update>
+
+  <!-- 根据id查询 PROJECTEXPERIENCE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PROJECTEXPERIENCE
+     where pkprojectexperience = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PROJECTEXPERIENCE
+     where pkprojectexperience = #{value}
+
+  </delete>
+
+  <!-- PROJECTEXPERIENCE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PROJECTEXPERIENCE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PROJECTEXPERIENCE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PROJECTEXPERIENCE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PROJECTEXPERIENCE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

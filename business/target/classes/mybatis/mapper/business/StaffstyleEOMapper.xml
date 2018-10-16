@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.StaffstyleEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.StaffstyleEO" >
+    <result column="pkstaffstyle" property="pkstaffstyle" />
+    <result column="title" property="title" />
+    <result column="content" property="content" />
+    <result column="isrelease" property="isrelease" />
+    <result column="applicationtime" property="applicationtime" />
+    <result column="releasetime" property="releasetime" />
+    <result column="imageurl" property="imageurl" />
+    <result column="videourl" property="videourl" />
+    <result column="sequencenumber" property="sequencenumber" />
+  </resultMap>
+
+    <!-- STAFFSTYLE table all fields -->
+    <sql id="Base_Column_List">
+     pkstaffstyle, title, content, isrelease, applicationtime, releasetime , imageurl, videourl, sequencenumber
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="pkstaffstyle != null">
+                and pkstaffstyle ${pkstaffstyleOperator} #{pkstaffstyle}
+            </if>
+            <if test="title != null">
+                and title ${titleOperator} #{title}
+            </if>
+            <if test="content != null">
+                and content ${contentOperator} #{content}
+            </if>
+            <if test="isrelease != null">
+                and isrelease ${isreleaseOperator} #{isrelease}
+            </if>
+            <if test="applicationtime != null">
+                and applicationtime ${applicationtimeOperator} #{applicationtime}
+            </if>
+            <if test="applicationtime1 != null">
+                and applicationtime &gt;= #{applicationtime1}
+            </if>
+            <if test="applicationtime2 != null">
+                and applicationtime &lt;= #{applicationtime2}
+            </if>
+            <if test="releasetime != null">
+                and releasetime ${releasetimeOperator} to_date(#{releasetime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="releasetime1 != null">
+                and releasetime &gt;= to_date(#{releasetime1},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="releasetime2 != null">
+                and releasetime &lt;= to_date(#{releasetime2},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="imageurl != null">
+                and imageurl ${imageurlOperator} #{imageurl}
+            </if>
+            <if test="videourl != null">
+                and videourl ${videourlOperator} #{videourl}
+            </if>
+            <if test="sequencenumber != null">
+                and sequencenumber ${sequencenumberOperator} #{sequencenumber}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.business.entity.StaffstyleEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkstaffstyle">
+            SELECT SEQ_STAFFSTYLE.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into STAFFSTYLE(<include refid="Base_Column_List"/>)
+        values (#{pkstaffstyle, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR},
+        #{isrelease, jdbcType=INTEGER}, #{applicationtime, jdbcType=TIMESTAMP}, #{releasetime, jdbcType=TIMESTAMP},
+        #{imageurl, jdbcType=VARCHAR}, #{videourl, jdbcType=VARCHAR}, #{sequencenumber, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.business.entity.StaffstyleEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkstaffstyle">
+        SELECT SEQ_STAFFSTYLE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into STAFFSTYLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkstaffstyle != null">pkstaffstyle,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="isrelease != null">isrelease,</if>
+            <if test="applicationtime != null">applicationtime,</if>
+            <if test="releasetime != null">releasetime,</if>
+            <if test="imageurl != null">imageurl,</if>
+            <if test="videourl != null">videourl,</if>
+            <if test="sequencenumber != null">sequencenumber,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkstaffstyle != null">#{pkstaffstyle, jdbcType=VARCHAR},</if>
+            <if test="title != null">#{title, jdbcType=VARCHAR},</if>
+            <if test="content != null">#{content, jdbcType=VARCHAR},</if>
+            <if test="isrelease != null">#{isrelease, jdbcType=INTEGER},</if>
+            <if test="applicationtime != null">#{applicationtime, jdbcType=TIMESTAMP},</if>
+            <if test="releasetime != null">#{releasetime, jdbcType=TIMESTAMP},</if>
+            <if test="imageurl != null">#{imageurl, jdbcType=VARCHAR},</if>
+            <if test="videourl != null">#{videourl, jdbcType=VARCHAR},</if>
+            <if test="sequencenumber != null">#{sequencenumber, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.StaffstyleEO">
+    update STAFFSTYLE
+       set  title = #{title},
+            content = #{content},
+            isrelease = #{isrelease},
+            applicationtime = #{applicationtime},
+            releasetime = #{releasetime},
+            imageurl = #{imageurl},
+            videourl = #{videourl},
+            sequencenumber = #{sequencenumber}
+     where  pkstaffstyle = #{pkstaffstyle}
+  </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.StaffstyleEO">
+        update STAFFSTYLE
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="isrelease != null">
+                isrelease = #{isrelease},
+            </if>
+            <if test="applicationtime != null">
+                applicationtime = #{applicationtime},
+            </if>
+            <if test="releasetime != null">
+                releasetime = #{releasetime},
+            </if>
+            <if test="imageurl != null">
+                imageurl = #{imageurl},
+            </if>
+            <if test="videourl != null">
+                videourl = #{videourl},
+            </if>
+            <if test="sequencenumber != null">
+                sequencenumber = #{sequencenumber},
+            </if>
+        </set>
+        where pkstaffstyle = #{pkstaffstyle}
+    </update>
+
+    <!-- 根据id查询 STAFFSTYLE -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from STAFFSTYLE
+        where pkstaffstyle = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from STAFFSTYLE
+     where pkstaffstyle = #{value}
+
+  </delete>
+
+    <!--批量删除员工风采中员工信息 -->
+    <delete id="deleteStaffList" parameterType="java.util.List">
+        delete from STAFFSTYLE
+        <where>
+            <if test="pkStaffs != null">
+                pkstaffstyle IN
+                <foreach close=")" separator="," open="(" item="item" index="index" collection="pkStaffs">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+    <!-- STAFFSTYLE 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from STAFFSTYLE
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询STAFFSTYLE列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from STAFFSTYLE
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from STAFFSTYLE
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+    <select id="queryByList1" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select PKSTAFFSTYLE,TITLE,APPLICATIONTIME,RELEASETIME,CONTENT,SEQUENCENUMBER from STAFFSTYLE
+        <include refid="Base_Where_Clause"/>
+        AND ISRELEASE=0
+        order by SEQUENCENUMBER desc
+
+    </select>
+</mapper>

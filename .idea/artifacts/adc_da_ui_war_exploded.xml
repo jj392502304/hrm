@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="adc-da-ui:war exploded">
+    <output-path>$PROJECT_DIR$/adc-da-ui/target/adc-da-ui</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="adc-da-ui" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/adc-da-ui/target/adc-da-ui/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="adc-da-ui/web/Web" />
+    </root>
+  </artifact>
+</component>

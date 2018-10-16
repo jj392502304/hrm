@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.JobintensionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.JobintensionEO" >
+    <id column="pkjobintention" property="pkjobintention" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="engagedinindustry" property="engagedinindustry" />
+    <result column="nowcity" property="nowcity" />
+    <result column="monthlysalary" property="monthlysalary" />
+    <result column="expectedwork" property="expectedwork" />
+    <result column="expectedcareer" property="expectedcareer" />
+    <result column="expectedcity" property="expectedcity" />
+    <result column="expectedsalary" property="expectedsalary" />
+    <result column="arrivaltime" property="arrivaltime" />
+    <result column="jobstate" property="jobstate" />
+    <result column="engagedcareer" property="engagedcareer" />
+  </resultMap>
+
+  <!-- JOBINTENSION table all fields -->
+  <sql id="Base_Column_List" >
+     pkjobintention, applymemberkey, engagedinindustry, nowcity, monthlysalary, expectedwork, expectedcareer, expectedcity, expectedsalary, arrivaltime, jobstate, engagedcareer
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkjobintention != null" >
+        and pkjobintention ${pkjobintentionOperator} #{pkjobintention}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="engagedinindustry != null" >
+        and engagedinindustry ${engagedinindustryOperator} #{engagedinindustry}
+      </if>
+      <if test="nowcity != null" >
+        and nowcity ${nowcityOperator} #{nowcity}
+      </if>
+      <if test="monthlysalary != null" >
+        and monthlysalary ${monthlysalaryOperator} #{monthlysalary}
+      </if>
+      <if test="expectedwork != null" >
+        and expectedwork ${expectedworkOperator} #{expectedwork}
+      </if>
+      <if test="expectedcareer != null" >
+        and expectedcareer ${expectedcareerOperator} #{expectedcareer}
+      </if>
+      <if test="expectedcity != null" >
+        and expectedcity ${expectedcityOperator} #{expectedcity}
+      </if>
+      <if test="expectedsalary != null" >
+        and expectedsalary ${expectedsalaryOperator} #{expectedsalary}
+      </if>
+      <if test="arrivaltime != null" >
+        and arrivaltime ${arrivaltimeOperator} #{arrivaltime}
+      </if>
+      <if test="arrivaltime1 != null" >
+        and arrivaltime &gt;= #{arrivaltime1}
+      </if>
+      <if test="arrivaltime2 != null" >
+        and arrivaltime &lt;= #{arrivaltime2}
+      </if>
+      <if test="jobstate != null" >
+        and jobstate ${jobstateOperator} #{jobstate}
+      </if>
+      <if test="engagedcareer != null" >
+        and engagedcareer ${engagedcareerOperator} #{engagedcareer}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.JobintensionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkjobintention">
+        SELECT SEQ_JOBINTENSION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into JOBINTENSION(<include refid="Base_Column_List" />)
+    values (#{pkjobintention, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{engagedinindustry, jdbcType=VARCHAR}, #{nowcity, jdbcType=VARCHAR}, #{monthlysalary, jdbcType=VARCHAR}, #{expectedwork, jdbcType=VARCHAR}, #{expectedcareer, jdbcType=VARCHAR}, #{expectedcity, jdbcType=VARCHAR}, #{expectedsalary, jdbcType=VARCHAR}, #{arrivaltime, jdbcType=TIMESTAMP}, #{jobstate, jdbcType=VARCHAR}, #{engagedcareer, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.JobintensionEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkjobintention">
+        SELECT SEQ_JOBINTENSION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into JOBINTENSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkjobintention != null" >pkjobintention,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="engagedinindustry != null" >engagedinindustry,</if>
+                <if test="nowcity != null" >nowcity,</if>
+                <if test="monthlysalary != null" >monthlysalary,</if>
+                <if test="expectedwork != null" >expectedwork,</if>
+                <if test="expectedcareer != null" >expectedcareer,</if>
+                <if test="expectedcity != null" >expectedcity,</if>
+                <if test="expectedsalary != null" >expectedsalary,</if>
+                <if test="arrivaltime != null" >arrivaltime,</if>
+                <if test="jobstate != null" >jobstate,</if>
+                <if test="engagedcareer != null" >engagedcareer,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkjobintention != null" >#{pkjobintention, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="engagedinindustry != null" >#{engagedinindustry, jdbcType=VARCHAR},</if>
+                <if test="nowcity != null" >#{nowcity, jdbcType=VARCHAR},</if>
+                <if test="monthlysalary != null" >#{monthlysalary, jdbcType=VARCHAR},</if>
+                <if test="expectedwork != null" >#{expectedwork, jdbcType=VARCHAR},</if>
+                <if test="expectedcareer != null" >#{expectedcareer, jdbcType=VARCHAR},</if>
+                <if test="expectedcity != null" >#{expectedcity, jdbcType=VARCHAR},</if>
+                <if test="expectedsalary != null" >#{expectedsalary, jdbcType=VARCHAR},</if>
+                <if test="arrivaltime != null" >#{arrivaltime, jdbcType=TIMESTAMP},</if>
+                <if test="jobstate != null" >#{jobstate, jdbcType=VARCHAR},</if>
+                <if test="engagedcareer != null" >#{engagedcareer, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.JobintensionEO" >
+    update JOBINTENSION
+       set  applymemberkey = #{applymemberkey},
+            engagedinindustry = #{engagedinindustry},
+            nowcity = #{nowcity},
+            monthlysalary = #{monthlysalary},
+            expectedwork = #{expectedwork},
+            expectedcareer = #{expectedcareer},
+            expectedcity = #{expectedcity},
+            expectedsalary = #{expectedsalary},
+            arrivaltime = #{arrivaltime},
+            jobstate = #{jobstate},
+            engagedcareer = #{engagedcareer}
+     where  pkjobintention = #{pkjobintention}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.JobintensionEO" >
+    update JOBINTENSION
+    <set >
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="engagedinindustry != null" >
+        engagedinindustry = #{engagedinindustry},
+      </if>
+      <if test="nowcity != null" >
+        nowcity = #{nowcity},
+      </if>
+      <if test="monthlysalary != null" >
+        monthlysalary = #{monthlysalary},
+      </if>
+      <if test="expectedwork != null" >
+        expectedwork = #{expectedwork},
+      </if>
+      <if test="expectedcareer != null" >
+        expectedcareer = #{expectedcareer},
+      </if>
+      <if test="expectedcity != null" >
+        expectedcity = #{expectedcity},
+      </if>
+      <if test="expectedsalary != null" >
+        expectedsalary = #{expectedsalary},
+      </if>
+      <if test="arrivaltime != null" >
+        arrivaltime = #{arrivaltime},
+      </if>
+      <if test="jobstate != null" >
+        jobstate = #{jobstate},
+      </if>
+      <if test="engagedcareer != null" >
+        engagedcareer = #{engagedcareer},
+      </if>
+    </set>
+     where pkjobintention = #{pkjobintention}
+  </update>
+
+  <!-- 根据id查询 JOBINTENSION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from JOBINTENSION
+     where pkjobintention = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from JOBINTENSION
+     where pkjobintention = #{value}
+
+  </delete>
+
+  <!-- JOBINTENSION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from JOBINTENSION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询JOBINTENSION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from JOBINTENSION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from JOBINTENSION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

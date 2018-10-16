@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.CareertalkEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.CareertalkEO" >
+    <id column="pkcareertalk" property="pkcareertalk" />
+    <result column="city" property="city" />
+    <result column="school" property="school" />
+    <result column="campus" property="campus" />
+    <result column="schooldate" property="schooldate" />
+    <result column="schooltime" property="schooltime" />
+    <result column="area" property="area" />
+    <result column="introduce" property="introduce" />
+    <result column="sequencenumber" property="sequencenumber" />
+    <result column="savetime" property="savetime" />
+  </resultMap>
+
+  <!-- CAREERTALK table all fields -->
+  <sql id="Base_Column_List" >
+     pkcareertalk, city, school, campus, schooldate, schooltime, area, introduce, sequencenumber, savetime
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkcareertalk != null" >
+        and pkcareertalk ${pkcareertalkOperator} #{pkcareertalk}
+      </if>
+      <if test="city != null" >
+        and city ${cityOperator} #{city}
+      </if>
+      <if test="school != null" >
+        and school ${schoolOperator} #{school}
+      </if>
+      <if test="campus != null" >
+        and campus ${campusOperator} #{campus}
+      </if>
+      <if test="schooldate != null" >
+        and schooldate ${schooldateOperator} #{schooldate}
+      </if>
+      <if test="schooldate1 != null" >
+        and schooldate &gt;= #{schooldate1}
+      </if>
+      <if test="schooldate2 != null" >
+        and schooldate &lt;= #{schooldate2}
+      </if>
+      <if test="schooltime != null" >
+        and schooltime ${schooltimeOperator} #{schooltime}
+      </if>
+      <if test="schooltime1 != null" >
+        and schooltime &gt;= #{schooltime1}
+      </if>
+      <if test="schooltime2 != null" >
+        and schooltime &lt;= #{schooltime2}
+      </if>
+      <if test="area != null" >
+        and area ${areaOperator} #{area}
+      </if>
+      <if test="introduce != null" >
+        and introduce ${introduceOperator} #{introduce}
+      </if>
+      <if test="sequencenumber != null" >
+        and sequencenumber ${sequencenumberOperator} #{sequencenumber}
+      </if>
+      <if test="savetime != null" >
+        and savetime ${savetimeOperator} #{savetime}
+      </if>
+      <if test="savetime1 != null" >
+        and savetime &gt;= #{savetime1}
+      </if>
+      <if test="savetime2 != null" >
+        and savetime &lt;= #{savetime2}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.CareertalkEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkcareertalk">
+        SELECT SEQ_CAREERTALK.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into CAREERTALK(<include refid="Base_Column_List" />)
+    values (#{pkcareertalk, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{school, jdbcType=VARCHAR}, #{campus, jdbcType=VARCHAR}, #{schooldate, jdbcType=TIMESTAMP}, #{schooltime, jdbcType=TIMESTAMP}, #{area, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR}, #{sequencenumber, jdbcType=INTEGER}, #{savetime, jdbcType=TIMESTAMP})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.CareertalkEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkcareertalk">
+        SELECT SEQ_CAREERTALK.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into CAREERTALK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkcareertalk != null" >pkcareertalk,</if>
+                <if test="city != null" >city,</if>
+                <if test="school != null" >school,</if>
+                <if test="campus != null" >campus,</if>
+                <if test="schooldate != null" >schooldate,</if>
+                <if test="schooltime != null" >schooltime,</if>
+                <if test="area != null" >area,</if>
+                <if test="introduce != null" >introduce,</if>
+                <if test="sequencenumber != null" >sequencenumber,</if>
+                <if test="savetime != null" >savetime,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkcareertalk != null" >#{pkcareertalk, jdbcType=VARCHAR},</if>
+                <if test="city != null" >#{city, jdbcType=VARCHAR},</if>
+                <if test="school != null" >#{school, jdbcType=VARCHAR},</if>
+                <if test="campus != null" >#{campus, jdbcType=VARCHAR},</if>
+                <if test="schooldate != null" >#{schooldate, jdbcType=TIMESTAMP},</if>
+                <if test="schooltime != null" >#{schooltime, jdbcType=TIMESTAMP},</if>
+                <if test="area != null" >#{area, jdbcType=VARCHAR},</if>
+                <if test="introduce != null" >#{introduce, jdbcType=VARCHAR},</if>
+                <if test="sequencenumber != null" >#{sequencenumber, jdbcType=INTEGER},</if>
+                <if test="savetime != null" >#{savetime, jdbcType=TIMESTAMP},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.CareertalkEO" >
+    update CAREERTALK
+       set  city = #{city},
+            school = #{school},
+            campus = #{campus},
+            schooldate = #{schooldate},
+            schooltime = #{schooltime},
+            area = #{area},
+            introduce = #{introduce},
+            sequencenumber = #{sequencenumber},
+            savetime = #{savetime}
+     where  pkcareertalk = #{pkcareertalk}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.CareertalkEO" >
+    update CAREERTALK
+    <set >
+      <if test="city != null" >
+        city = #{city},
+      </if>
+      <if test="school != null" >
+        school = #{school},
+      </if>
+      <if test="campus != null" >
+        campus = #{campus},
+      </if>
+      <if test="schooldate != null" >
+        schooldate = #{schooldate},
+      </if>
+      <if test="schooltime != null" >
+        schooltime = #{schooltime},
+      </if>
+      <if test="area != null" >
+        area = #{area},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce},
+      </if>
+      <if test="sequencenumber != null" >
+        sequencenumber = #{sequencenumber},
+      </if>
+      <if test="savetime != null" >
+        savetime = #{savetime},
+      </if>
+    </set>
+     where pkcareertalk = #{pkcareertalk}
+  </update>
+
+  <!-- 根据id查询 CAREERTALK -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from CAREERTALK
+     where pkcareertalk = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CAREERTALK
+     where pkcareertalk = #{value}
+
+  </delete>
+
+  <!-- CAREERTALK 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from CAREERTALK
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询CAREERTALK列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from CAREERTALK
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from CAREERTALK
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

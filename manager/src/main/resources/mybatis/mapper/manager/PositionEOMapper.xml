@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.PositionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.PositionEO" >
+    <result column="enadletime" property="enadletime" />
+    <result column="createtime" property="createtime" />
+    <result column="isenable" property="isenable" />
+    <result column="positionname" property="positionname" />
+    <result column="positionkey" property="positionkey" />
+  </resultMap>
+
+  <!-- POSITION table all fields -->
+  <sql id="Base_Column_List" >
+     enadletime, createtime, isenable, positionname, positionkey
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="enadletime != null" >
+        and enadletime ${enadletimeOperator} #{enadletime}
+      </if>
+      <if test="enadletime1 != null" >
+        and enadletime &gt;= #{enadletime1}
+      </if>
+      <if test="enadletime2 != null" >
+        and enadletime &lt;= #{enadletime2}
+      </if>
+      <if test="createtime != null" >
+        and createtime ${createtimeOperator} #{createtime}
+      </if>
+      <if test="createtime1 != null" >
+        and createtime &gt;= #{createtime1}
+      </if>
+      <if test="createtime2 != null" >
+        and createtime &lt;= #{createtime2}
+      </if>
+      <if test="isenable != null" >
+        and isenable ${isenableOperator} #{isenable}
+      </if>
+      <if test="positionname != null" >
+        and positionname ${positionnameOperator} #{positionname}
+      </if>
+      <if test="positionkey != null" >
+        and positionkey ${positionkeyOperator} #{positionkey}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.PositionEO" >
+    insert into POSITION(<include refid="Base_Column_List" />)
+    values (#{enadletime, jdbcType=TIMESTAMP}, #{createtime, jdbcType=TIMESTAMP}, #{isenable, jdbcType=INTEGER}, #{positionname, jdbcType=VARCHAR}, #{positionkey, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.PositionEO" >
+        insert into POSITION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="enadletime != null" >enadletime,</if>
+                <if test="createtime != null" >createtime,</if>
+                <if test="isenable != null" >isenable,</if>
+                <if test="positionname != null" >positionname,</if>
+                <if test="positionkey != null" >positionkey,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="enadletime != null" >#{enadletime, jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null" >#{createtime, jdbcType=TIMESTAMP},</if>
+                <if test="isenable != null" >#{isenable, jdbcType=INTEGER},</if>
+                <if test="positionname != null" >#{positionname, jdbcType=VARCHAR},</if>
+                <if test="positionkey != null" >#{positionkey, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- POSITION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from POSITION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询POSITION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from POSITION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from POSITION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.PersonnewsEODao" >
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap"  type="com.adc.da.manager.entity.PersonnewsEO" >
+        <result column="personnewsid" property="personnewsid" />
+        <result column="personname" property="personname" />
+        <result column="personidnumber" property="personidnumber" />
+        <result column="personsex" property="personsex" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="createtime" property="createtime" />
+        <result column="flag" property="flag" />
+        <result column="downtime" property="downtime" />
+        <result column="personstatus" property="personstatus" />
+        <result column="statuscreatetime" property="statuscreatetime" />
+    </resultMap>
+    <resultMap id="userNewsResultMap"  type="com.adc.da.manager.entity.UserNewsSelectEO" >
+        <result column="personnewsid" property="personnewsid" />
+        <result column="personname" property="personname" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="createtime" property="createtime" jdbcType="DATE"/>
+        <result column="flag" property="flag" />
+        <result column="departmentalname" property="departmentalname" />
+        <result column="accountnumber" property="accountnumber" />
+        <result column="rolename" property="rolename" />
+    </resultMap>
+
+
+    <!-- PERSONNEWS table all fields -->
+    <sql id="Base_Column_List" >
+        personnewsid, personname, personidnumber, personsex, phone, email, createtime, flag, downtime, personstatus, statuscreatetime
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides="," >
+            <if test="personnewsid != null" >
+                and personnewsid ${personnewsidOperator} #{personnewsid}
+            </if>
+            <if test="personname != null" >
+                and personname ${personnameOperator} #{personname}
+            </if>
+            <if test="personidnumber != null" >
+                and personidnumber ${personidnumberOperator} #{personidnumber}
+            </if>
+            <if test="personsex != null" >
+                and personsex ${personsexOperator} #{personsex}
+            </if>
+            <if test="phone != null" >
+                and phone ${phoneOperator} #{phone}
+            </if>
+            <if test="email != null" >
+                and email ${emailOperator} #{email}
+            </if>
+            <if test="createtime != null" >
+                and createtime ${createtimeOperator} #{createtime}
+            </if>
+            <if test="createtime1 != null" >
+                and createtime &gt;= #{createtime1}
+            </if>
+            <if test="createtime2 != null" >
+                and createtime &lt;= #{createtime2}
+            </if>
+            <if test="flag != null" >
+                and flag ${flagOperator} #{flag}
+            </if>
+            <if test="downtime != null" >
+                and downtime ${downtimeOperator} #{downtime}
+            </if>
+            <if test="downtime1 != null" >
+                and downtime &gt;= #{downtime1}
+            </if>
+            <if test="downtime2 != null" >
+                and downtime &lt;= #{downtime2}
+            </if>
+            <if test="personstatus != null" >
+                and personstatus ${personstatusOperator} #{personstatus}
+            </if>
+            <if test="statuscreatetime != null" >
+                and statuscreatetime ${statuscreatetimeOperator} #{statuscreatetime}
+            </if>
+            <if test="statuscreatetime1 != null" >
+                and statuscreatetime &gt;= #{statuscreatetime1}
+            </if>
+            <if test="statuscreatetime2 != null" >
+                and statuscreatetime &lt;= #{statuscreatetime2}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.manager.entity.PersonnewsEO" >
+        insert into PERSONNEWS(<include refid="Base_Column_List" />)
+        values (#{personnewsid, jdbcType=VARCHAR}, #{personname, jdbcType=VARCHAR}, #{personidnumber, jdbcType=VARCHAR}, #{personsex, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{createtime, jdbcType=TIMESTAMP}, #{flag, jdbcType=INTEGER}, #{downtime, jdbcType=TIMESTAMP}, #{personstatus, jdbcType=INTEGER}, #{statuscreatetime, jdbcType=TIMESTAMP})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.manager.entity.PersonnewsEO" >
+        insert into PERSONNEWS
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="personnewsid != null" >personnewsid,</if>
+            <if test="personname != null" >personname,</if>
+            <if test="personidnumber != null" >personidnumber,</if>
+            <if test="personsex != null" >personsex,</if>
+            <if test="phone != null" >phone,</if>
+            <if test="email != null" >email,</if>
+            <if test="createtime != null" >createtime,</if>
+            <if test="flag != null" >flag,</if>
+            <if test="downtime != null" >downtime,</if>
+            <if test="personstatus != null" >personstatus,</if>
+            <if test="statuscreatetime != null" >statuscreatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="personnewsid != null" >#{personnewsid, jdbcType=VARCHAR},</if>
+            <if test="personname != null" >#{personname, jdbcType=VARCHAR},</if>
+            <if test="personidnumber != null" >#{personidnumber, jdbcType=VARCHAR},</if>
+            <if test="personsex != null" >#{personsex, jdbcType=VARCHAR},</if>
+            <if test="phone != null" >#{phone, jdbcType=VARCHAR},</if>
+            <if test="email != null" >#{email, jdbcType=VARCHAR},</if>
+            <if test="createtime != null" >#{createtime, jdbcType=TIMESTAMP},</if>
+            <if test="flag != null" >#{flag, jdbcType=INTEGER},</if>
+            <if test="downtime != null" >#{downtime, jdbcType=TIMESTAMP},</if>
+            <if test="personstatus != null" >#{personstatus, jdbcType=INTEGER},</if>
+            <if test="statuscreatetime != null" >#{statuscreatetime, jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <!-- PERSONNEWS 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PERSONNEWS
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PERSONNEWS列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select <include refid="Base_Column_List" /> from
+        (select tmp_tb.* , rownum rn from
+        (select <include refid="Base_Column_List" /> from PERSONNEWS
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select <include refid="Base_Column_List"/> from PERSONNEWS
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+            ${pager.orderCondition}
+        </if>
+    </select>
+    <select id="userNewsSelect"  resultMap="userNewsResultMap">
+        SELECT * FROM
+        (
+        SELECT A.*,ROWNUM RN
+        FROM (
+        SELECT
+        PERSONNEWS.PERSONNEWSID,
+        PERSONNEWS.PERSONNAME,
+        DEPARTMENTAL.DEPARTMENTALNAME,
+        USERROLE.ROLENAME,
+        USERLOGIN.ACCOUNTNUMBER,
+        PERSONNEWS.PHONE,
+        PERSONNEWS.EMAIL,
+        PERSONNEWS.FLAG,
+        PERSONNEWS.CREATETIME
+
+        FROM
+        PERSONNEWS,
+        PERSONDEPARTMENTPOSITION,
+        USERROLE,
+        DEPARTMENTALPOSITIONS,
+        DEPARTMENTAL,
+        USERLOGIN
+        WHERE
+        PERSONNEWS.PERSONNEWSID =PERSONDEPARTMENTPOSITION.PERSONNEWSKEY
+        AND
+        PERSONDEPARTMENTPOSITION.ROLEPRIMARYKEY=USERROLE.ROLEPRIMARYKEY
+        AND
+        PERSONDEPARTMENTPOSITION.DEPARTMENTJOBKEY=DEPARTMENTALPOSITIONS.DEPARTMENTJOBKEY
+        AND
+        DEPARTMENTALPOSITIONS.DEPARTMENTALFREIGNKEY=DEPARTMENTAL.DEPARTMENTPRIMARYKEY
+        AND
+        USERLOGIN.PERSONNEWSKEY=PERSONNEWS.PERSONNEWSID
+        ORDER BY
+        PERSONNEWS.CREATETIME
+        DESC
+        )A
+        WHERE ROWNUM &lt;= #{endIndex}
+        )
+        WHERE RN &gt;= #{beginIndex}
+    </select>
+    <select id="userNewsVagueSelect" resultMap="userNewsResultMap">
+ SELECT * FROM
+        (
+        SELECT A.*,ROWNUM RN
+        FROM (
+        SELECT
+        PERSONNEWS.PERSONNEWSID,
+        PERSONNEWS.PERSONNAME,
+        DEPARTMENTAL.DEPARTMENTALNAME,
+        USERROLE.ROLENAME,
+        USERLOGIN.ACCOUNTNUMBER,
+        PERSONNEWS.PHONE,
+        PERSONNEWS.EMAIL,
+        PERSONNEWS.FLAG,
+        PERSONNEWS.CREATETIME
+
+        FROM
+        PERSONNEWS,
+        PERSONDEPARTMENTPOSITION,
+        USERROLE,
+        DEPARTMENTALPOSITIONS,
+        DEPARTMENTAL,
+        USERLOGIN
+        WHERE
+        PERSONNEWS.PERSONNEWSID =PERSONDEPARTMENTPOSITION.PERSONNEWSKEY
+        AND
+        PERSONDEPARTMENTPOSITION.ROLEPRIMARYKEY=USERROLE.ROLEPRIMARYKEY
+        AND
+        PERSONDEPARTMENTPOSITION.DEPARTMENTJOBKEY=DEPARTMENTALPOSITIONS.DEPARTMENTJOBKEY
+        AND
+        DEPARTMENTALPOSITIONS.DEPARTMENTALFREIGNKEY=DEPARTMENTAL.DEPARTMENTPRIMARYKEY
+        AND
+        USERLOGIN.PERSONNEWSKEY=PERSONNEWS.PERSONNEWSID
+        AND
+        PERSONNEWS.PersonName like concat(concat('%',#{name}),'%')
+        AND
+        PERSONNEWS.Flag=#{state}
+        ORDER BY
+        PERSONNEWS.CREATETIME
+        DESC
+          )A
+        WHERE ROWNUM &lt;= #{endIndex}
+        )
+        WHERE RN &gt;= #{beginIndex}
+    </select>
+    <select id="userNewsVagueSelectAll" resultMap="userNewsResultMap">
+SELECT * FROM
+        (
+        SELECT A.*,ROWNUM RN
+        FROM (
+        SELECT
+        PERSONNEWS.PERSONNEWSID,
+        PERSONNEWS.PERSONNAME,
+        DEPARTMENTAL.DEPARTMENTALNAME,
+        USERROLE.ROLENAME,
+        USERLOGIN.ACCOUNTNUMBER,
+        PERSONNEWS.PHONE,
+        PERSONNEWS.EMAIL,
+        PERSONNEWS.FLAG,
+        PERSONNEWS.CREATETIME
+
+        FROM
+        PERSONNEWS,
+        PERSONDEPARTMENTPOSITION,
+        USERROLE,
+        DEPARTMENTALPOSITIONS,
+        DEPARTMENTAL,
+        USERLOGIN
+        WHERE
+        PERSONNEWS.PERSONNEWSID =PERSONDEPARTMENTPOSITION.PERSONNEWSKEY
+        AND
+        PERSONDEPARTMENTPOSITION.ROLEPRIMARYKEY=USERROLE.ROLEPRIMARYKEY
+        AND
+        PERSONDEPARTMENTPOSITION.DEPARTMENTJOBKEY=DEPARTMENTALPOSITIONS.DEPARTMENTJOBKEY
+        AND
+        DEPARTMENTALPOSITIONS.DEPARTMENTALFREIGNKEY=DEPARTMENTAL.DEPARTMENTPRIMARYKEY
+        AND
+        USERLOGIN.PERSONNEWSKEY=PERSONNEWS.PERSONNEWSID
+        AND
+        PERSONNEWS.PersonName like concat(concat('%',#{name}),'%')
+          )A
+        WHERE ROWNUM &lt;= #{endIndex}
+        )
+        WHERE RN &gt;= #{beginIndex}
+    </select>
+    <select id="loginLogSelect" resultType="com.adc.da.manager.entity.UserlogEO">
+        select * FROM USERLOG,PERSONNEWS WHERE USERLOG.USERID=PERSONNEWS.PERSONNEWSID
+        AND PERSONNEWS.PERSONNEWSID = #{personNewsID}
+    </select>
+    <delete id="userNewsDelete" parameterType="java.lang.String">
+           DELETE
+FROM
+	PERSONNEWS
+WHERE
+ PERSONNEWS.PERSONNEWSID = #{personNewsID,jdbcType=VARCHAR}
+    </delete>
+    <delete id="userLoginDelete" parameterType="java.lang.String">
+        DELETE
+        FROM
+        USERLOGIN
+        WHERE
+        USERLOGIN.PERSONNEWSKEY = #{personNewsID,jdbcType=VARCHAR}
+    </delete>
+    <delete id="personDepartmentPositionDelete" parameterType="java.lang.String">
+        DELETE
+        FROM
+        PERSONDEPARTMENTPOSITION
+        WHERE
+        PERSONDEPARTMENTPOSITION.PERSONNEWSKEY = #{personNewsID,jdbcType=VARCHAR}
+    </delete>
+    <delete id="departmentPositionDelete" parameterType="java.lang.String">
+        DELETE FROM DEPARTMENTALPOSITIONS
+where EXISTS
+(
+     select 1
+     from PERSONDEPARTMENTPOSITION
+     WHERE PERSONDEPARTMENTPOSITION.DEPARTMENTJOBKEY = DEPARTMENTALPOSITIONS.DEPARTMENTJOBKEY
+     AND
+PERSONDEPARTMENTPOSITION.PERSONNEWSKEY= #{personNewsID,jdbcType=VARCHAR}
+)
+
+    </delete>
+    <select id="getCount" resultType="java.lang.Integer">
+SELECT
+	"COUNT" (*)
+FROM
+	PERSONNEWS,
+	PERSONDEPARTMENTPOSITION,
+	USERROLE,
+	DEPARTMENTALPOSITIONS,
+	DEPARTMENTAL,
+	USERLOGIN
+WHERE
+	PERSONNEWS.PERSONNEWSID = PERSONDEPARTMENTPOSITION.PERSONNEWSKEY
+AND PERSONDEPARTMENTPOSITION.ROLEPRIMARYKEY = USERROLE.ROLEPRIMARYKEY
+AND PERSONDEPARTMENTPOSITION.DEPARTMENTJOBKEY = DEPARTMENTALPOSITIONS.DEPARTMENTJOBKEY
+AND DEPARTMENTALPOSITIONS.DEPARTMENTALFREIGNKEY = DEPARTMENTAL.DEPARTMENTPRIMARYKEY
+AND USERLOGIN.PERSONNEWSKEY = PERSONNEWS.PERSONNEWSID
+    </select>
+</mapper>

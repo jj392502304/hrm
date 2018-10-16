@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.FeedbackinformationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.FeedbackinformationEO" >
+    <id column="feedbackcontentkey" property="feedbackcontentkey" />
+    <result column="feedbackcontent" property="feedbackcontent" />
+    <result column="approverkey" property="approverkey" />
+    <result column="stateofapproval" property="stateofapproval" />
+    <result column="examinetime" property="examinetime" />
+  </resultMap>
+
+  <!-- FEEDBACKINFORMATION table all fields -->
+  <sql id="Base_Column_List" >
+     feedbackcontentkey, feedbackcontent, approverkey, stateofapproval, examinetime
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="feedbackcontentkey != null" >
+        and feedbackcontentkey ${feedbackcontentkeyOperator} #{feedbackcontentkey}
+      </if>
+      <if test="feedbackcontent != null" >
+        and feedbackcontent ${feedbackcontentOperator} #{feedbackcontent}
+      </if>
+      <if test="approverkey != null" >
+        and approverkey ${approverkeyOperator} #{approverkey}
+      </if>
+      <if test="stateofapproval != null" >
+        and stateofapproval ${stateofapprovalOperator} #{stateofapproval}
+      </if>
+      <if test="examinetime != null" >
+        and examinetime ${examinetimeOperator} #{examinetime}
+      </if>
+      <if test="examinetime1 != null" >
+        and examinetime &gt;= #{examinetime1}
+      </if>
+      <if test="examinetime2 != null" >
+        and examinetime &lt;= #{examinetime2}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.FeedbackinformationEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="feedbackcontentkey">
+        SELECT SEQ_FEEDBACKINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into FEEDBACKINFORMATION(<include refid="Base_Column_List" />)
+    values (#{feedbackcontentkey, jdbcType=VARCHAR}, #{feedbackcontent, jdbcType=VARCHAR}, #{approverkey, jdbcType=VARCHAR}, #{stateofapproval, jdbcType=INTEGER}, #{examinetime, jdbcType=TIMESTAMP})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.FeedbackinformationEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="feedbackcontentkey">
+        SELECT SEQ_FEEDBACKINFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into FEEDBACKINFORMATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="feedbackcontentkey != null" >feedbackcontentkey,</if>
+                <if test="feedbackcontent != null" >feedbackcontent,</if>
+                <if test="approverkey != null" >approverkey,</if>
+                <if test="stateofapproval != null" >stateofapproval,</if>
+                <if test="examinetime != null" >examinetime,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="feedbackcontentkey != null" >#{feedbackcontentkey, jdbcType=VARCHAR},</if>
+                <if test="feedbackcontent != null" >#{feedbackcontent, jdbcType=VARCHAR},</if>
+                <if test="approverkey != null" >#{approverkey, jdbcType=VARCHAR},</if>
+                <if test="stateofapproval != null" >#{stateofapproval, jdbcType=INTEGER},</if>
+                <if test="examinetime != null" >#{examinetime, jdbcType=TIMESTAMP},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.FeedbackinformationEO" >
+    update FEEDBACKINFORMATION
+       set  feedbackcontent = #{feedbackcontent},
+            approverkey = #{approverkey},
+            stateofapproval = #{stateofapproval},
+            examinetime = #{examinetime}
+     where  feedbackcontentkey = #{feedbackcontentkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.FeedbackinformationEO" >
+    update FEEDBACKINFORMATION
+    <set >
+      <if test="feedbackcontent != null" >
+        feedbackcontent = #{feedbackcontent},
+      </if>
+      <if test="approverkey != null" >
+        approverkey = #{approverkey},
+      </if>
+      <if test="stateofapproval != null" >
+        stateofapproval = #{stateofapproval},
+      </if>
+      <if test="examinetime != null" >
+        examinetime = #{examinetime},
+      </if>
+    </set>
+     where feedbackcontentkey = #{feedbackcontentkey}
+  </update>
+
+  <!-- 根据id查询 FEEDBACKINFORMATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from FEEDBACKINFORMATION
+     where feedbackcontentkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from FEEDBACKINFORMATION
+     where feedbackcontentkey = #{value}
+
+  </delete>
+
+  <!-- FEEDBACKINFORMATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from FEEDBACKINFORMATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询FEEDBACKINFORMATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from FEEDBACKINFORMATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from FEEDBACKINFORMATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

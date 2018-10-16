@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.EducationalbackgroundEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.EducationalbackgroundEO" >
+    <id column="pkschoolinformation" property="pkschoolinformation" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="schoolname" property="schoolname" />
+    <result column="education" property="education" />
+    <result column="degree" property="degree" />
+    <result column="city" property="city" />
+    <result column="collegename" property="collegename" />
+    <result column="achievement" property="achievement" />
+    <result column="culturemode" property="culturemode" />
+    <result column="professionalcourses" property="professionalcourses" />
+    <result column="professionalranking" property="professionalranking" />
+    <result column="professionalname" property="professionalname" />
+    <result column="graduationtime" property="graduationtime" />
+  </resultMap>
+
+  <!-- EDUCATIONALBACKGROUND table all fields -->
+  <sql id="Base_Column_List" >
+     pkschoolinformation, applymemberkey, schoolname, education, degree, city, collegename, achievement, culturemode, professionalcourses, professionalranking, professionalname, graduationtime
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pkschoolinformation != null" >
+        and pkschoolinformation ${pkschoolinformationOperator} #{pkschoolinformation}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="schoolname != null" >
+        and schoolname ${schoolnameOperator} #{schoolname}
+      </if>
+      <if test="education != null" >
+        and education ${educationOperator} #{education}
+      </if>
+      <if test="degree != null" >
+        and degree ${degreeOperator} #{degree}
+      </if>
+      <if test="city != null" >
+        and city ${cityOperator} #{city}
+      </if>
+      <if test="collegename != null" >
+        and collegename ${collegenameOperator} #{collegename}
+      </if>
+      <if test="achievement != null" >
+        and achievement ${achievementOperator} #{achievement}
+      </if>
+      <if test="culturemode != null" >
+        and culturemode ${culturemodeOperator} #{culturemode}
+      </if>
+      <if test="professionalcourses != null" >
+        and professionalcourses ${professionalcoursesOperator} #{professionalcourses}
+      </if>
+      <if test="professionalranking != null" >
+        and professionalranking ${professionalrankingOperator} #{professionalranking}
+      </if>
+      <if test="professionalname != null" >
+        and professionalname ${professionalnameOperator} #{professionalname}
+      </if>
+      <if test="graduationtime != null" >
+        and graduationtime ${graduationtimeOperator} #{graduationtime}
+      </if>
+      <if test="graduationtime1 != null" >
+        and graduationtime &gt;= #{graduationtime1}
+      </if>
+      <if test="graduationtime2 != null" >
+        and graduationtime &lt;= #{graduationtime2}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.EducationalbackgroundEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkschoolinformation">
+        SELECT SEQ_EDUCATIONALBACKGROUND.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into EDUCATIONALBACKGROUND(<include refid="Base_Column_List" />)
+    values (#{pkschoolinformation, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{schoolname, jdbcType=VARCHAR}, #{education, jdbcType=VARCHAR}, #{degree, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{collegename, jdbcType=VARCHAR}, #{achievement, jdbcType=VARCHAR}, #{culturemode, jdbcType=VARCHAR}, #{professionalcourses, jdbcType=VARCHAR}, #{professionalranking, jdbcType=VARCHAR}, #{professionalname, jdbcType=VARCHAR}, #{graduationtime, jdbcType=TIMESTAMP})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.EducationalbackgroundEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pkschoolinformation">
+        SELECT SEQ_EDUCATIONALBACKGROUND.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into EDUCATIONALBACKGROUND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pkschoolinformation != null" >pkschoolinformation,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="schoolname != null" >schoolname,</if>
+                <if test="education != null" >education,</if>
+                <if test="degree != null" >degree,</if>
+                <if test="city != null" >city,</if>
+                <if test="collegename != null" >collegename,</if>
+                <if test="achievement != null" >achievement,</if>
+                <if test="culturemode != null" >culturemode,</if>
+                <if test="professionalcourses != null" >professionalcourses,</if>
+                <if test="professionalranking != null" >professionalranking,</if>
+                <if test="professionalname != null" >professionalname,</if>
+                <if test="graduationtime != null" >graduationtime,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pkschoolinformation != null" >#{pkschoolinformation, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="schoolname != null" >#{schoolname, jdbcType=VARCHAR},</if>
+                <if test="education != null" >#{education, jdbcType=VARCHAR},</if>
+                <if test="degree != null" >#{degree, jdbcType=VARCHAR},</if>
+                <if test="city != null" >#{city, jdbcType=VARCHAR},</if>
+                <if test="collegename != null" >#{collegename, jdbcType=VARCHAR},</if>
+                <if test="achievement != null" >#{achievement, jdbcType=VARCHAR},</if>
+                <if test="culturemode != null" >#{culturemode, jdbcType=VARCHAR},</if>
+                <if test="professionalcourses != null" >#{professionalcourses, jdbcType=VARCHAR},</if>
+                <if test="professionalranking != null" >#{professionalranking, jdbcType=VARCHAR},</if>
+                <if test="professionalname != null" >#{professionalname, jdbcType=VARCHAR},</if>
+                <if test="graduationtime != null" >#{graduationtime, jdbcType=TIMESTAMP},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.EducationalbackgroundEO" >
+    update EDUCATIONALBACKGROUND
+       set  applymemberkey = #{applymemberkey},
+            schoolname = #{schoolname},
+            education = #{education},
+            degree = #{degree},
+            city = #{city},
+            collegename = #{collegename},
+            achievement = #{achievement},
+            culturemode = #{culturemode},
+            professionalcourses = #{professionalcourses},
+            professionalranking = #{professionalranking},
+            professionalname = #{professionalname},
+            graduationtime = #{graduationtime}
+     where  pkschoolinformation = #{pkschoolinformation}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.EducationalbackgroundEO" >
+    update EDUCATIONALBACKGROUND
+    <set >
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="schoolname != null" >
+        schoolname = #{schoolname},
+      </if>
+      <if test="education != null" >
+        education = #{education},
+      </if>
+      <if test="degree != null" >
+        degree = #{degree},
+      </if>
+      <if test="city != null" >
+        city = #{city},
+      </if>
+      <if test="collegename != null" >
+        collegename = #{collegename},
+      </if>
+      <if test="achievement != null" >
+        achievement = #{achievement},
+      </if>
+      <if test="culturemode != null" >
+        culturemode = #{culturemode},
+      </if>
+      <if test="professionalcourses != null" >
+        professionalcourses = #{professionalcourses},
+      </if>
+      <if test="professionalranking != null" >
+        professionalranking = #{professionalranking},
+      </if>
+      <if test="professionalname != null" >
+        professionalname = #{professionalname},
+      </if>
+      <if test="graduationtime != null" >
+        graduationtime = #{graduationtime},
+      </if>
+    </set>
+     where pkschoolinformation = #{pkschoolinformation}
+  </update>
+
+  <!-- 根据id查询 EDUCATIONALBACKGROUND -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from EDUCATIONALBACKGROUND
+     where pkschoolinformation = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EDUCATIONALBACKGROUND
+     where pkschoolinformation = #{value}
+
+  </delete>
+
+  <!-- EDUCATIONALBACKGROUND 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from EDUCATIONALBACKGROUND
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询EDUCATIONALBACKGROUND列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from EDUCATIONALBACKGROUND
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from EDUCATIONALBACKGROUND
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

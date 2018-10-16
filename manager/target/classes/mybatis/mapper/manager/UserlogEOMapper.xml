@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.manager.dao.UserlogEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.manager.entity.UserlogEO" >
+    <id column="pklog" property="pklog" />
+    <result column="loginway" property="loginway" />
+    <result column="loginip" property="loginip" />
+    <result column="logindate" property="logindate" />
+    <result column="userid" property="userid" />
+  </resultMap>
+
+  <!-- USERLOG table all fields -->
+  <sql id="Base_Column_List" >
+     loginway, loginip, logindate, userid, pklog
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="loginway != null" >
+        and loginway ${loginwayOperator} #{loginway}
+      </if>
+      <if test="loginip != null" >
+        and loginip ${loginipOperator} #{loginip}
+      </if>
+      <if test="logindate != null" >
+        and logindate ${logindateOperator} #{logindate}
+      </if>
+      <if test="logindate1 != null" >
+        and logindate &gt;= #{logindate1}
+      </if>
+      <if test="logindate2 != null" >
+        and logindate &lt;= #{logindate2}
+      </if>
+      <if test="userid != null" >
+        and userid ${useridOperator} #{userid}
+      </if>
+      <if test="pklog != null" >
+        and pklog ${pklogOperator} #{pklog}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.manager.entity.UserlogEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pklog">
+        SELECT SEQ_USERLOG.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into USERLOG(<include refid="Base_Column_List" />)
+    values (#{loginway, jdbcType=INTEGER}, #{loginip, jdbcType=VARCHAR}, #{logindate, jdbcType=TIMESTAMP}, #{userid, jdbcType=VARCHAR}, #{pklog, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.manager.entity.UserlogEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="pklog">
+        SELECT SEQ_USERLOG.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into USERLOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="loginway != null" >loginway,</if>
+                <if test="loginip != null" >loginip,</if>
+                <if test="logindate != null" >logindate,</if>
+                <if test="userid != null" >userid,</if>
+                <if test="pklog != null" >pklog,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="loginway != null" >#{loginway, jdbcType=INTEGER},</if>
+                <if test="loginip != null" >#{loginip, jdbcType=VARCHAR},</if>
+                <if test="logindate != null" >#{logindate, jdbcType=TIMESTAMP},</if>
+                <if test="userid != null" >#{userid, jdbcType=VARCHAR},</if>
+                <if test="pklog != null" >#{pklog, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.manager.entity.UserlogEO" >
+    update USERLOG
+       set  loginway = #{loginway},
+            loginip = #{loginip},
+            logindate = #{logindate},
+            userid = #{userid}
+     where  pklog = #{pklog}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.manager.entity.UserlogEO" >
+    update USERLOG
+    <set >
+      <if test="loginway != null" >
+        loginway = #{loginway},
+      </if>
+      <if test="loginip != null" >
+        loginip = #{loginip},
+      </if>
+      <if test="logindate != null" >
+        logindate = #{logindate},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid},
+      </if>
+    </set>
+     where pklog = #{pklog}
+  </update>
+
+  <!-- 根据id查询 USERLOG -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from USERLOG
+     where pklog = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from USERLOG
+     where pklog = #{value}
+
+  </delete>
+
+  <!-- USERLOG 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from USERLOG
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询USERLOG列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from USERLOG
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from USERLOG
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="adc-da-file" />
+        <module name="adc-da-login" />
+        <module name="adc-da-main" />
+        <module name="adc-da-quartz" />
+        <module name="adc-da-sys" />
+        <module name="adc-da-ui" />
+        <module name="business" />
+        <module name="manager" />
+        <module name="workflow" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.7">
+      <module name="adc-da-file" target="1.7" />
+      <module name="adc-da-login" target="1.7" />
+      <module name="adc-da-main" target="1.7" />
+      <module name="adc-da-quartz" target="1.7" />
+      <module name="adc-da-sys" target="1.7" />
+      <module name="adc-da-ui" target="1.7" />
+      <module name="business" target="1.7" />
+      <module name="manager" target="1.7" />
+      <module name="recruitment" target="1.7" />
+      <module name="utils" target="1.7" />
+      <module name="workflow" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,510 @@
+<style>
+    .pagesize{width: 60px;line-height: 20px; padding: 0; margin: 0 0 10px 25px;}
+    .search label{display: inline;}
+    .search select{ width: 150px;height: 35px;line-height: 35px; margin-left: 10px;margin-bottom: 25px;
+        appearance:none; -moz-appearance:none; -webkit-appearance:none;}
+    .search input{ width: 150px; border-radius: 2px;}
+    .search label{margin-left: 10px;}
+    .search a{margin-left: 10px;}
+
+</style>
+
+<div class="portlet  ">
+
+    <div class="portlet-title ">
+        <!--列表 头部信息-->
+        <div class="caption"><i class="icon-reorder"></i>用户列表</div>
+
+        <div class="tools tabbletools">
+            <a id="userAdd" href="javascript:;" class="plus"></a>
+            <a id="userUpdate" href="javascript:;" class="config"></a>
+            <a id="userDelete" href="javascript:;" class="delete"></a>
+        </div>
+
+    </div>
+
+    <div class="portlet-body">
+        <div class="search">
+            <label for="searchuser">用户姓名：</label>
+            <input type="text" id="searchuser" name="searchuser" placeholder="用户姓名"/>
+            <label >角色名称：</label>
+            <select id="searchrole" name="searchrole" class="form-control selectmultiple" data-placeholder="角色名称" > </select>
+            <a href="javascript:void(0);" class="btn btn-small" onclick="searchparam()" id="searchbutton"><i class="icon-search"></i>检索</a>
+        </div>
+        <!--  表头的 自己画-->
+        <table class="table table-striped table-bordered table-hover systable" id="usertable">
+            <thead>
+            <tr>
+                <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                <th style="width:15px;">#</th>
+                <th>用户ID</th>
+                <th>登录名</th>
+                <th>用户姓名</th>
+                <th >角色名称</th>
+                <th >所属组织</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="pagination" >
+            每页显示<select class="pagesize " id="pagesize"></select>条
+            <div style="display: inline;" id="text"></div>
+            <ul id="paglist"></ul>
+            <span id="totalcount"></span>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="usAdd" class="span12">
+    <!-- form表单要自己设计内容。 -->
+    <form class="form-horizontal" id="userform" name="userform">
+        <input type="hidden" id="usidAdd" name="usid" >
+        <div class="control-group" style="margin-top: 5px;">
+            <label class="control-label col-sm-2" for="usnameAdd">用户名称：</label>
+            <div class="controls col-sm-4">
+                <input type="text" id="usnameAdd" name="usname" placeholder="用户名称">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="usaccountAdd">用户名：</label>
+            <div class="controls">
+                <input type="text" id="usaccountAdd" name="account" placeholder="用户名">
+            </div>
+        </div>
+        <div id="passwordDiv">
+        <div class="control-group">
+            <label class="control-label" for="password">密码：</label>
+            <div class="controls">
+                <input type="password" id="password" name="password" placeholder="密码">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">确认密码：</label>
+            <div class="controls">
+                <input type="password" id="repassword" name="repassword" placeholder="确认密码">
+            </div>
+        </div> 
+        </div>
+       <div class="control-group">
+      <!--  <input id="usRoleAdd0" name="rolesstr" value="" type="hidden">-->
+                   <label class="control-label" for="usRoleAdd">角色名称：</label>
+                    <div class="controls">
+                        <select id="usRoleAdd" name="rolesstr" class="form-control selectmultiple"  multiple="multiple" >
+                        </select>
+                    </div>
+        </div>
+        <div class="control-group">
+                   <label class="control-label" for="usOrgAdd">所属组织：</label>
+                    <div class="controls">
+                        <select id="usOrgAdd" name="orgsstr" class="form-control selectmultiple"  >
+                        </select>
+                    </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    /* 默认隐藏弹出表单*/
+    $('#usAdd').hide();
+    var pageSize =5, pageNo=1, totalSize = 1, totalCounts = 1,
+        id ="usertable" ;
+    var searchmsg = {usname:'',rolestr:''};
+    var url ='';
+    var pagearr = [5,10,15,20];
+
+    // 获取列表数据
+    var getlist = function(type ){
+        url =addr+"/api/sys/user?pageNo="+pageNo+"&pageSize="+pageSize
+            + "&usname="+ searchmsg.usname+ "&rolename="+searchmsg.rolestr ; // + "&rolestr="+searchmsg.rolestr;
+        $.ajax({
+            url: url ,
+            type:"GET",
+            contentType:"application/json; charset=UTF-8",
+            success:function (data) {
+                //国际化
+//                sign(data.respCode);
+                var cur = data.data.list, str="",
+                    roles="", rolestr = "" , statu = "",orgs="",orgstr="";
+                totalCounts = data.data.count|| 1;
+//                pagecoount = data.data.pageCount;
+                if(type != 'change') {
+                    setjqpage();
+                    $(".checkboxes").change(function () {
+                        console.log(3);
+                    });
+                }
+                for(var i=0 ;i<pageSize; i ++){
+                    rolestr = "";
+                    orgstr = "";
+                    try{
+                        roles= cur[i].roles;
+                        userid = cur[i].usid;
+                        username = cur[i].usname;
+                        account = cur[i].account;
+                        statu = cur[i].enable;
+                        orgs = cur[i].orgs;
+                    }catch (ex)
+                    {
+                        roles =  userid=  username = account = statu = orgs ="";
+                        console.log('错误' + ex.message );
+                    }
+                    if(roles.length){
+                        for(var j in roles){
+                            if(j == roles.length-1){
+                                rolestr +=roles[j].name;
+                            }else{
+                                rolestr += roles[j].name+", ";
+                            }
+                        }
+                    }
+                    if(orgs.length){
+                        for(var j in orgs){
+                            if(j == orgs.length-1){
+                                orgstr +=orgs[j].name;
+                            }else{
+                            	orgstr += orgs[j].name+", ";
+                            }
+                        }
+                    }
+
+                    str+= "<tr><td><input type='checkbox' name='checkboxes' class='checkboxes' rowno = '"+i+"' value='"+userid+"' /></td>"
+                        + "<td>"+parseInt(i+1)+"</td>"
+                        + "<td>"+userid+"</td><td>"+account+"</td>"
+                        + "<td>"+username+"</td><td>"+rolestr+"</td><td>"+orgstr+"</td></tr>";
+                }
+                $("#"+id+" tbody").html(str);
+            }
+        });
+    }
+    getlist('init');
+    //分页设置
+    function setjqpage() {
+        pageSize = parseInt(pageSize);
+        $('#paglist').jqPaginator({
+            totalCounts:totalCounts,
+            pageSize:pageSize,
+            visiblePages: 5,
+            currentPage: pageNo,
+            first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+            prev: '<li class="prev"><a href="javascript:void(0);">上一页</a></li>',
+            next: '<li class="next"><a href="javascript:void(0);">下一页</a></li>',
+            last: '<li class="last"><a href="javascript:void(0);">最后一页</a></li>',
+            page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
+            onPageChange: function (num,type) {
+                pageNo = num;
+                if(type == 'change') getlist('change');
+                var pagesizearr='';
+                for(var i  in pagearr){
+                    pagesizearr +='<option value = "'+ pagearr[i] +'">'+ pagearr[i]+'</option>'
+                }
+                $('#text').html('当前第' + num + '页');
+                $('#totalcount').html('共 '+ Math.ceil(totalCounts/pageSize) +" 页");
+                $('#pagesize').html(pagesizearr).val(pageSize);
+            }
+        });
+    }
+    // 全选
+    $(".group-checkable").change(function () {
+        var isChecked = $(this).prop("checked");
+        $("input[name='checkboxes']").prop("checked", isChecked);
+    });
+    // 勾选框
+    var checkboxes = 0;
+    setTimeout(function(){
+        $("td").on("change","input[name='checkboxes']",function () {
+            if($("input[name='checkboxes']").prop("checked")) {
+                ++checkboxes;
+            }else {
+                --checkboxes;
+            }
+
+        });
+    },300);
+    //每页显示条数
+    $("#pagesize").on('change',function () {
+        if(pageSize != $(this).val()){
+            pageSize =  $(this).val();
+            pageNo = 1;
+            getlist('init');
+        }
+    });
+
+    // 角色列表
+    var rolelist = {
+        url:addr+"/api/sys/role?_ts="+timestamp,
+        delay: 250,
+        allowClear: true,
+        placeholder: {
+            id: '-1', // the value of the option
+            text: '请选择1'
+        },
+        processResults: function (data) {
+            var cur = data.data, selectrole = [{"id":" ", "text":"---请选择---"}];
+            for (var i =0;i<cur.length;i++){
+                var land = cur[i];
+                var option = {"id":land.rid, "text": land.rname};
+                selectrole.push(option);
+            }
+            return {
+                results: selectrole
+            };
+        },
+        templateResult: function (data) {
+            if (data.id === '') { // adjust for custom placeholder values
+                return '请选择';
+            }
+            return data.text;
+        },
+        cache:true
+    }
+    
+    function getOrgTreeList()
+    {
+ 	   $.ajax({
+            url: addr+"/api/sys/org/listOrgByOrgName",
+            type: "GET",
+            async:false,
+            success:function (data) {
+         	   var cur = data.data;
+         	   var option='<option value="0">---请选择---</option>';
+ 	           for (var i =0;i<cur.length;i++){
+ 	               var land = cur[i];
+ 	               if(land.parentId!=0){
+ 	            	   option +='<option value="'+land.id+'" parent="'+land.parentId+'">'+land.name+'</option>';
+ 	               }
+ 	               else{
+ 	            	   option +='<option value="'+land.id+'">'+land.name+'</option>';
+ 	               }
+ 	              // var option1 = {"id":land.id,"value":land.id,"parent":land.parentId, "text": land.name};
+ 	              // selectorg.push(option);
+ 	           }
+ 	         //  alert(option);
+ 	            $("#usOrgAdd").empty();
+ 	           $("#usOrgAdd").append(option);
+            },
+            error:function (data) {
+                layer.msg('获取信息失败！');
+            }
+        });
+    }
+
+    // 角色下拉框
+        $("#searchrole").select2({
+            ajax:rolelist
+        });
+
+    // 搜索
+    function searchparam() {
+        pageNo = 1;
+        searchmsg.usname = $("#searchuser").val();
+        if($("#searchrole").select2('data')[0]){
+        	searchmsg.rolestr = $("#searchrole").select2('data')[0].text; 
+        }
+        if(searchmsg.rolestr=="---请选择---"){
+        	searchmsg.rolestr ="";
+        }
+       // alert(searchmsg.rolestr);
+        getlist('init');
+    }
+
+    // 工具栏 点击弹窗
+    $(".tools").on('click','a',function () {
+        var html= "",title ="",htmlstr="",checkboxes = $("input[name='checkboxes']:checked") ;
+        switch ($(this)[0].id){
+            case 'userAdd':
+                htmlstr = $("#usAdd");
+                title = "新增用户信息";
+                layerfn(htmlstr,title,'add');
+                break;
+            case 'userUpdate':
+                title = "修改用户信息";
+                htmlstr = getform(checkboxes.val(),$("#usAdd"),title);
+                break;
+            case 'userDelete':
+                title = "删除用户信息";
+                var chk_value = [];
+                checkboxes.each(function(){
+                    chk_value.push($(this).val());
+                });
+                if($("input[name='checkboxes']:checked").length ){
+                    dellist(chk_value);
+                }else {
+                    layer.msg("请选择一条记录！");
+                }
+                break;
+            case 'userMessage':
+                title = "查看用户信息";
+                break;
+        }
+        $('#userform')[0].reset();
+
+        $("#usRoleAdd").select2({
+            ajax:rolelist
+        });
+        getOrgTreeList()
+        $("#usOrgAdd").select2tree();
+    });
+
+    //弹窗
+    function layerfn(htmlstr,title,type) {
+        layer.open({
+            type: 1,
+            title:title,
+            skin: 'ayui-layer-molv,demo-class', //加上边框
+            area: ['500px', '350px'], //宽高
+            content: htmlstr,
+            anim: 2, //弹出动画
+            shadeClose: false, //开启遮罩关闭
+            btn: [ '提交','重置', '关闭'],
+            btnAlign:'b',
+            btn1: function(index, layero){
+                var fmsg = $("#userform").serializeArray();
+                var params ="{";
+                var roleids ='[';
+                for(var i in fmsg){
+                    /* if(fmsg[i].name =="password"){
+                        params+='"password":"'+window.btoa(fmsg[i].value)+'"';
+                    }
+                    else */ if(fmsg[i].name =="rolesstr"&&fmsg[i].value.length>0){
+                        roleids+='"'+fmsg[i].value+'",';
+                    }else if(fmsg[i].name =="orgsstr"&&fmsg[i].value.length>0){
+                    	params+='"'+fmsg[i].name+'":["'+fmsg[i].value+'"]' ;
+                    	params +=',';
+                    }
+                    else{
+                        params+='"'+fmsg[i].name+'":"'+fmsg[i].value+'"' ;
+                        params +=',';
+                    }
+                }
+                
+               // params = params.length==2?params:params.substr(0,params.length-1);
+                roleids = (roleids.length==1?roleids:roleids.substr(0,roleids.length-1))+']';
+                params += '"roles": [], "rolesstr":'+roleids;
+                params += "}";
+                alert(params);
+                params = JSON.parse(params);
+                if(type == 'add'){
+                    addlist(addr+"/api/sys/user","POST",params);
+                }else if(type=='update'){
+                    addlist(addr+"/api/sys/user","PUT",params);
+                }
+                layer.closeAll();
+            } ,
+            btn2: function(index, layero){
+                $('#userform')[0].reset;
+                return false //开启该代码可禁止点击该按钮关闭
+            } ,
+            btn3: function(index, layero){
+//                $('#userform').reset;
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+
+        });
+
+    }
+
+    //增
+    function addlist(url,type,param) {
+        param  = JSON.stringify(param);
+        $.ajax({
+            url:url,
+            type:type,
+            data: param,
+            contentType:"application/json; charset=UTF-8",
+            success:function (data) {
+                console.log(data);
+                if(data.ok){
+                    pageNo =1;
+                    getlist('init');
+                    layer.msg("成功");
+//                    layer.msg(data.respMsg);
+                }else{
+                    layer.msg(data.respMsg);
+                }
+            },error:function () {
+                layer.msg(data.respMsg);
+            }
+        });
+    }
+
+    // 获取信息
+    function getform(id,htmlstr,title,type){
+        $.ajax({
+            url: addr + "/api/sys/user/"+ id,
+            type: "GET",
+            success:function (data) {
+                layerfn(htmlstr,title,'update');
+                loadData(data.data);
+                if(type == 'view'){
+                    $('input,select,textarea',$('form[name="userform"]')).prop('readonly',true);
+                }
+            },
+            error:function (data) {
+                layer.msg('获取信息失败！');
+            }
+        });
+    }
+
+    function dellist(id) {
+        layer.confirm('确定删除信息？', {
+            btn: ['删除','取消'] //按钮
+        }, function(){
+            $.ajax({
+                url:addr+'/api/sys/user/'+id,
+                type:'DELETE',
+                success:function (data) {
+                    if(data.ok){
+                        getlist('init');
+                        layer.msg('删除成功！');
+                    }
+                },error:function (data) {
+                    console.log(data);
+                    layer.msg('删除失败！');
+                }
+            });
+        });
+    }
+
+    // 加载信息
+    function loadData(obj) {
+    	$("#passwordDiv").hide();
+        var key,value,tagName,type,arr;
+      //  alert(JSON.stringify(obj));
+        for(x in obj ){
+            key = x;
+            value = obj[x];
+            $("[name='"+key+"'],[name='"+key+"[]']").each(function(){
+                tagName = $(this)[0].tagName;
+                type = $(this).attr('type');
+                if(tagName=='INPUT'){
+                    if(type=='radio'){
+                        $(this).attr('checked',$(this).val()==value);
+                    }else if(type=='checkbox'){
+                        arr = value.split(',');
+                        for(var i =0;i<arr.length;i++){
+                            if($(this).val()==arr[i]){
+                                $(this).attr('checked',true);
+                                break;
+                            }
+                        }
+                    }else{
+                        $(this).val(value);
+                    }
+                }else if(tagName=='SELECT' ){
+                   // $(this).val( value.split(',')).select2(); 
+                   //alert(value);
+                    var select_id = $(this)[0].id;
+                    $("#"+select_id).val(value);
+                }else if( tagName=='TEXTAREA'){
+                    $(this).val(value);
+                }
+
+            });
+        }
+    }
+
+</script>
+

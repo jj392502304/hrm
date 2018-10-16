@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.business.dao.AbilityEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.business.entity.AbilityEO" >
+    <id column="primarykeyoflanguageability" property="primarykeyoflanguageability" />
+    <result column="applymemberkey" property="applymemberkey" />
+    <result column="degreeofmastery" property="degreeofmastery" />
+    <result column="listeningandspeaking" property="listeningandspeaking" />
+    <result column="readandwrite" property="readandwrite" />
+    <result column="languagetype" property="languagetype" />
+    <result column="abilitytype" property="abilitytype" />
+  </resultMap>
+
+  <!-- ABILITY table all fields -->
+  <sql id="Base_Column_List" >
+     primarykeyoflanguageability, applymemberkey, degreeofmastery, listeningandspeaking, readandwrite, languagetype, abilitytype
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="primarykeyoflanguageability != null" >
+        and primarykeyoflanguageability ${primarykeyoflanguageabilityOperator} #{primarykeyoflanguageability}
+      </if>
+      <if test="applymemberkey != null" >
+        and applymemberkey ${applymemberkeyOperator} #{applymemberkey}
+      </if>
+      <if test="degreeofmastery != null" >
+        and degreeofmastery ${degreeofmasteryOperator} #{degreeofmastery}
+      </if>
+      <if test="listeningandspeaking != null" >
+        and listeningandspeaking ${listeningandspeakingOperator} #{listeningandspeaking}
+      </if>
+      <if test="readandwrite != null" >
+        and readandwrite ${readandwriteOperator} #{readandwrite}
+      </if>
+      <if test="languagetype != null" >
+        and languagetype ${languagetypeOperator} #{languagetype}
+      </if>
+      <if test="abilitytype != null" >
+        and abilitytype ${abilitytypeOperator} #{abilitytype}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.business.entity.AbilityEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="primarykeyoflanguageability">
+        SELECT SEQ_ABILITY.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into ABILITY(<include refid="Base_Column_List" />)
+    values (#{primarykeyoflanguageability, jdbcType=VARCHAR}, #{applymemberkey, jdbcType=VARCHAR}, #{degreeofmastery, jdbcType=VARCHAR}, #{listeningandspeaking, jdbcType=VARCHAR}, #{readandwrite, jdbcType=VARCHAR}, #{languagetype, jdbcType=VARCHAR}, #{abilitytype, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.business.entity.AbilityEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="primarykeyoflanguageability">
+        SELECT SEQ_ABILITY.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ABILITY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="primarykeyoflanguageability != null" >primarykeyoflanguageability,</if>
+                <if test="applymemberkey != null" >applymemberkey,</if>
+                <if test="degreeofmastery != null" >degreeofmastery,</if>
+                <if test="listeningandspeaking != null" >listeningandspeaking,</if>
+                <if test="readandwrite != null" >readandwrite,</if>
+                <if test="languagetype != null" >languagetype,</if>
+                <if test="abilitytype != null" >abilitytype,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="primarykeyoflanguageability != null" >#{primarykeyoflanguageability, jdbcType=VARCHAR},</if>
+                <if test="applymemberkey != null" >#{applymemberkey, jdbcType=VARCHAR},</if>
+                <if test="degreeofmastery != null" >#{degreeofmastery, jdbcType=VARCHAR},</if>
+                <if test="listeningandspeaking != null" >#{listeningandspeaking, jdbcType=VARCHAR},</if>
+                <if test="readandwrite != null" >#{readandwrite, jdbcType=VARCHAR},</if>
+                <if test="languagetype != null" >#{languagetype, jdbcType=VARCHAR},</if>
+                <if test="abilitytype != null" >#{abilitytype, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.business.entity.AbilityEO" >
+    update ABILITY
+       set  applymemberkey = #{applymemberkey},
+            degreeofmastery = #{degreeofmastery},
+            listeningandspeaking = #{listeningandspeaking},
+            readandwrite = #{readandwrite},
+            languagetype = #{languagetype},
+            abilitytype = #{abilitytype}
+     where  primarykeyoflanguageability = #{primarykeyoflanguageability}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.business.entity.AbilityEO" >
+    update ABILITY
+    <set >
+      <if test="applymemberkey != null" >
+        applymemberkey = #{applymemberkey},
+      </if>
+      <if test="degreeofmastery != null" >
+        degreeofmastery = #{degreeofmastery},
+      </if>
+      <if test="listeningandspeaking != null" >
+        listeningandspeaking = #{listeningandspeaking},
+      </if>
+      <if test="readandwrite != null" >
+        readandwrite = #{readandwrite},
+      </if>
+      <if test="languagetype != null" >
+        languagetype = #{languagetype},
+      </if>
+      <if test="abilitytype != null" >
+        abilitytype = #{abilitytype},
+      </if>
+    </set>
+     where primarykeyoflanguageability = #{primarykeyoflanguageability}
+  </update>
+
+  <!-- 根据id查询 ABILITY -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ABILITY
+     where primarykeyoflanguageability = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ABILITY
+     where primarykeyoflanguageability = #{value}
+
+  </delete>
+
+  <!-- ABILITY 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ABILITY
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ABILITY列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ABILITY
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ABILITY
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

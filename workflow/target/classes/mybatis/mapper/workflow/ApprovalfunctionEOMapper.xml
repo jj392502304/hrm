@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.workflow.dao.ApprovalfunctionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.workflow.entity.ApprovalfunctionEO" >
+    <id column="approvalfunctionkey" property="approvalfunctionkey" />
+    <result column="functionname" property="functionname" />
+    <result column="functiondescription" property="functiondescription" />
+  </resultMap>
+
+  <!-- APPROVALFUNCTION table all fields -->
+  <sql id="Base_Column_List" >
+     approvalfunctionkey, functionname, functiondescription
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="approvalfunctionkey != null" >
+        and approvalfunctionkey ${approvalfunctionkeyOperator} #{approvalfunctionkey}
+      </if>
+      <if test="functionname != null" >
+        and functionname ${functionnameOperator} #{functionname}
+      </if>
+      <if test="functiondescription != null" >
+        and functiondescription ${functiondescriptionOperator} #{functiondescription}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.workflow.entity.ApprovalfunctionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="approvalfunctionkey">
+        SELECT SEQ_APPROVALFUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into APPROVALFUNCTION(<include refid="Base_Column_List" />)
+    values (#{approvalfunctionkey, jdbcType=VARCHAR}, #{functionname, jdbcType=VARCHAR}, #{functiondescription, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.workflow.entity.ApprovalfunctionEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="approvalfunctionkey">
+        SELECT SEQ_APPROVALFUNCTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into APPROVALFUNCTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="approvalfunctionkey != null" >approvalfunctionkey,</if>
+                <if test="functionname != null" >functionname,</if>
+                <if test="functiondescription != null" >functiondescription,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="approvalfunctionkey != null" >#{approvalfunctionkey, jdbcType=VARCHAR},</if>
+                <if test="functionname != null" >#{functionname, jdbcType=VARCHAR},</if>
+                <if test="functiondescription != null" >#{functiondescription, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.workflow.entity.ApprovalfunctionEO" >
+    update APPROVALFUNCTION
+       set  functionname = #{functionname},
+            functiondescription = #{functiondescription}
+     where  approvalfunctionkey = #{approvalfunctionkey}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.workflow.entity.ApprovalfunctionEO" >
+    update APPROVALFUNCTION
+    <set >
+      <if test="functionname != null" >
+        functionname = #{functionname},
+      </if>
+      <if test="functiondescription != null" >
+        functiondescription = #{functiondescription},
+      </if>
+    </set>
+     where approvalfunctionkey = #{approvalfunctionkey}
+  </update>
+
+  <!-- 根据id查询 APPROVALFUNCTION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from APPROVALFUNCTION
+     where approvalfunctionkey = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from APPROVALFUNCTION
+     where approvalfunctionkey = #{value}
+
+  </delete>
+
+  <!-- APPROVALFUNCTION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from APPROVALFUNCTION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询APPROVALFUNCTION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from APPROVALFUNCTION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from APPROVALFUNCTION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.UserEODao">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.adc.da.sys.entity.UserEO">
+		<id column="usid" property="usid" />
+		<result column="account" property="account" />
+		<result column="del_flag" property="delFlag" />
+		<result column="password" property="password" />
+		<result column="usname" property="usname" />
+		<result column="ext_info" property="extInfo" />
+	</resultMap>
+
+	<!-- TS_USER table all fields -->
+	<sql id="Base_Column_List">
+		usid, account, del_flag, password, usname, ext_info
+	</sql>
+
+	<resultMap id="UserRoleMap" extends="BaseResultMap" type="com.adc.da.sys.entity.UserEO">
+		<collection property="roleEOList" ofType="com.adc.da.sys.entity.RoleEO">
+			<id column="id" property="id" />
+			<result column="data_scope" property="dataScope" />
+			<result column="r_delFlag" property="delFlag" />
+			<result column="is_default" property="isDefault" />
+			<result column="name" property="name" />
+			<result column="remarks" property="remarks" />
+			<result column="r_extInfo" property="extInfo" />
+		</collection>
+		<collection property="orgEOList" ofType="com.adc.da.sys.entity.OrgEO">
+			<id column="org_id" property="id" />
+			<result column="org_name" property="name" />
+			<result column="org_desc" property="orgDesc" />
+			<result column="org_code" property="orgCode" />
+			<result column="org_type" property="orgType" />
+			<result column="org_parent_id" property="parentId" />
+			<result column="org_remarks" property="remarks" />
+			<result column="org_isshow" property="isShow" />
+			<result column="org_delFlag" property="delFlag" />
+			<result column="org_parentIds" property="parentIds" />
+		</collection>
+	</resultMap>
+	
+	
+
+	<sql id="User_Role_List">
+		u.*, r.id as id,
+		r.data_scope as dataScope,
+		r.del_flag as r_delFlag,
+		r.is_default as isDefault,
+		r.name as name,
+		r.remarks as remarks,
+		r.ext_info as r_extInfo,
+		ORG.id AS org_id,
+		ORG.ORG_NAME AS org_name,
+		ORG.ORG_DESC AS org_desc,
+		ORG.ORG_CODE AS org_code,
+		ORG.ORG_TYPE AS org_type,
+		ORG.PARENT_ID AS org_parent_id,
+		ORG.REMARKS AS org_remarks,
+		ORG.IS_SHOW AS org_isshow,
+		ORG.DEL_FLAG AS org_delFlag,
+		ORG.PARENT_IDS AS org_parentIds
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="Base_Where_Clause">
+		where 1=1
+		<trim suffixOverrides=",">
+			<if test="usid != null">
+				and u0.usid ${usidOperator} #{usid}
+			</if>
+			<if test="account != null">
+				and u0.account ${accountOperator} #{account}
+			</if>
+			<if test="password != null">
+				and u0.password ${passwordOperator} #{password}
+			</if>
+			<if test="usname != null">
+				and u0.usname ${usnameOperator} '%${usname}%'
+			</if>
+			<if test="rolename != null">
+				and r0.name ${rolenameOperator} #{rolename}
+			</if>
+		</trim>
+	</sql>
+
+	<update id="updatePassword">
+		update TS_USER
+		<set>
+			<if test="oldPassword == password">
+				password = #{newPassword}
+			</if>
+		</set>
+		where usid = #{userId}
+	</update>
+
+	<update id="updateUserEO" parameterType="com.adc.da.sys.entity.UserEO">
+		update TS_USER
+		<set>
+			usname = #{usname}
+		</set>
+		where usid = #{usid}
+	</update>
+
+	<select id="getRoleIdListByUserId" resultType="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		select role_id
+		from TS_USER_ROLE ur
+		where ur.user_id = #{usid}
+	</select>
+
+	<insert id="saveUserRole">
+		insert into TR_USER_ROLE(user_id,role_id) values (#{usid}, #{roleId})
+	</insert>
+	
+	<insert id="saveUserOrg">
+		insert into TR_USER_ORG(user_id,org_id) values (#{usid}, #{orgId})
+	</insert>
+
+	<delete id="deleteUserRoleByUsid" parameterType="java.lang.String">
+		delete from
+		TR_USER_ROLE
+		where user_id = #{usid}
+	</delete>
+	
+	<delete id="deleteUserOrgByUsid" parameterType="java.lang.String">
+		delete from
+		TR_USER_ORG
+		where user_id = #{usid}
+	</delete>
+
+	<update id="deleteLogicInBatch" parameterType="java.util.List">
+		update TS_USER
+		set del_flag = 1
+		where usid in
+		<foreach item="usid" collection="list" open="(" separator=","
+			close=")" index="index">
+			#{usid}
+		</foreach>
+	</update>
+
+	<delete id="deleteUserRoleByUsidInBatch" parameterType="java.util.List">
+		delete from TR_USER_ROLE
+		where user_id in
+		<foreach item="usid" collection="list" open="(" separator=","
+			close=")" index="index">
+			#{usid}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteUserOrgByUsidInBatch" parameterType="java.util.List">
+		delete from TR_USER_ORG
+		where user_id in
+		<foreach item="usid" collection="list" open="(" separator=","
+			close=")" index="index">
+			#{usid}
+		</foreach>
+	</delete>
+
+	<select id="getUserEOByAccount" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TS_USER
+		where account = #{account}
+	</select>
+
+	<select id="getUserWithRoles" resultMap="UserRoleMap" parameterType="java.lang.String">
+		select <include refid="User_Role_List" />
+		from TS_USER u
+		left join TR_USER_ROLE ur on u.usid = ur.user_id
+		left join TS_ROLE r on ur.role_id = r.id
+		left join TR_USER_ORG UORG on u.usid = UORG.user_id
+	    left join TS_ORG ORG on UORG.org_id = ORG.id
+		where u.usid = #{id}
+	</select>
+
+	<select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from TS_USER u
+		left join TR_USER_ROLE ur
+		on u.usid = ur.role_id
+		where ur.roleId = #{id}
+	</select>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.adc.da.sys.entity.UserEO">
+		insert into TS_USER(
+		<include refid="Base_Column_List" />
+		)
+		values (#{usid}, #{account}, #{delFlag}, #{password}, #{usname}, #{extInfo})
+	</insert>
+
+	<!-- 根据pk，修改记录 -->
+	<update id="updateByPrimaryKey" parameterType="com.adc.da.sys.entity.UserEO">
+		update TS_USER
+		set account = #{account},
+		del_flag = #{delFlag},
+		password = #{password},
+		usname = #{usname},
+		where usid = #{usid}
+	</update>
+
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.UserEO">
+		update TS_USER
+		<set>
+			<if test="usname != null">
+				usname = #{usname},
+			</if>
+		</set>
+		where usid = #{usid}
+	</update>
+
+	<!-- 根据id查询 TS_USER -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TS_USER
+		where usid = #{value}
+	</select>
+
+	<!-- 删除记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from TS_USER
+		where usid = #{value}
+	</delete>
+
+	<!-- TS_USER 列表总数 -->
+	<select id="queryByCount" resultType="java.lang.Integer"
+		parameterType="com.adc.da.base.page.BasePage">
+		select count(distinct u0.usid) from TS_USER u0
+		left join TR_USER_ROLE ur0 on u0.usid = ur0.user_id
+		left join TS_ROLE r0 on ur0.role_id = r0.id
+		<include refid="Base_Where_Clause" />
+		and u0.del_flag != 1
+	</select>
+
+	<!-- 查询TS_USER列表 -->
+    <select id="queryByPage" resultMap="UserRoleMap" parameterType="com.adc.da.base.page.BasePage">
+	  select <include refid="User_Role_List" /> from
+		  (select tmp_tb.* , rownum rn from
+			  (select distinct u0.* from TS_USER u0
+			   left join TR_USER_ROLE ur0 on u0.usid = ur0.user_id
+			   left join TS_ROLE r0 on ur0.role_id = r0.id
+			   left join TR_USER_ORG UORG0 on u0.usid = UORG0.user_id
+			   left join TS_ORG ORG0 on UORG0.org_id = ORG0.id
+			   <include refid="Base_Where_Clause"/>
+			   and u0.del_flag != 1
+			   <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	  ${pager.orderCondition}
+			   </if>
+			  ) tmp_tb where rownum &lt;= ${pager.endIndex}) u
+			  left join TR_USER_ROLE ur on u.usid = ur.user_id
+			  left join TS_ROLE r on ur.role_id = r.id
+			  left join TR_USER_ORG UORG on u.usid = UORG.user_id
+			  left join TS_ORG ORG on UORG.org_id = ORG.id
+			  where rn &gt;= ${pager.startIndex}
+    </select>
+
+	<select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+      select <include refid="Base_Column_List"/> from TS_USER
+      <include refid="Base_Where_Clause"/>
+      <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+         ${pager.orderCondition}
+      </if>
+	</select>
+</mapper>
